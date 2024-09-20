@@ -28,7 +28,20 @@
     color-scheme: light;
   }
 } */
+/* 
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-weight: 400;
+  font-style: normal;
+  src: url("/fonts/nanum-barun-gothic/NanumBarunGothic.ttf") format("ttf");
+}
 
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-weight: 700;
+  font-style: normal;
+  src: url("/fonts/nanum-barun-gothic/NanumBarunGothicBold.ttf") format("ttf");
+} */
 
 html,
 body {
@@ -39,9 +52,11 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: "NanumBarunGothic", Arial, Helvetica, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.025rem;
+  line-height: 1.5;
 }
 
 * {
@@ -55,3 +70,100 @@ a {
   text-decoration: none;
 }
 
+/* custom */
+.container {
+  width: 1280px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.narrow-container {
+  width: 900px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-space-between {
+  justify-content: space-between;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.pre-line {
+  white-space: pre-line;
+}
+
+.max-width-100 {
+  max-width: 100%;
+}
+
+/* font */
+.font-size-s {
+  font-size: 12px;
+}
+
+.font-size-xs {
+  font-size: 10px;
+}
+
+.font-size-xxs {
+  font-size: 8px;
+}
+
+.font-size-m {
+  font-size: 14px;
+}
+
+.font-size-l {
+  font-size: 16px;
+}
+
+.font-size-xl {
+  font-size: 18px;
+}
+
+.font-size-xxl {
+  font-size: 20px;
+}
+
+.font-size-xxxl {
+  font-size: 22px;
+}
+
+.font-size-xxxxl {
+  font-size: 26px;
+}
+
+.font-size-xxxxxl {
+  font-size: 32px;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.font-weight-normal {
+  font-weight: normal;
+}
+
+@media (max-width: 1280px) {
+  .container {
+    width: 100% !important;
+  }
+}
