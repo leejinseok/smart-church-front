@@ -11,6 +11,7 @@ export interface Service {
 
 export interface Staff {
   name: string;
+  role: string;
   description: string | null;
   tel: string | null;
   email: string | null;

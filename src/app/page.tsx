@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import StaffGroup from "./components/Staff/StaffGroup";
 import Header from "@/components/Header/Header";
 import { nanumBarunGothicBold } from "./layout";
+import StaffModal from "./components/Staff/StaffModal";
 
 export default async function Home() {
   const churchMainInformation: ChurchMainInformation = {
@@ -28,25 +29,59 @@ export default async function Home() {
         type: "목사",
         staffs: [
           {
-            name: "장이규",
-            description: "하하",
-            email: "jang@cheonhojeil.org",
+            name: "김스마트",
+            role: "담임목사",
+            description: "",
+            email: "kim@smart-church.com",
             tel: "010-1004-1004",
-            profileImageUrl:
-              "http://www.chunhojeil.com/user/saveDir/people/1_img.jpg",
+            profileImageUrl: "/images/pastor.png",
+          },
+          {
+            name: "박스마트",
+            role: "부목사",
+            description: "",
+            email: "park@smart-church.com",
+            tel: "010-1004-1004",
+            profileImageUrl: "/images/pastor.png",
+          },
+        ],
+      },
+      {
+        type: "전도사",
+        staffs: [
+          {
+            name: "김전도사",
+            role: "전도사",
+            description: "",
+            email: null,
+            tel: null,
+            profileImageUrl: "/images/pastor.png",
+          },
+        ],
+      },
+      {
+        type: "직원",
+        staffs: [
+          {
+            name: "김직원",
+            role: "관리담당",
+            description: "",
+            email: null,
+            tel: null,
+            profileImageUrl: "/images/pastor.png",
           },
         ],
       },
     ],
-    welcome: `천호제일감리교회 홈페이지를 방문해 주신 여러분을 진심으로환영합니다.
-    주님의 사랑과 평안이 여러분들에게 가득 하시길 기도드립니다. 
-    저는 천호제일교회를 담임하고 있는 장이규 목사입니다. 
-    
-    저희교회는 1951년 11월 12일에 이곳 천호동에서 시작되어 오늘에이르렀습니다. 
-    작은 모습이지만 한손에는 복음을 들고 한손에는 사랑을들고 하나님의 구원의 은혜를 여러분과 나누길 원합니다. 
-    함께사랑하며, 축복하며, 서로의 부족한 모습을 채우는 공동체가 되고싶습니다. 이 자리에 여러분을 초대합니다. 
+    welcome: `스마트 교회는 예수 그리스도의 복음을 가장 중요한 가치로 삼고, 그분의 가르침을 따라 살아가는 공동체입니다. 
+    우리는 모든 세대와 모든 사람들을 환영하며, 복음의 메시지가 일상의 삶 속에서 실현될 수 있도록 돕습니다. 
+    전통적 신앙의 깊이와 현대적 접근 방식을 결합하여, 교회의 모든 사역과 활동은 하나님의 사랑을 전하고 이웃을 섬기는 데 중점을 둡니다.
 
-    이 복된 자리에 함께하셔서 잃어버린 행복과 주님이 주시는 자유를 되찾기를 소원합니다.`,
+    스마트 교회는 예배뿐만 아니라 소그룹 모임, 교육, 봉사활동을 통해 삶 속에서 복음의 능력을 체험하며, 함께 성장하고 변화되는 교회를 지향합니다. 
+    우리의 문은 항상 열려 있으며, 주님의 은혜를 나누기 위해 기도와 헌신으로 함께 나아가고 있습니다.
+
+    - 담임목사 김스마트
+`,
   };
 
   return (
@@ -57,9 +92,6 @@ export default async function Home() {
           <section>
             <h3
               className={`${nanumBarunGothicBold.className} font-size-xxxxl font-weight-bold`}
-              style={{
-                marginBottom: 14,
-              }}
             >
               환영인사
             </h3>
