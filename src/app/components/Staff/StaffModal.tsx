@@ -1,6 +1,6 @@
 export default function StaffModal() {
   return (
-    <div className="modal transparent">
+    <div className="modal">
       <div>
         <div className="modal__header">
           <h4>섬기는 사람들</h4>

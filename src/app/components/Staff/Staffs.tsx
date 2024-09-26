@@ -25,7 +25,7 @@ const Staff = ({ staff }: { staff: StaffInterface }) => {
       </div>
 
       <div className={`${styles["content-container"]}`}>
-        <p className="font-size-xxl text-align-center">
+        <p className="font-size-l text-align-center">
           {staff.name} {staff.role}
         </p>
       </div>

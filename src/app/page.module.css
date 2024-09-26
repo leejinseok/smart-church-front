@@ -2,11 +2,16 @@
 }
 
 .main section {
-  padding: 34px 22px;
-  border-bottom: 1px solid #eee;
+  padding: 0 22px;
 }
 
-.main section > h3 {
+.main section > div {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 34px;
+  padding-top: 34px;
+}
+
+.main section > div > h3 {
   display: inline-block;
   font-weight: 200;
   margin-bottom: 28px;

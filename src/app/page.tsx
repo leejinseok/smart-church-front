@@ -1,20 +1,67 @@
-import { ChurchMainInformation } from "@/api/smart-church/smart-church-api-response";
-import styles from "./page.module.css";
+import {
+  ChurchMainInformation,
+  ChurchResponse,
+} from "@/api/smart-church/smart-church-api-response";
+// import styles from "./page.module.css";
 import StaffGroup from "./components/Staff/StaffGroup";
 import Header from "@/components/Header/Header";
 import { nanumBarunGothicBold } from "./layout";
-import StaffModal from "./components/Staff/StaffModal";
+import Locations from "./components/Location/Locations";
+import Footer from "@/components/Footer/Footer";
+import "./page.scss";
+import Service from "./components/Service/Service";
 
 export default async function Home() {
-  const churchMainInformation: ChurchMainInformation = {
+  const church: ChurchResponse = {
     id: 1,
+    name: "스마트 처치",
+    email: "smartchurch@smart-church.com",
+    tel: "02-1004-1004",
+    logoImageUrl: "",
+    footerLogoImageUrl: "",
+    address: "서울시 아무구 아무동 아무번지",
+  };
+
+  const churchMainInformation: ChurchMainInformation = {
+    churchId: church.id,
     service: [
       {
         type: "SERVICE",
         items: [
           {
-            time: "주일 오전 11시",
+            title: "주일 1부예배",
+            time: "오전 8시 30분",
+            location: "본당 (지하 2층)",
+          },
+          {
             title: "주일 2부예배",
+            time: "오전 11시 30분",
+            location: "본당 (지하 2층)",
+          },
+          {
+            title: "주일 3부예배",
+            time: "오후 2시",
+            location: "본당 (지하 2층)",
+          },
+          {
+            title: "젊은이부 예배",
+            time: "주일 오후 2시",
+            location: "벧엘성전 (4층)",
+          },
+          {
+            title: "수요예배",
+            time: "오후 7시 30분",
+            location: "본당 (지하2층)",
+          },
+          {
+            title: "금요예배",
+            time: "오후 9시",
+            location: "본당 (지하2층)",
+          },
+          {
+            title: "새벽예배",
+            time: "매일 오전 5시",
+            location: "본당 (지하2층)",
           },
         ],
       },
@@ -22,7 +69,8 @@ export default async function Home() {
     location: {
       lat: 100,
       lng: 100,
-      description: "잘 찾아오셔",
+      description: `사실주의를 만들, 있는 금융과 감동을 무상하다. 교통사고다 움직이다 백 그가 처사나 새롭다. 방침이자 행위가 순조롭는 지붕과 속을 역사가 한, 하지만, 핀다. 농촌이요 있어 많아야 취임을, 것, 아니는지 때문 쓴, 틀리다. 과학의 씨 블랙커피까지 감정이 응답은, 해소한 있는데 들다. 알갱이 초고속을 녹화가 떠들썩하다 스니프터다 증명하여서 생각하다 것 하다. 그 확보하지 쫄쫄 자동차다 뜻을 실에 거 때의 이러하고 청정하다. 예 언제 채권을 이런 표다 서두르다. 10일 형성은 생각은 쫓을 들어가는 그에서 그 삶의 쓰다.
+`,
     },
     staffGroup: [
       {
@@ -85,98 +133,99 @@ export default async function Home() {
   };
 
   return (
-    <>
-      <Header />
-      <main className={styles.main}>
+    <div id="main-page">
+      <Header church={church} />
+      <main>
         <div className="container">
           <section>
-            <h3
-              className={`${nanumBarunGothicBold.className} font-size-xxxxl font-weight-bold`}
-            >
-              환영인사
-            </h3>
-
-            <div className={`font-size-xxl pre-line`}>
-              {churchMainInformation.welcome}
-            </div>
-          </section>
-
-          <section className={`${styles["service-guide"]}`}>
-            <h3
-              className={`${nanumBarunGothicBold.className} font-size-xxxxl font-weight-bold`}
-            >
-              예배 및 모임안내
-            </h3>
-
-            <div>
-              <table className="font-size-xxl">
-                <tbody>
-                  <tr>
-                    <td>주일 1부예배</td>
-                    <td>주일 오전 8시 30분</td>
-                  </tr>
-
-                  <tr>
-                    <td>주일 2부예배</td>
-                    <td>주일 오전 11시 30분</td>
-                  </tr>
-
-                  <tr>
-                    <td>주일 3부예배</td>
-                    <td>주일 오후 3시</td>
-                  </tr>
-
-                  <tr>
-                    <td>주일 젊은이부 예배</td>
-                    <td>주일 오후 2시 (벧엘성전)</td>
-                  </tr>
-
-                  <tr>
-                    <td>수요예배</td>
-                    <td>매주 수요일 오후 7시 30분</td>
-                  </tr>
-
-                  <tr>
-                    <td>새벽예배</td>
-                    <td>매일 오전 5시</td>
-                  </tr>
-
-                  <tr>
-                    <td>금요기도회</td>
-                    <td>매주 금요일 오후 9시</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div style={{ paddingTop: 22, paddingBottom: 0 }}>
+              <img
+                src="/images/banner/banner-02.jpg"
+                alt=""
+                style={{
+                  width: "100%",
+                  height: 500,
+                  objectFit: "cover",
+                  display: "block",
+                }}
+              />
             </div>
           </section>
 
           <section>
-            <h3
-              className={`${nanumBarunGothicBold.className} font-size-xxxxl font-weight-bold`}
-            >
-              섬기는 사람들
-            </h3>
-
             <div>
-              {churchMainInformation.staffGroup.map(
-                (staffGroup, staffGroupIndex) => {
-                  return (
-                    <StaffGroup key={staffGroupIndex} staffGroup={staffGroup} />
-                  );
-                },
-              )}
+              <h3
+                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+              >
+                교회소개
+              </h3>
+
+              <div className={`font-size-l pre-line`}>
+                {churchMainInformation.welcome}
+              </div>
+            </div>
+          </section>
+
+          <section className="service-guide">
+            <div>
+              <h3
+                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+              >
+                예배 및 모임안내
+              </h3>
+
+              <div>
+                {churchMainInformation.service.map((service, serviceIndex) => {
+                  return <Service key={serviceIndex} service={service} />;
+                })}
+              </div>
             </div>
           </section>
 
           <section>
-            <h3
-              className={`${nanumBarunGothicBold.className} font-size-xxxxl font-weight-bold`}
-            >
-              찾아오시는길
-            </h3>
+            <div>
+              <h3
+                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+              >
+                섬기는 사람들
+              </h3>
+
+              <div>
+                <div>
+                  {churchMainInformation.staffGroup.map(
+                    (staffGroup, staffGroupIndex) => {
+                      return (
+                        <StaffGroup
+                          key={staffGroupIndex}
+                          staffGroup={staffGroup}
+                        />
+                      );
+                    },
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section>
+            <div>
+              <h3
+                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+              >
+                찾아오시는 길
+              </h3>
+
+              <div>
+                <Locations latitude={37.3595704} longitude={127.105399} />
+                <p style={{ marginTop: 16 }} className="font-size-l">
+                  {churchMainInformation.location.description}
+                </p>
+              </div>
+            </div>
           </section>
         </div>
       </main>
-    </>
+      <Footer church={church} />
+    </div>
   );
 }

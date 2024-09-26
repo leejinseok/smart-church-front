@@ -1,0 +1,20 @@
+#main-page {
+  main {
+  }
+
+  main section {
+    padding: 0 22px;
+  }
+
+  main section > div {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 34px;
+    padding-top: 34px;
+  }
+
+  main section > div > h3 {
+    display: inline-block;
+    font-weight: 200;
+    margin-bottom: 28px;
+  }
+}

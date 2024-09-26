@@ -10,7 +10,7 @@ export default function StaffGroup({
   return (
     <div>
       <h5
-        className={`${nanumBarunGothicLight.className} font-size-xxxl`}
+        className={`${nanumBarunGothicLight.className} font-size-l`}
         style={{
           marginBottom: 14,
         }}

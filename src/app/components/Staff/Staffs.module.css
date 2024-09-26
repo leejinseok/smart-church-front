@@ -2,10 +2,6 @@
   float: left;
   margin-bottom: 32px;
   width: 25%;
-  /* border: 1px solid red; */
-}
-
-.staff-list * {
 }
 
 .staff-list:first-child {

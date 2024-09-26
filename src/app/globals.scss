@@ -2,6 +2,9 @@
 @import "./style/modal.scss";
 @import "./style/reset.scss";
 
+* {
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -30,6 +33,10 @@ body {
 }
 
 /* custom */
+.hide {
+  display: none;
+}
+
 .container {
   width: 1280px;
   display: block;
@@ -76,6 +83,10 @@ body {
   clear: both;
   content: "";
   display: block;
+}
+
+.col {
+  float: left;
 }
 
 /* media */
