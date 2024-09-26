@@ -19,7 +19,7 @@ export default function Locations({
   latitude: number;
   longitude: number;
 }) {
-  const [isMapLoaded, setMapLoaded] = useState(false);
+  const [, setMapLoaded] = useState(false);
 
   const initMap = useCallback((latitude: number, longitude: number): void => {
     const mapOptions = {
@@ -31,8 +31,6 @@ export default function Locations({
       center: new naver.maps.LatLng(latitude, longitude),
       zoom: 16,
     };
-
-    console.log("mapInstance", mapInstance);
 
     if (document.getElementById("map")) {
       mapInstance = new naver.maps.Map("map", mapOptions);
@@ -65,7 +63,7 @@ export default function Locations({
 
   return (
     <div>
-      <div id="map" style={{ width: "100%", height: 600 }} />
+      <div id="map" style={{ width: "100%", height: 500 }} />
     </div>
   );
 }
