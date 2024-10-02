@@ -33,10 +33,23 @@ export interface Location {
   description: string;
 }
 
+export interface GalleryPhoto {
+  imageUrl: string;
+  description: string;
+}
+
+export interface ChurchBanner {
+  imageUrl: string;
+  title: string;
+  description: string;
+}
+
 export interface ChurchMainInformation {
   churchId: number;
   welcome: string;
   service: Service[];
   staffGroup: StaffGroup[];
   location: Location;
+  gallery: GalleryPhoto[];
+  banner: ChurchBanner[];
 }
