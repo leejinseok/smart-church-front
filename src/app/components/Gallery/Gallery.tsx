@@ -2,22 +2,19 @@
 
 import { GalleryPhoto } from "../../../api/smart-church/smart-church-api-response";
 import GalleryModal from "./GalleryModal";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
   const [galleryModal, setGalleryModal] = useState({
     visible: false,
-    galleryPhoto: {
-      imageUrl: "",
-      description: "",
-    } as GalleryPhoto,
+    galleryPhotoIndex: 0,
   });
 
-  const handleClickGallery = (galleryPhoto: GalleryPhoto) => {
+  const handleClickGallery = (galleryPhotoIndex: number) => {
     document.body.classList.add("overflow-hidden");
     setGalleryModal({
       visible: true,
-      galleryPhoto,
+      galleryPhotoIndex,
     });
   };
 
@@ -25,23 +22,34 @@ export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
     document.body.classList.remove("overflow-hidden");
     setGalleryModal({
       visible: false,
-      galleryPhoto: {
-        imageUrl: "",
-        description: "",
-      },
+      galleryPhotoIndex: 0,
     });
   };
 
+  const handleKeydown = useCallback((e: KeyboardEvent) => {
+    if (e.code === "Escape") {
+      handleClickGalleryModal();
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeydown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeydown);
+    };
+  }, [handleKeydown]);
+
   return (
     <>
-      {gallery.map((gallery, galleryIndex) => {
+      {gallery.map((galleryPhoto, galleryPhotoIndex) => {
         return (
-          <div key={galleryIndex} className="col gallery-col">
+          <div key={galleryPhotoIndex} className="col gallery-col">
             <div
               className="image-container"
-              onClick={() => handleClickGallery(gallery)}
+              onClick={() => handleClickGallery(galleryPhotoIndex)}
             >
-              <img src={gallery.imageUrl} alt="" />
+              <img src={galleryPhoto.imageUrl} alt="" />
             </div>
           </div>
         );
@@ -49,7 +57,8 @@ export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
 
       {galleryModal.visible && (
         <GalleryModal
-          galleryPhoto={galleryModal.galleryPhoto}
+          gallery={gallery}
+          galleryIndex={galleryModal.galleryPhotoIndex}
           hide={handleClickGalleryModal}
         />
       )}

@@ -1,4 +1,4 @@
-import { SvgProps } from "@/type/style";
+import { SvgProps } from "../../type/style";
 
 export default function FacebookIcon({ maxWidth, fill }: SvgProps) {
   return (
