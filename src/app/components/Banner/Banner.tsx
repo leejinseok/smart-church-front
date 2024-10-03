@@ -1,12 +1,13 @@
 "use client";
 
+import "./Banner.scss";
 import { ChurchBanner } from "../../../api/smart-church/smart-church-api-response";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function Banner({ banners }: { banners: ChurchBanner[] }) {
   return (
-    <>
+    <div id="banner-component">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}
@@ -37,6 +38,6 @@ export default function Banner({ banners }: { banners: ChurchBanner[] }) {
           );
         })}
       </Swiper>
-    </>
+    </div>
   );
 }

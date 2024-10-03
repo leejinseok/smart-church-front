@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 let mapInstance: naver.maps.Map | null = null;
 
@@ -20,6 +20,7 @@ export default function Locations({
   longitude: number;
 }) {
   const [, setMapLoaded] = useState(false);
+  const mapRef = useRef<HTMLDivElement>(null);
 
   const initMap = useCallback((latitude: number, longitude: number): void => {
     const mapOptions = {
@@ -61,9 +62,31 @@ export default function Locations({
     }
   }, [initMap, latitude, longitude]);
 
+  const handleWindowResize = useCallback(() => {
+    const current = mapRef.current;
+
+    if (current) {
+      const windowInnerWidth = window.innerWidth;
+      if (windowInnerWidth <= 768) {
+        current.style.height = "200px";
+      } else if (windowInnerWidth <= 1024) {
+        current.style.height = "300px";
+      } else {
+        current.style.height = "500px";
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", handleWindowResize);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, [handleWindowResize]);
+
   return (
     <div>
-      <div id="map" style={{ width: "100%", height: 500 }} />
+      <div id="map" ref={mapRef} style={{ width: "100%", height: 500 }} />
     </div>
   );
 }

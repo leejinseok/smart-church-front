@@ -22,3 +22,12 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  #service-component {
+    table th.location,
+    table td.location {
+      display: none;
+    }
+  }
+}

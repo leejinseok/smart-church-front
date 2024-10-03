@@ -1,9 +1,5 @@
-import { Service as ServiceResponse } from "@/api/smart-church/smart-church-api-response";
+import { Service as ServiceResponse } from "../../../api/smart-church/smart-church-api-response";
 import "./Service.scss";
-
-const ServiceType = {
-  SERVICE: "예배",
-};
 
 export default function Service({ service }: { service: ServiceResponse }) {
   return (
@@ -15,7 +11,7 @@ export default function Service({ service }: { service: ServiceResponse }) {
           <tr>
             <th>구분</th>
             <th>시간</th>
-            <th>장소</th>
+            <th className="location">장소</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +20,7 @@ export default function Service({ service }: { service: ServiceResponse }) {
               <tr key={itemIndex}>
                 <td>{item.title}</td>
                 <td>{item.time}</td>
-                <td>{item.location}</td>
+                <td className="location">{item.location}</td>
               </tr>
             );
           })}

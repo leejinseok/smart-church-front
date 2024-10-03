@@ -12,7 +12,7 @@ const SwiperSlideContent = ({
   galleryPhoto: GalleryPhoto;
 }) => {
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center swiper-slide__inner">
       <div onClick={(e) => e.stopPropagation()} style={{ maxWidth: 1400 }}>
         <div className="d-flex justify-content-center">
           <img src={galleryPhoto.imageUrl} />

@@ -50,3 +50,44 @@
 .font-weight-lighter {
   font-weight: 200;
 }
+
+@media (max-width: 1024px) {
+  .font-size-xxs {
+    font-size: 4px;
+  }
+  .font-size-xs {
+    font-size: 6px;
+  }
+
+  .font-size-s {
+    font-size: 8px;
+  }
+
+  .font-size-m {
+    font-size: 12px;
+  }
+
+  .font-size-l {
+    font-size: 14px;
+  }
+
+  .font-size-xl {
+    font-size: 20px;
+  }
+
+  .font-size-xxl {
+    font-size: 24px;
+  }
+
+  .font-size-xxxl {
+    font-size: 28px;
+  }
+
+  .font-size-xxxxl {
+    font-size: 34px;
+  }
+
+  .font-size-xxxxxl {
+    font-size: 40px;
+  }
+}

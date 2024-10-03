@@ -1,0 +1,14 @@
+#banner-component {
+  .swiper-slide {
+  }
+}
+
+@media (max-width: 1024px) {
+  #banner-component {
+    .swiper-slide {
+      img {
+        height: 150px !important;
+      }
+    }
+  }
+}
