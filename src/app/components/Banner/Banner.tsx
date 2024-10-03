@@ -18,7 +18,7 @@ export default function Banner({ banners }: { banners: ChurchBanner[] }) {
         pagination={{ clickable: true }}
         scrollbar={{ draggable: true }}
         onSwiper={(swiper) => console.log(swiper)}
-        onSlideChange={() => console.log("slide change")}
+        onSlideChange={() => console.log()}
       >
         {banners.map((banner, bannerIndex) => {
           return (
