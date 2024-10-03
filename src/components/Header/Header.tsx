@@ -1,12 +1,14 @@
+import "./Header.scss";
 import styles from "./Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { nanumBarunGothicBold } from "../../app/layout";
 import { ChurchResponse } from "../../api/smart-church/smart-church-api-response";
+
 export default function Header({ church }: { church: ChurchResponse }) {
   return (
-    <div>
+    <div id="header-component">
       <div className={`${styles["mini-nav"]} font-size-s hide`}>
         <div className="d-flex justify-content-space-between container">
           <div className="d-flex align-items-center">
@@ -21,11 +23,7 @@ export default function Header({ church }: { church: ChurchResponse }) {
         </div>
       </div>
 
-      <div
-        style={{
-          borderBottom: "1px solid #eee",
-        }}
-      >
+      <div className="nav-container">
         <nav
           className={`${styles.nav} ${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
