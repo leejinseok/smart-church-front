@@ -4,7 +4,9 @@ import "./Service.scss";
 export default function Service({ service }: { service: ServiceResponse }) {
   return (
     <div id="service-component">
-      <h3 style={{ marginBottom: 16 }}>예배</h3>
+      <h3 style={{ marginBottom: 16 }} className="font-size-l">
+        예배
+      </h3>
 
       <table className="font-size-l">
         <thead>

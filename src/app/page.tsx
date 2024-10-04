@@ -9,6 +9,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
 import Banner from "./components/Banner/Banner";
+import Video from "./components/Video/Video";
 
 export default async function Home() {
   const church: ChurchResponse = {
@@ -48,6 +49,20 @@ export default async function Home() {
 
               <div className={`font-size-l pre-line`}>
                 {churchMainInformation.welcome}
+              </div>
+            </div>
+          </section>
+
+          <section className="recently-videos">
+            <div>
+              <h3
+                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+              >
+                영상
+              </h3>
+
+              <div>
+                <Video video={churchMainInformation.vedio} />
               </div>
             </div>
           </section>

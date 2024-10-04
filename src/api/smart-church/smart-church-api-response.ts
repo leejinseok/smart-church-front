@@ -44,6 +44,13 @@ export interface ChurchBanner {
   description: string;
 }
 
+export type ChurchVideoType = "YOUTUBE";
+
+export interface ChurchVideo {
+  type: ChurchVideoType;
+  url: string;
+}
+
 export interface ChurchMainInformation {
   churchId: number;
   welcome: string;
@@ -52,4 +59,5 @@ export interface ChurchMainInformation {
   location: Location;
   gallery: GalleryPhoto[];
   banner: ChurchBanner[];
+  vedio: ChurchVideo[];
 }

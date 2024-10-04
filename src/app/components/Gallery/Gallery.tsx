@@ -41,7 +41,7 @@ export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
   }, [handleKeydown]);
 
   return (
-    <>
+    <div>
       {gallery.map((galleryPhoto, galleryPhotoIndex) => {
         return (
           <div key={galleryPhotoIndex} className="col gallery-col">
@@ -62,6 +62,6 @@ export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
           hide={handleClickGalleryModal}
         />
       )}
-    </>
+    </div>
   );
 }

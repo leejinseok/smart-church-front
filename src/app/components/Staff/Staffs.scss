@@ -1,0 +1,51 @@
+#staffs-component {
+  .staff-list {
+    margin-left: -12px;
+    margin-right: -12px;
+    .staff {
+      float: left;
+      margin-bottom: 32px;
+      width: 25%;
+      padding-left: 12px;
+      padding-right: 12px;
+
+      .image-container {
+        cursor: pointer;
+        width: 100%;
+        height: 250px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+
+        img {
+          max-width: 100%;
+          height: fit-content;
+        }
+      }
+
+      .content-container {
+        margin-top: 16px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #staffs-component {
+    .staff-list {
+      width: 100% !important;
+      margin-bottom: 14px;
+      .image-container {
+        height: auto;
+      }
+
+      .content-container {
+        margin-top: 10px;
+      }
+    }
+  }
+}

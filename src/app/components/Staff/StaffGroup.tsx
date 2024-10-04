@@ -9,14 +9,14 @@ export default function StaffGroup({
 }) {
   return (
     <div>
-      <h5
+      {/* <h5
         className={`${nanumBarunGothicLight.className} font-size-l`}
         style={{
           marginBottom: 14,
         }}
       >
         {staffGroup.type}
-      </h5>
+      </h5> */}
       <div>
         <Staffs staffs={staffGroup.staffs} />
       </div>

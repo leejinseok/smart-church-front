@@ -7,6 +7,16 @@
   #banner-component {
     .swiper-slide {
       img {
+        height: 350px !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #banner-component {
+    .swiper-slide {
+      img {
         height: 150px !important;
       }
     }

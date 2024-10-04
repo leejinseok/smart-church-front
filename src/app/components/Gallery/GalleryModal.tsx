@@ -1,10 +1,9 @@
-import { Swiper, SwiperSlide } from "swiper/react";
 import { GalleryPhoto } from "../../../api/smart-church/smart-church-api-response";
 import "./GalleryModal.scss";
 import ArrowBackIcon from "../../../components/Icon/ArrowBackIcon";
 import ArrowForwardIcon from "../../../components/Icon/ArrowForwardIcon";
-import { Navigation } from "swiper/modules";
-import { MouseEvent } from "react";
+import { MouseEvent, useEffect, useState } from "react";
+import Swiper from "swiper";
 
 const SwiperSlideContent = ({
   galleryPhoto,
@@ -40,9 +39,62 @@ export default function GalleryModal({
   galleryIndex: number;
   hide: () => void;
 }) {
-  const stopPropagation = (e: MouseEvent) => {
+  const [swiper, setSwiper] = useState<Swiper>();
+
+  useEffect(() => {
+    if (!swiper) {
+      const nextEl = document.querySelector(
+        ".swiper-gallery .swiper-button-next",
+      ) as HTMLElement;
+      const prevEl = document.querySelector(
+        ".swiper-gallery .swiper-button-prev",
+      ) as HTMLElement;
+      const handleNavigation = (swiper: Swiper) => {
+        nextEl.classList.remove("swiper-button-disabled");
+        prevEl.classList.remove("swiper-button-disabled");
+
+        if (swiper.activeIndex === gallery.length - 1) {
+          nextEl.classList.add("swiper-button-disabled");
+        }
+
+        if (swiper.activeIndex === 0) {
+          prevEl.classList.add("swiper-button-disabled");
+        }
+      };
+
+      setSwiper(
+        new Swiper(".swiper-gallery", {
+          loop: false,
+          initialSlide: galleryIndex,
+          navigation: {
+            nextEl,
+            prevEl,
+          },
+
+          on: {
+            init(swiper) {
+              handleNavigation(swiper);
+            },
+
+            slideChange(swiper) {
+              handleNavigation(swiper);
+            },
+          },
+        }),
+      );
+    }
+  }, [gallery.length, galleryIndex, swiper]);
+
+  const handleClickNextSlide = (e: MouseEvent) => {
     e.stopPropagation();
+    swiper?.slideNext();
   };
+
+  const handleClickPrevSlide = (e: MouseEvent) => {
+    e.stopPropagation();
+    swiper?.slidePrev();
+  };
+
   return (
     <div id="gallery-modal" className="modal-container" onClick={hide}>
       <div className="modal__inner">
@@ -50,29 +102,24 @@ export default function GalleryModal({
           className="modal__body"
           style={{ marginTop: 0, padding: "40px 0" }}
         >
-          <Swiper
-            modules={[Navigation]}
-            initialSlide={galleryIndex}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            }}
-          >
-            {gallery.map((galleryPhoto, galleryPhotoIndex) => {
-              return (
-                <SwiperSlide key={galleryPhotoIndex}>
-                  <SwiperSlideContent galleryPhoto={galleryPhoto} />
-                </SwiperSlide>
-              );
-            })}
+          <div className="swiper swiper-gallery">
+            <div className="swiper-wrapper">
+              {gallery.map((galleryPhoto, galleryPhotoIndex) => {
+                return (
+                  <div key={galleryPhotoIndex} className="swiper-slide">
+                    <SwiperSlideContent galleryPhoto={galleryPhoto} />
+                  </div>
+                );
+              })}
+            </div>
 
-            <div className="swiper-button-next" onClick={stopPropagation}>
+            <div className="swiper-button-next" onClick={handleClickNextSlide}>
               <ArrowForwardIcon maxWidth={30} />
             </div>
-            <div className="swiper-button-prev" onClick={stopPropagation}>
+            <div className="swiper-button-prev" onClick={handleClickPrevSlide}>
               <ArrowBackIcon maxWidth={30} />
             </div>
-          </Swiper>
+          </div>
         </div>
       </div>
     </div>

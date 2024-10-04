@@ -1,16 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { loadScript } from "../../../util/script-utils";
 
 let mapInstance: naver.maps.Map | null = null;
-
-const loadScript = (src: string, callback: () => void) => {
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src = src;
-  script.onload = () => callback();
-  document.head.appendChild(script);
-};
 
 export default function Locations({
   latitude,

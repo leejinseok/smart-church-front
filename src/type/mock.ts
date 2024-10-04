@@ -65,7 +65,7 @@ export const churchMainInformationMock: ChurchMainInformation = {
   },
   staffGroup: [
     {
-      type: "목사",
+      type: "NONE",
       staffs: [
         {
           name: "김스마트",
@@ -85,32 +85,32 @@ export const churchMainInformationMock: ChurchMainInformation = {
         },
       ],
     },
-    {
-      type: "전도사",
-      staffs: [
-        {
-          name: "김전도사",
-          role: "전도사",
-          description: "",
-          email: null,
-          tel: null,
-          profileImageUrl: "/images/pastor.png",
-        },
-      ],
-    },
-    {
-      type: "직원",
-      staffs: [
-        {
-          name: "김직원",
-          role: "관리담당",
-          description: "",
-          email: null,
-          tel: null,
-          profileImageUrl: "/images/pastor.png",
-        },
-      ],
-    },
+    // {
+    //   type: "전도사",
+    //   staffs: [
+    //     {
+    //       name: "김전도사",
+    //       role: "전도사",
+    //       description: "",
+    //       email: null,
+    //       tel: null,
+    //       profileImageUrl: "/images/pastor.png",
+    //     },
+    //   ],
+    // },
+    // {
+    //   type: "직원",
+    //   staffs: [
+    //     {
+    //       name: "김직원",
+    //       role: "관리담당",
+    //       description: "",
+    //       email: null,
+    //       tel: null,
+    //       profileImageUrl: "/images/pastor.png",
+    //     },
+    //   ],
+    // },
   ],
   welcome: `스마트 교회는 예수 그리스도의 복음을 가장 중요한 가치로 삼고, 그분의 가르침을 따라 살아가는 공동체입니다. 
   우리는 모든 세대와 모든 사람들을 환영하며, 복음의 메시지가 일상의 삶 속에서 실현될 수 있도록 돕습니다. 
@@ -159,5 +159,16 @@ export const churchMainInformationMock: ChurchMainInformation = {
     //   description:
     //     "누구든지 병역의무의 이행으로 인하여 불이익한 처우를 받지 아니한다",
     // },
+  ],
+
+  vedio: [
+    {
+      type: "YOUTUBE",
+      url: "https://www.youtube.com/watch?v=aXqdQ2cj2sQ",
+    },
+    {
+      type: "YOUTUBE",
+      url: "https://www.youtube.com/watch?v=GQmWxwhW6rg",
+    },
   ],
 };
