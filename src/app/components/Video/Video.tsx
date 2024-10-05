@@ -22,6 +22,7 @@ export default function Video({ video }: { video: ChurchVideo[] }) {
                 height: "380",
                 width: "610",
                 videoId,
+                playerVars: {},
               });
             });
           };
@@ -39,8 +40,16 @@ export default function Video({ video }: { video: ChurchVideo[] }) {
       setMounted(false);
     };
   }, []);
+
+  const generateVideoLengthClassName = (videoLength: number) => {
+    return null;
+  };
+
   return (
-    <div id="video-component">
+    <div
+      id="video-component"
+      className={`${generateVideoLengthClassName(video.length)}`}
+    >
       <ul className="clearfix">
         {video.map((item, itemIndex) => {
           return (

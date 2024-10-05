@@ -51,10 +51,16 @@ export interface ChurchVideo {
   url: string;
 }
 
+export interface ChurchDepartment {
+  name: string;
+  description: string;
+}
+
 export interface ChurchMainInformation {
   churchId: number;
   welcome: string;
   service: Service[];
+  departments: ChurchDepartment[];
   staffGroup: StaffGroup[];
   location: Location;
   gallery: GalleryPhoto[];
