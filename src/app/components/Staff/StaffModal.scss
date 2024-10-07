@@ -1,0 +1,24 @@
+#staff-modal-component {
+  .modal__body {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    min-width: 300px;
+
+    .image-container {
+      img {
+        max-width: 1200px;
+        max-height: 700px;
+      }
+    }
+
+    .description-container {
+      width: 100%;
+      border-top: 1px solid #c9c9c9;
+      margin-top: 8px;
+      padding-top: 12px;
+    }
+  }
+}

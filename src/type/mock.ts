@@ -88,7 +88,14 @@ export const churchMainInformationMock: ChurchMainInformation = {
         {
           name: "김스마트",
           role: "담임목사",
-          description: "",
+          description: `
+            학력
+            감리교 신학대학교 졸업
+            감리교 신학대학원 졸업
+
+            집필
+            미주크리스챤 저널: “소 그룹 리더의 영적 치유” 필자 (2003-‘06.1, 2010)
+          `,
           email: "kim@smart-church.com",
           tel: "010-1004-1004",
           profileImageUrl: "/images/pastor.png",
@@ -98,7 +105,7 @@ export const churchMainInformationMock: ChurchMainInformation = {
           role: "부목사",
           description: "",
           email: "park@smart-church.com",
-          tel: "010-1004-1004",
+          tel: "",
           profileImageUrl: "/images/pastor/pastor-01.jpg",
         },
         {
