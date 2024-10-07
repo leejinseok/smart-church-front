@@ -37,14 +37,33 @@
 @media (max-width: 768px) {
   #staffs-component {
     .staff-list {
-      width: 100% !important;
       margin-bottom: 14px;
-      .image-container {
-        height: auto;
-      }
 
-      .content-container {
-        margin-top: 10px;
+      .staff {
+        width: 50% !important;
+        .image-container {
+          height: 200px;
+          img {
+            height: auto;
+          }
+        }
+
+        .content-container {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  #staffs-component {
+    .staff-list {
+      .staff {
+        .image-container {
+          height: auto;
+        }
+        width: 100% !important;
       }
     }
   }

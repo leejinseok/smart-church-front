@@ -6,6 +6,19 @@
       width: 50%;
       padding-left: 8px;
       padding-right: 8px;
+
+      .church-vedio-container {
+      }
     }
+  }
+}
+
+@media (max-width: 768px) {
+  #video-component ul li {
+    width: 100% !important;
+  }
+
+  #video-component ul li:not(:last-child) {
+    margin-bottom: 14px;
   }
 }
