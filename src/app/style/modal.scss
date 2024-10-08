@@ -45,3 +45,10 @@
     }
   }
 }
+
+@media (max-width: 1024px) {
+  .modal__inner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

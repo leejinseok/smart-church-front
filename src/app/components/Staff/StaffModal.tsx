@@ -1,5 +1,6 @@
 import "./StaffModal.scss";
 import { Staff } from "../../../api/smart-church/smart-church-api-response";
+import CloseIcon from "../../../components/Icon/CloseIcon";
 
 export default function StaffModal({
   staff,
@@ -16,27 +17,45 @@ export default function StaffModal({
     >
       <div className="modal__inner">
         <div className="modal__body" onClick={(e) => e.stopPropagation()}>
-          <h3
-            className="font-size-l"
-            style={{
-              marginBottom: 14,
-            }}
-          >
-            {staff.name} {staff.role}
-          </h3>
+          <div className="modal__body-header">
+            <h3
+              className="font-size-l"
+              style={{
+                marginBottom: 14,
+              }}
+            >
+              {staff.name} {staff.role}
+            </h3>
+            <span className="close" onClick={hideModal}>
+              <CloseIcon maxWidth={24} fill="#888" />
+            </span>
+          </div>
+
           <div className="image-container">
             <img src={staff.profileImageUrl!} alt={staff.name} />
           </div>
 
+          {staff.department && (
+            <div>
+              <p>
+                <b>부서</b> {staff.department}
+              </p>
+            </div>
+          )}
+
           {staff.email && (
             <div>
-              <p>이메일: {staff.email}</p>
+              <p>
+                <b>이메일</b> {staff.email}
+              </p>
             </div>
           )}
 
           {staff.tel && (
             <div>
-              <p>연락처: {staff.tel}</p>
+              <p>
+                <b>연락처</b> {staff.tel}
+              </p>
             </div>
           )}
 

@@ -7,10 +7,21 @@
     border-radius: 12px;
     min-width: 300px;
 
+    .modal__body-header {
+      position: relative;
+      .close {
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        cursor: pointer;
+      }
+    }
+
     .image-container {
       img {
         max-width: 1200px;
         max-height: 700px;
+        width: 100%;
       }
     }
 

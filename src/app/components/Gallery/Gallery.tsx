@@ -1,5 +1,6 @@
 "use client";
 
+import "./Gallery.scss";
 import { GalleryPhoto } from "../../../api/smart-church/smart-church-api-response";
 import GalleryModal from "./GalleryModal";
 import { useCallback, useEffect, useState } from "react";
@@ -41,7 +42,7 @@ export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
   }, [handleKeydown]);
 
   return (
-    <div>
+    <div id="gallery-component">
       {gallery.map((galleryPhoto, galleryPhotoIndex) => {
         return (
           <div key={galleryPhotoIndex} className="col gallery-col">

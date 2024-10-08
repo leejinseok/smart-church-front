@@ -67,9 +67,12 @@ export default function Video({ video }: { video: ChurchVideo[] }) {
     };
 
     window.addEventListener("resize", videoResize);
+    setTimeout(() => {
+      videoResize();
+    }, 1000);
     return () => {
       if (timer) {
-        clearTimeout(timer);
+        window.clearTimeout(timer);
       }
       window.removeEventListener("resize", videoResize);
     };

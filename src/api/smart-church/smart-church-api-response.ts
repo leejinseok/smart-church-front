@@ -18,6 +18,7 @@ export interface Staff {
   name: string;
   role: string;
   description: string | null;
+  department: string | null;
   tel: string | null;
   email: string | null;
   profileImageUrl: string | null;

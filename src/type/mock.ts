@@ -99,6 +99,7 @@ export const churchMainInformationMock: ChurchMainInformation = {
           email: "kim@smart-church.com",
           tel: "010-1004-1004",
           profileImageUrl: "/images/pastor.png",
+          department: null,
         },
         {
           name: "박스마트",
@@ -107,6 +108,7 @@ export const churchMainInformationMock: ChurchMainInformation = {
           email: "park@smart-church.com",
           tel: "",
           profileImageUrl: "/images/pastor/pastor-01.jpg",
+          department: "아동부",
         },
         {
           name: "홍스마트",
@@ -115,6 +117,7 @@ export const churchMainInformationMock: ChurchMainInformation = {
           email: "park@smart-church.com",
           tel: "010-1004-1004",
           profileImageUrl: "/images/pastor/pastor-02.jpg",
+          department: "선교부",
         },
         {
           name: "유스마트",
@@ -123,6 +126,7 @@ export const churchMainInformationMock: ChurchMainInformation = {
           email: "park@smart-church.com",
           tel: "010-1004-1004",
           profileImageUrl: "/images/pastor/pastor-03.jpg",
+          department: "교육부",
         },
       ],
     },
