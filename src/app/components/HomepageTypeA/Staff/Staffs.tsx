@@ -3,7 +3,7 @@
 import "./Staffs.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Staff as StaffInterface } from "../../../api/smart-church/smart-church-api-response";
+import { Staff as StaffInterface } from "../../../../api/smart-church/smart-church-api-response";
 import { useEffect, useState } from "react";
 import StaffModal from "./StaffModal";
 
@@ -16,15 +16,21 @@ const Staff = ({
 }) => {
   return (
     <li className="staff">
-      <div onClick={() => handleClickStaff(staff)}>
+      <div>
         <div className={`image-container d-flex justify-content-center`}>
           {staff.profileImageUrl ? (
             <img
               src={staff.profileImageUrl!}
               alt={`${staff.name} ${staff.role} 사진`}
+              onClick={() => handleClickStaff(staff)}
             />
           ) : (
-            <FontAwesomeIcon icon={faUser} width={100} color="gray" />
+            <FontAwesomeIcon
+              icon={faUser}
+              width={100}
+              color="gray"
+              onClick={() => handleClickStaff(staff)}
+            />
           )}
         </div>
 

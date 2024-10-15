@@ -1,7 +1,7 @@
 "use client";
 
 import "./Gallery.scss";
-import { GalleryPhoto } from "../../../api/smart-church/smart-church-api-response";
+import { GalleryPhoto } from "../../../../api/smart-church/smart-church-api-response";
 import GalleryModal from "./GalleryModal";
 import { useCallback, useEffect, useState } from "react";
 
@@ -46,11 +46,12 @@ export default function Gallery({ gallery }: { gallery: GalleryPhoto[] }) {
       {gallery.map((galleryPhoto, galleryPhotoIndex) => {
         return (
           <div key={galleryPhotoIndex} className="col gallery-col">
-            <div
-              className="image-container"
-              onClick={() => handleClickGallery(galleryPhotoIndex)}
-            >
-              <img src={galleryPhoto.imageUrl} alt="" />
+            <div className="image-container">
+              <img
+                src={galleryPhoto.imageUrl}
+                alt="사진첩 사진"
+                onClick={() => handleClickGallery(galleryPhotoIndex)}
+              />
             </div>
           </div>
         );

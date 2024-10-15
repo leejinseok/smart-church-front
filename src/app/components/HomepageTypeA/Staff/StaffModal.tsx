@@ -1,6 +1,6 @@
 import "./StaffModal.scss";
-import { Staff } from "../../../api/smart-church/smart-church-api-response";
-import CloseIcon from "../../../components/Icon/CloseIcon";
+import { Staff } from "../../../../api/smart-church/smart-church-api-response";
+import CloseIcon from "../../../../components/Icon/CloseIcon";
 
 export default function StaffModal({
   staff,

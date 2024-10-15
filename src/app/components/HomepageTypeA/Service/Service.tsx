@@ -1,7 +1,11 @@
-import { Service as ServiceResponse } from "../../../api/smart-church/smart-church-api-response";
+import { WorshipServicesAndMeetingsInformationGroup } from "../../../../type/homepage/homepage-type-a";
 import "./Service.scss";
 
-export default function Service({ service }: { service: ServiceResponse }) {
+export default function Service({
+  service,
+}: {
+  service: WorshipServicesAndMeetingsInformationGroup;
+}) {
   return (
     <div id="service-component">
       <h3 style={{ marginBottom: 16 }} className="font-size-l">
@@ -20,7 +24,7 @@ export default function Service({ service }: { service: ServiceResponse }) {
           {service.items.map((item, itemIndex) => {
             return (
               <tr key={itemIndex}>
-                <td>{item.title}</td>
+                <td>{item.name}</td>
                 <td>{item.time}</td>
                 <td className="location">{item.location}</td>
               </tr>

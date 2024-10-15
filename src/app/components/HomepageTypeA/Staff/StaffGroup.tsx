@@ -1,5 +1,5 @@
-import { StaffGroup as StaffGroupInterface } from "../../../api/smart-church/smart-church-api-response";
-import { nanumBarunGothicLight } from "../../layout";
+import { StaffGroup as StaffGroupInterface } from "../../../../api/smart-church/smart-church-api-response";
+import { nanumBarunGothicLight } from "../../../layout";
 import Staffs from "./Staffs";
 
 export default function StaffGroup({

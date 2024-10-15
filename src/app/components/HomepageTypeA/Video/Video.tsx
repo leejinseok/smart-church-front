@@ -2,9 +2,8 @@
 
 import "./Video.scss";
 import { useEffect, useState } from "react";
-import { ChurchVideo } from "../../../api/smart-church/smart-church-api-response";
-import { loadScript } from "../../../util/script-utils";
-import { clearTimeout } from "timers";
+import { loadScript } from "../../../../util/script-utils";
+import { ChurchVideo } from "../../../../type/homepage/homepage-type-a";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;

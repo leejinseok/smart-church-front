@@ -1,23 +1,27 @@
-import StaffGroup from "./components/Staff/StaffGroup";
+import StaffGroup from "./components/HomepageTypeA/Staff/StaffGroup";
 import { nanumBarunGothicBold } from "./layout";
-import Locations from "./components/Location/Locations";
+import Locations from "./components/HomepageTypeA/Location/Locations";
 import "./page.scss";
-import Service from "./components/Service/Service";
-import Gallery from "./components/Gallery/Gallery";
+import Service from "./components/HomepageTypeA/Service/Service";
+import Gallery from "./components/HomepageTypeA/Gallery/Gallery";
 import { churchMainInformationMock, churchMock } from "../type/mock";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
-import Banner from "./components/Banner/Banner";
-import Video from "./components/Video/Video";
-import ChurchDepartment from "./components/ChurchDepartment/ChurchDepartment";
+import Banner from "./components/HomepageTypeA/Banner/Banner";
+import Video from "./components/HomepageTypeA/Video/Video";
+import ChurchDepartment from "./components/HomepageTypeA/ChurchDepartment/ChurchDepartment";
+import ScrollEventRelatedParent from "./components/HomepageTypeA/Event/ScrollEventRelatedParent";
+import { homepageTypeAFormMock } from "../type/homepage/homepage-type-a-mock";
 
 export default async function Home() {
   const church: ChurchResponse = {
     ...churchMock,
   };
 
-  const churchMainInformation = { ...churchMainInformationMock };
+  // const churchMainInformation = { ...churchMainInformationMock };
+
+  const homepageTypeAMock = { ...homepageTypeAFormMock };
 
   // let galleryLengthClassName = churchMainInformation.gallery.length
 
@@ -36,7 +40,7 @@ export default async function Home() {
         <div className="container">
           <section>
             <div style={{ paddingTop: 22, paddingBottom: 0 }}>
-              <Banner banners={churchMainInformation.banner} />
+              <Banner banners={homepageTypeAMock.banners} />
             </div>
           </section>
 
@@ -49,7 +53,9 @@ export default async function Home() {
               </h3>
 
               <div className={`font-size-l pre-line`}>
-                {churchMainInformation.welcome}
+                {homepageTypeAMock.churchIntro.map((op, opIndex) => {
+                  return <p key={opIndex}>{(op.insert as string) || ""}</p>;
+                })}
               </div>
             </div>
           </section>
@@ -63,7 +69,7 @@ export default async function Home() {
               </h3>
 
               <div>
-                <Video video={churchMainInformation.vedio} />
+                <Video video={homepageTypeAMock.videos} />
               </div>
             </div>
           </section>
@@ -78,7 +84,7 @@ export default async function Home() {
 
               <div>
                 <ChurchDepartment
-                  departments={churchMainInformation.departments}
+                  departments={homepageTypeAMock.churchDepartmentsAndMinistries}
                 />
               </div>
             </div>
@@ -93,9 +99,11 @@ export default async function Home() {
               </h3>
 
               <div>
-                {churchMainInformation.service.map((service, serviceIndex) => {
-                  return <Service key={serviceIndex} service={service} />;
-                })}
+                {homepageTypeAMock.worshipServicesAndMeetings.map(
+                  (service, serviceIndex) => {
+                    return <Service key={serviceIndex} service={service} />;
+                  },
+                )}
               </div>
             </div>
           </section>
@@ -152,7 +160,7 @@ export default async function Home() {
 
               <div>
                 <div>
-                  {churchMainInformation.staffGroup.map(
+                  {homepageTypeAMock.staffGroup.map(
                     (staffGroup, staffGroupIndex) => {
                       return (
                         <StaffGroup
@@ -177,9 +185,9 @@ export default async function Home() {
 
               <div className="gallery-content">
                 <div
-                  className={`${generateGalleryContentClassNameByLength(churchMainInformation.gallery.length)} gallery-content__container clearfix`}
+                  className={`${generateGalleryContentClassNameByLength(homepageTypeAMock.gallery.length)} gallery-content__container clearfix`}
                 >
-                  <Gallery gallery={churchMainInformation.gallery} />
+                  <Gallery gallery={homepageTypeAMock.gallery} />
                 </div>
               </div>
             </div>
@@ -202,7 +210,7 @@ export default async function Home() {
                   {church.address}
                 </p>
                 <p style={{ marginTop: 16 }} className="font-size-l">
-                  {churchMainInformation.location.description}
+                  {/* {churchMock.location.description} */}
                 </p>
               </div>
             </div>
@@ -210,6 +218,8 @@ export default async function Home() {
         </div>
       </main>
       <Footer church={church} />
+
+      <ScrollEventRelatedParent />
     </div>
   );
 }

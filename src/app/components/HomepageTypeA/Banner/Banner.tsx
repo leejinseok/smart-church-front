@@ -1,9 +1,9 @@
 "use client";
 
 import "./Banner.scss";
-import { ChurchBanner } from "../../../api/smart-church/smart-church-api-response";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { ChurchBanner } from "../../../../type/homepage/homepage-type-a";
 
 export default function Banner({ banners }: { banners: ChurchBanner[] }) {
   return (

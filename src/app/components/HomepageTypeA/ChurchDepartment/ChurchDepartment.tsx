@@ -1,5 +1,5 @@
 import "./ChurchDepartment.scss";
-import { ChurchDepartment as ChurchDepartmentInterface } from "../../../api/smart-church/smart-church-api-response";
+import { ChurchDepartment as ChurchDepartmentInterface } from "../../../../api/smart-church/smart-church-api-response";
 
 export default function ChurchDepartment({
   departments,

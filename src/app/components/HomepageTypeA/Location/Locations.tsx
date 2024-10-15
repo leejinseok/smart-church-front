@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { loadScript } from "../../../util/script-utils";
+import { loadScript } from "../../../../util/script-utils";
 
 let mapInstance: naver.maps.Map | null = null;
 

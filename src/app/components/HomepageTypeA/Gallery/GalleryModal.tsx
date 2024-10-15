@@ -1,7 +1,7 @@
-import { GalleryPhoto } from "../../../api/smart-church/smart-church-api-response";
+import { GalleryPhoto } from "../../../../api/smart-church/smart-church-api-response";
 import "./GalleryModal.scss";
-import ArrowBackIcon from "../../../components/Icon/ArrowBackIcon";
-import ArrowForwardIcon from "../../../components/Icon/ArrowForwardIcon";
+import ArrowBackIcon from "../../../../components/Icon/ArrowBackIcon";
+import ArrowForwardIcon from "../../../../components/Icon/ArrowForwardIcon";
 import { MouseEvent, useEffect, useState } from "react";
 import Swiper from "swiper";
 
