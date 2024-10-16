@@ -19,15 +19,26 @@ export default function ScrollEventRelatedParent() {
     const domReadyListener = () => {
       window.parent.postMessage("DOMContentLoaded", "http://localhost:3000/");
     };
+
     if (document.readyState === "complete") {
       domReadyListener();
     } else {
       document.addEventListener("DOMContentLoaded", domReadyListener);
+      document.onreadystatechange = () => {
+        if (document.readyState === "complete") {
+          domReadyListener();
+        }
+      };
     }
 
     const messageEventListener = (ev: MessageEvent) => {
       if (ev.origin.includes("localhost")) {
-        window.scrollTo({ left: 0, top: ev.data });
+        const parse = JSON.parse(ev.data);
+        if (parse.messageType === "SCROLL_TOP") {
+          window.scrollTo({ left: 0, top: parse.value });
+        } else if (parse.messageType === "RELOAD") {
+          window.location.reload();
+        }
       }
     };
     window.addEventListener("message", messageEventListener);

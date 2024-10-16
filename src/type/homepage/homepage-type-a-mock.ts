@@ -33,8 +33,7 @@ export const homepageTypeAFormMock: HomepageTypeA = {
   ],
   churchIntro: [
     {
-      insert: `
-      스마트 교회는 예수 그리스도의 복음을 가장 중요한 가치로 삼고, 그분의 가르침을 따라 살아가는 공동체입니다. 
+      insert: `스마트 교회는 예수 그리스도의 복음을 가장 중요한 가치로 삼고, 그분의 가르침을 따라 살아가는 공동체입니다. 
       우리는 모든 세대와 모든 사람들을 환영하며, 복음의 메시지가 일상의 삶 속에서 실현될 수 있도록 돕습니다. 
       전통적 신앙의 깊이와 현대적 접근 방식을 결합하여, 교회의 모든 사역과 활동은 하나님의 사랑을 전하고 이웃을 섬기는 데 중점을 둡니다.
 
@@ -47,8 +46,7 @@ export const homepageTypeAFormMock: HomepageTypeA = {
   ],
   churchRegisterGuide: [
     {
-      insert: `
-      1. 새가족 등록 절차
+      insert: `1. 새가족 등록 절차
       1) 예배 참석
       스마트 교회의 주일예배에 참석해 주시길 바랍니다. 예배는 매주 주일 오전 10시와 오후 2시에 진행됩니다. 예배 후, 새가족을 위한 환영 시간이 마련되어 있으니 꼭 함께해 주세요.
 
@@ -74,6 +72,7 @@ export const homepageTypeAFormMock: HomepageTypeA = {
       새가족 소그룹 배정: 비슷한 연령대 및 관심사를 가진 소그룹에 배정되어 더 깊은 교제를 나눌 수 있습니다.
       교회 행사 초대: 교회의 주요 행사 및 프로그램에 초대하여 함께 교제하는 시간을 갖습니다.
     `,
+      attributes: {},
     },
   ],
   gallery: [

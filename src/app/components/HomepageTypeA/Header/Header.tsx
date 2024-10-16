@@ -3,8 +3,8 @@ import styles from "./Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import { nanumBarunGothicBold } from "../../app/layout";
-import { ChurchResponse } from "../../api/smart-church/smart-church-api-response";
+import { nanumBarunGothicBold } from "../../../layout";
+import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 
 export default function Header({ church }: { church: ChurchResponse }) {
   return (
