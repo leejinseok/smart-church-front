@@ -1,9 +1,14 @@
-import "./HomepageTypeA.scss";
+"use client";
 
+import "./HomepageTypeA.scss";
 import { ChurchResponse } from "../../../api/smart-church/smart-church-api-response";
 import { homepageTypeAFormMock } from "../../../type/homepage/homepage-type-a-mock";
 import { churchMock } from "../../../type/mock";
-import { nanumBarunGothicBold } from "../../layout";
+import {
+  nanumBarunGothic,
+  nanumBarunGothicBold,
+  nanumBarunGothicLight,
+} from "../../layout";
 import Banner from "./Banner/Banner";
 import ChurchDepartment from "./ChurchDepartment/ChurchDepartment";
 import ScrollEventRelatedParent from "./Event/ScrollEventRelatedParent";
@@ -15,18 +20,22 @@ import Service from "./Service/Service";
 import StaffGroup from "./Staff/StaffGroup";
 import Video from "./Video/Video";
 import QuillRenderer from "../Quill/QuillRenderer";
+import { useState } from "react";
 
-export default function HomepageTypeA() {
+export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
+  const [editState, setEditState] = useState<Record<string, false>>({
+    editHeaderLogo: false,
+    editBanner: false,
+    editChurchIntro: false,
+    editVideos: false,
+    editDepartmentsAndMinistries: false,
+    editWorshipServicesAndMeetings: false,
+  });
+
   const church: ChurchResponse = {
     ...churchMock,
   };
-
-  // const churchMainInformation = { ...churchMainInformationMock };
-
   const homepageTypeAMock = { ...homepageTypeAFormMock };
-
-  // let galleryLengthClassName = churchMainInformation.gallery.length
-
   const generateGalleryContentClassNameByLength = (length: number) => {
     if (length < 4) {
       return `gallery-length-${length}`;
@@ -37,12 +46,16 @@ export default function HomepageTypeA() {
 
   return (
     <div id="homepage-type-a-component">
-      <Header church={church} />
-      <main>
+      <Header church={church} isEdit={isEdit} />
+      <main
+        style={{
+          paddingTop: 103,
+        }}
+      >
         <div className="container">
           <section>
             <div style={{ paddingTop: 22, paddingBottom: 0 }}>
-              <Banner banners={homepageTypeAMock.banners} />
+              <Banner banners={homepageTypeAMock.banners} isEdit={isEdit} />
             </div>
           </section>
 
@@ -192,8 +205,23 @@ export default function HomepageTypeA() {
         </div>
       </main>
       <Footer church={church} />
-
       <ScrollEventRelatedParent />
+
+      <div className="edit-button-container">
+        <button
+          type="button"
+          className={`${nanumBarunGothicLight.className} font-size-l`}
+        >
+          홈<br />
+          페<br />
+          이<br />
+          지<br />
+          <br />
+          편<br />
+          집<br />
+          하<br />기
+        </button>
+      </div>
     </div>
   );
 }

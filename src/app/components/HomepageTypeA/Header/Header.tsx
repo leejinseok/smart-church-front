@@ -5,20 +5,27 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
+import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 
-export default function Header({ church }: { church: ChurchResponse }) {
+export default function Header({
+  church,
+  isEdit = false,
+}: {
+  church: ChurchResponse;
+  isEdit: boolean;
+}) {
   return (
     <div id="header-component">
-      <div className={`${styles["mini-nav"]} font-size-s hide`}>
+      <div className={`${styles["mini-nav"]} font-size-s`}>
         <div className="d-flex justify-content-space-between container">
           <div className="d-flex align-items-center">
             <a href="#">Smart Church</a>
           </div>
 
           <div className="d-flex font-size-xs align-items-center">
-            {/* <button>로그인</button>
-            <button>회원가입</button> */}
-            <span>Copyright ©RainyHeaven</span>
+            <button>게시하기</button>
+            <button>나가기</button>
+            {/* <span>Copyright ©RainyHeaven</span> */}
           </div>
         </div>
       </div>
@@ -27,7 +34,7 @@ export default function Header({ church }: { church: ChurchResponse }) {
         <nav
           className={`${styles.nav} ${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center church-logo">
             <a href="#" className="d-flex">
               <Image
                 src={"/images/sample-church-logo.png"}
@@ -39,10 +46,11 @@ export default function Header({ church }: { church: ChurchResponse }) {
                   marginRight: 16,
                 }}
               />
-              <h2 className="d-flex align-items-center font-size-xxl">
+              <h2 className="d-flex align-items-center font-size-xl">
                 {church.name}
               </h2>
             </a>
+            {isEdit && <HomepageEditOverlay />}
           </div>
 
           <div
@@ -51,8 +59,8 @@ export default function Header({ church }: { church: ChurchResponse }) {
             {/* <span>
               <FontAwesomeIcon icon={faMessage} width={26} />
             </span> */}
-            <span>
-              <FontAwesomeIcon icon={faBars} width={26} />
+            <span className="font-size-xl">
+              <FontAwesomeIcon icon={faBars} width={20} />
             </span>
           </div>
         </nav>

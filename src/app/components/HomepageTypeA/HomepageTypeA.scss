@@ -43,6 +43,20 @@
       }
     }
   }
+
+  .edit-button-container {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    button {
+      display: block;
+      border-radius: 0 3px 3px 0;
+      outline: none;
+      border: 1px solid #ccc;
+      padding: 24px 20px;
+      cursor: pointer;
+    }
+  }
 }
 
 @media (max-width: 1024px) {

@@ -1,11 +1,19 @@
 "use client";
 
 import "./Banner.scss";
+
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ChurchBanner } from "../../../../type/homepage/homepage-type-a";
+import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 
-export default function Banner({ banners }: { banners: ChurchBanner[] }) {
+export default function Banner({
+  banners,
+  isEdit = false,
+}: {
+  banners: ChurchBanner[];
+  isEdit: boolean;
+}) {
   return (
     <div id="banner-component">
       <Swiper
@@ -38,6 +46,8 @@ export default function Banner({ banners }: { banners: ChurchBanner[] }) {
           );
         })}
       </Swiper>
+
+      {isEdit && <HomepageEditOverlay />}
     </div>
   );
 }

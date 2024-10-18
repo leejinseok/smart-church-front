@@ -1,5 +1,22 @@
 #header-component {
   .nav-container {
-    box-shadow: 0 -6px 6px 4px rgba(0, 0, 0, 0.3);
+    // box-shadow: 0 -6px 6px 4px rgba(0, 0, 0, 0.3);
+    background-color: #fff;
+  }
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.2);
+  position: fixed;
+  width: 100%;
+  z-index: 3;
+}
+
+.edit #header-component {
+  nav .church-logo {
+    position: relative;
+
+    &:hover {
+      #homepage-edit-overlay-component {
+        display: flex;
+      }
+    }
   }
 }
