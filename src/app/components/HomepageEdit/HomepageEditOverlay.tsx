@@ -1,11 +1,15 @@
 import EditIcon from "../../../components/Icon/EditIcon";
 import "./HomepageEditOverlay.scss";
 
-export default function HomepageEditOverlay() {
+export default function HomepageEditOverlay({
+  onClickListener,
+}: {
+  onClickListener: () => void;
+}) {
   return (
     <div
       id="homepage-edit-overlay-component"
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => onClickListener()}
     >
       <div className="d-flex align-items-center justify-content-center">
         <EditIcon fill="#fff" maxWidth={18} />

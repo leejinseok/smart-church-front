@@ -1,12 +1,30 @@
 #header-component {
+  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.2);
+
   .nav-container {
-    // box-shadow: 0 -6px 6px 4px rgba(0, 0, 0, 0.3);
     background-color: #fff;
   }
-  box-shadow: 0 2px 7px 0 rgba(0, 0, 0, 0.2);
-  position: fixed;
-  width: 100%;
-  z-index: 3;
+
+  nav {
+    padding-left: 22px;
+    padding-right: 22px;
+    height: 68px;
+    display: flex;
+  }
+
+  .right-menu-container {
+    display: flex;
+  }
+
+  .right-menu-container span {
+    display: flex;
+    margin-right: 14px;
+    cursor: pointer;
+  }
+
+  .right-menu-container span:last-child {
+    margin-right: 0;
+  }
 }
 
 .edit #header-component {

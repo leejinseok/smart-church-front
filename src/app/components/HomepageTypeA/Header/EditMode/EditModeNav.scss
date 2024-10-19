@@ -1,0 +1,23 @@
+#edit-mode-nav-component {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  background-color: #eee;
+  border-bottom: 1px solid #eee;
+
+  .edit-mode-nav-container {
+    padding-left: 22px;
+    padding-right: 22px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+
+    button {
+      padding: 3px 12px;
+      margin-left: 4px;
+      border-radius: 3px;
+      border: 1px solid #8d8d8d;
+      cursor: pointer;
+    }
+  }
+}

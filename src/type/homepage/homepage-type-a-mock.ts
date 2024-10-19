@@ -1,6 +1,10 @@
 import { HomepageTypeA } from "./homepage-type-a";
 
 export const homepageTypeAFormMock: HomepageTypeA = {
+  churchLogo: {
+    type: "LOGO_AND_CHURCH_NAME",
+    image: "/images/sample-church-logo.png",
+  },
   banners: [
     {
       id: 0,

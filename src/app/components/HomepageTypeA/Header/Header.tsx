@@ -1,70 +1,86 @@
 import "./Header.scss";
-import styles from "./Header.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
+import EditModeNav from "./EditMode/EditModeNav";
+import { useState } from "react";
+import LogoEditModal from "./LogoEditModal/LogoEditModal";
+import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
 
 export default function Header({
   church,
+  churchLogo,
   isEdit = false,
 }: {
   church: ChurchResponse;
+  churchLogo: ChurchLogo;
   isEdit: boolean;
 }) {
+  const [logoEditModal, setLogoEditModal] = useState({
+    visible: false,
+  });
+
+  const handleClickEditClick = () => {
+    setLogoEditModal({ visible: true });
+  };
+
   return (
     <div id="header-component">
-      <div className={`${styles["mini-nav"]} font-size-s`}>
-        <div className="d-flex justify-content-space-between container">
-          <div className="d-flex align-items-center">
-            <a href="#">Smart Church</a>
-          </div>
-
-          <div className="d-flex font-size-xs align-items-center">
-            <button>게시하기</button>
-            <button>나가기</button>
-            {/* <span>Copyright ©RainyHeaven</span> */}
-          </div>
-        </div>
-      </div>
-
-      <div className="nav-container">
+      <div
+        className="nav-container"
+        style={{
+          paddingTop: isEdit ? 40 : 0,
+        }}
+      >
+        <EditModeNav />
         <nav
-          className={`${styles.nav} ${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
+          className={`${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
           <div className="d-flex align-items-center church-logo">
             <a href="#" className="d-flex">
-              <Image
-                src={"/images/sample-church-logo.png"}
-                alt="logo"
-                width={40}
-                height={40}
-                style={{
-                  borderRadius: 100,
-                  marginRight: 16,
-                }}
-              />
-              <h2 className="d-flex align-items-center font-size-xl">
-                {church.name}
-              </h2>
+              {churchLogo.type === "LOGO_AND_CHURCH_NAME" && (
+                <>
+                  <Image
+                    src={churchLogo.image || "/images/sample-church-logo.png"}
+                    alt="logo"
+                    width={40}
+                    height={40}
+                    style={{
+                      borderRadius: 100,
+                      marginRight: 16,
+                    }}
+                  />
+                  <h2 className="d-flex align-items-center font-size-xl">
+                    {church.name}
+                  </h2>
+                </>
+              )}
             </a>
-            {isEdit && <HomepageEditOverlay />}
+            {isEdit && (
+              <HomepageEditOverlay onClickListener={handleClickEditClick} />
+            )}
           </div>
 
-          <div
-            className={`d-flex align-items-center ${styles["right-menu-container"]}`}
-          >
+          <div className={`d-flex align-items-center `}>
             {/* <span>
               <FontAwesomeIcon icon={faMessage} width={26} />
             </span> */}
-            <span className="font-size-xl">
+            <span
+              className="font-size-xl"
+              style={{
+                display: "inline-flex",
+              }}
+            >
               <FontAwesomeIcon icon={faBars} width={20} />
             </span>
           </div>
         </nav>
       </div>
+
+      {logoEditModal.visible && <LogoEditModal churchLogo={churchLogo} />}
     </div>
   );
 }

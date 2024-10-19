@@ -46,12 +46,12 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
 
   return (
     <div id="homepage-type-a-component">
-      <Header church={church} isEdit={isEdit} />
-      <main
-        style={{
-          paddingTop: 103,
-        }}
-      >
+      <Header
+        church={church}
+        churchLogo={homepageTypeAMock.churchLogo}
+        isEdit={isEdit}
+      />
+      <main>
         <div className="container">
           <section>
             <div style={{ paddingTop: 22, paddingBottom: 0 }}>

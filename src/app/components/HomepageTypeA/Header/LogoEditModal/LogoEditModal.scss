@@ -1,0 +1,24 @@
+#logo-edit-modal-component {
+  .modal__inner {
+    .modal__body {
+      background-color: #fff;
+      border-radius: 3px;
+      padding: 10px 14px;
+      margin-top: 12px;
+
+      label {
+        cursor: pointer;
+      }
+
+      .form-group {
+        margin-bottom: 12px;
+      }
+
+      .form-group-logoImage {
+        img {
+          max-width: 200px;
+        }
+      }
+    }
+  }
+}

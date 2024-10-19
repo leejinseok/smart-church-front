@@ -47,7 +47,14 @@ export interface Gallery {
   description: string;
 }
 
+export type ChurchLogoType = "LOGO" | "LOGO_AND_CHURCH_NAME";
+export interface ChurchLogo {
+  type: ChurchLogoType;
+  image: string | null;
+}
+
 export interface HomepageTypeA {
+  churchLogo: ChurchLogo;
   churchIntro: Op[];
   banners: ChurchBanner[];
   videos: ChurchVideo[];
