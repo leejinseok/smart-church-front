@@ -1,3 +1,5 @@
+"use client";
+
 import "./Header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +8,7 @@ import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import EditModeNav from "./EditMode/EditModeNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogoEditModal from "./LogoEditModal/LogoEditModal";
 import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
 
@@ -19,6 +21,7 @@ export default function Header({
   churchLogo: ChurchLogo;
   isEdit: boolean;
 }) {
+  const [churchLogoState, setChurchLogoState] = useState<ChurchLogo>();
   const [logoEditModal, setLogoEditModal] = useState({
     visible: false,
   });
@@ -26,6 +29,14 @@ export default function Header({
   const handleClickEditClick = () => {
     setLogoEditModal({ visible: true });
   };
+
+  const hideEditModal = () => {
+    setLogoEditModal({ visible: false });
+  };
+
+  useEffect(() => {
+    setChurchLogoState(churchLogo);
+  }, [churchLogo]);
 
   return (
     <div id="header-component">
@@ -40,25 +51,23 @@ export default function Header({
           className={`${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
           <div className="d-flex align-items-center church-logo">
-            <a href="#" className="d-flex">
-              {churchLogo.type === "LOGO_AND_CHURCH_NAME" && (
-                <>
-                  <Image
-                    src={churchLogo.image || "/images/sample-church-logo.png"}
-                    alt="logo"
-                    width={40}
-                    height={40}
-                    style={{
-                      borderRadius: 100,
-                      marginRight: 16,
-                    }}
-                  />
-                  <h2 className="d-flex align-items-center font-size-xl">
-                    {church.name}
-                  </h2>
-                </>
+            <div className="d-flex">
+              <Image
+                src={churchLogoState?.image || "/images/sample-church-logo.png"}
+                alt="logo"
+                width={40}
+                height={40}
+                style={{
+                  borderRadius: 100,
+                  marginRight: 16,
+                }}
+              />
+              {churchLogoState?.type === "LOGO_AND_CHURCH_NAME" && (
+                <span className="d-flex align-items-center font-size-xl">
+                  {church.name}
+                </span>
               )}
-            </a>
+            </div>
             {isEdit && (
               <HomepageEditOverlay onClickListener={handleClickEditClick} />
             )}
@@ -80,7 +89,9 @@ export default function Header({
         </nav>
       </div>
 
-      {logoEditModal.visible && <LogoEditModal churchLogo={churchLogo} />}
+      {logoEditModal.visible && (
+        <LogoEditModal churchLogo={churchLogo} hide={hideEditModal} />
+      )}
     </div>
   );
 }

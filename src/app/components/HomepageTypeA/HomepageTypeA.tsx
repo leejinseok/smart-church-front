@@ -20,22 +20,39 @@ import Service from "./Service/Service";
 import StaffGroup from "./Staff/StaffGroup";
 import Video from "./Video/Video";
 import QuillRenderer from "../Quill/QuillRenderer";
-import { useState } from "react";
+import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
+import {
+  getLocalStorageItem,
+  setLocalStorageItem,
+} from "../../../util/local-storage-utils";
 
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
-  const [editState, setEditState] = useState<Record<string, false>>({
-    editHeaderLogo: false,
-    editBanner: false,
-    editChurchIntro: false,
-    editVideos: false,
-    editDepartmentsAndMinistries: false,
-    editWorshipServicesAndMeetings: false,
-  });
-
   const church: ChurchResponse = {
     ...churchMock,
   };
-  const homepageTypeAMock = { ...homepageTypeAFormMock };
+
+  let homepageTypeAMock = { ...homepageTypeAFormMock };
+  if (isEdit) {
+    if (typeof window !== "undefined") {
+      const homepageTypeALocalStorageItem = getLocalStorageItem(
+        "homepageTypeAStoraged",
+      ) as string;
+      if (homepageTypeALocalStorageItem) {
+        const parse = JSON.parse(
+          decodeURIComponent(homepageTypeALocalStorageItem),
+        ) as HomepageTypeAInterface;
+
+        homepageTypeAMock = { ...parse };
+      } else {
+        homepageTypeAMock = { ...homepageTypeAFormMock };
+        const homepageTypeAMockStr = encodeURIComponent(
+          JSON.stringify(homepageTypeAMock),
+        );
+        setLocalStorageItem("homepageTypeAStoraged", homepageTypeAMockStr);
+      }
+    }
+  }
+
   const generateGalleryContentClassNameByLength = (length: number) => {
     if (length < 4) {
       return `gallery-length-${length}`;
