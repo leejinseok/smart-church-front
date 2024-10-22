@@ -25,6 +25,28 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../../../util/local-storage-utils";
+import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../../type/homepage/homepage";
+
+const getHomepageTypeALocalStorageItem = () => {
+  const homepageTypeALocalStorageItem = getLocalStorageItem(
+    HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
+  ) as string;
+  if (homepageTypeALocalStorageItem) {
+    const parse = JSON.parse(
+      decodeURIComponent(homepageTypeALocalStorageItem),
+    ) as HomepageTypeAInterface;
+
+    return parse;
+  } else {
+    const homepageTypeAMockStr = encodeURIComponent(
+      JSON.stringify(homepageTypeAFormMock),
+    );
+    setLocalStorageItem(
+      HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
+      homepageTypeAMockStr,
+    );
+  }
+};
 
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   const church: ChurchResponse = {
@@ -34,21 +56,9 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   let homepageTypeAMock = { ...homepageTypeAFormMock };
   if (isEdit) {
     if (typeof window !== "undefined") {
-      const homepageTypeALocalStorageItem = getLocalStorageItem(
-        "homepageTypeAStoraged",
-      ) as string;
-      if (homepageTypeALocalStorageItem) {
-        const parse = JSON.parse(
-          decodeURIComponent(homepageTypeALocalStorageItem),
-        ) as HomepageTypeAInterface;
-
-        homepageTypeAMock = { ...parse };
-      } else {
-        homepageTypeAMock = { ...homepageTypeAFormMock };
-        const homepageTypeAMockStr = encodeURIComponent(
-          JSON.stringify(homepageTypeAMock),
-        );
-        setLocalStorageItem("homepageTypeAStoraged", homepageTypeAMockStr);
+      const localStorageItem = getHomepageTypeALocalStorageItem();
+      if (localStorageItem) {
+        homepageTypeAMock = { ...localStorageItem };
       }
     }
   }

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import "./LogoEditModal.scss";
 import {
   ChurchLogo,
@@ -9,6 +9,7 @@ import {
   getLocalStorageItem,
   setLocalStorageItem,
 } from "../../../../../util/local-storage-utils";
+import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../../../../type/homepage/homepage";
 
 export default function LogoEditModal({
   churchLogo,
@@ -26,12 +27,38 @@ export default function LogoEditModal({
     }));
   };
 
+  const handleChangeLogoImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) {
+      return;
+    }
+
+    // TODO Upload to real backend server.
+    const file = files[0];
+
+    const reader = new FileReader();
+
+    // Once the file is read, this event is triggered
+    reader.onload = (progressEvent: ProgressEvent<FileReader>) => {
+      const dataURL = progressEvent.target?.result;
+      if (dataURL) {
+        setChurchLogoState((prev) => ({
+          ...prev,
+          image: dataURL.toString(),
+        }));
+      }
+    };
+
+    reader.readAsDataURL(file); // Read the file as a data URL
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const homepageTypeALocalStorageItem = getLocalStorageItem(
-      "homepageTypeAStoraged",
+      HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
     ) as string | undefined;
+
     if (homepageTypeALocalStorageItem) {
       const parse = JSON.parse(
         decodeURIComponent(homepageTypeALocalStorageItem),
@@ -39,13 +66,14 @@ export default function LogoEditModal({
       parse.churchLogo = churchLogoState;
 
       setLocalStorageItem(
-        "homepageTypeAStoraged",
+        HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
         encodeURIComponent(JSON.stringify(parse)),
       );
 
       window.location.reload();
     }
   };
+
   return (
     <div
       id="logo-edit-modal-component"
@@ -121,7 +149,7 @@ export default function LogoEditModal({
                   />
                 </div>
 
-                <input type="file" />
+                <input type="file" onChange={(e) => handleChangeLogoImage(e)} />
               </div>
             </div>
 

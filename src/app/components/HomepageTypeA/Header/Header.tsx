@@ -50,22 +50,18 @@ export default function Header({
         <nav
           className={`${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
-          <div className="d-flex align-items-center church-logo">
-            <div className="d-flex">
-              <Image
-                src={churchLogoState?.image || "/images/sample-church-logo.png"}
-                alt="logo"
-                width={40}
-                height={40}
+          <div className="d-flex church-logo">
+            <div className="d-flex align-items-center">
+              <img
+                src={churchLogoState?.image || ""}
+                alt=""
                 style={{
-                  borderRadius: 100,
                   marginRight: 16,
+                  maxHeight: 50,
                 }}
               />
               {churchLogoState?.type === "LOGO_AND_CHURCH_NAME" && (
-                <span className="d-flex align-items-center font-size-xl">
-                  {church.name}
-                </span>
+                <span className="font-size-xl">{church.name}</span>
               )}
             </div>
             {isEdit && (
