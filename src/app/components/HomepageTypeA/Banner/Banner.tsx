@@ -6,6 +6,8 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ChurchBanner } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
+import { useState } from "react";
+import BannerEditModal from "./BannerEditModal/BannerEditModal";
 
 export default function Banner({
   banners,
@@ -14,6 +16,24 @@ export default function Banner({
   banners: ChurchBanner[];
   isEdit: boolean;
 }) {
+  const [bannerEditModal, setBannerEditModal] = useState({
+    visible: false,
+  });
+
+  const handleClickEditOverlay = () => {
+    setBannerEditModal((prev) => ({
+      ...prev,
+      visible: true,
+    }));
+  };
+
+  const hideBannerEditModal = () => {
+    setBannerEditModal((prev) => ({
+      ...prev,
+      visible: false,
+    }));
+  };
+
   return (
     <div id="banner-component">
       <Swiper
@@ -25,7 +45,6 @@ export default function Banner({
         loop
         speed={1200}
         pagination={{ clickable: true }}
-        scrollbar={{ draggable: true }}
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log()}
       >
@@ -47,7 +66,13 @@ export default function Banner({
         })}
       </Swiper>
 
-      {isEdit && <HomepageEditOverlay />}
+      {isEdit && (
+        <HomepageEditOverlay onClickListener={handleClickEditOverlay} />
+      )}
+
+      {bannerEditModal.visible && (
+        <BannerEditModal hide={hideBannerEditModal} banners={banners} />
+      )}
     </div>
   );
 }

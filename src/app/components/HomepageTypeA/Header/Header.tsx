@@ -3,7 +3,6 @@
 import "./Header.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";
 import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";

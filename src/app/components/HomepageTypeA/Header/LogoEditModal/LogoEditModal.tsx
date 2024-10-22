@@ -35,10 +35,7 @@ export default function LogoEditModal({
 
     // TODO Upload to real backend server.
     const file = files[0];
-
     const reader = new FileReader();
-
-    // Once the file is read, this event is triggered
     reader.onload = (progressEvent: ProgressEvent<FileReader>) => {
       const dataURL = progressEvent.target?.result;
       if (dataURL) {
@@ -88,7 +85,7 @@ export default function LogoEditModal({
               marginBottom: 6,
             }}
           >
-            로고 설정
+            로고 편집
           </p>
 
           <form onSubmit={handleSubmit}>

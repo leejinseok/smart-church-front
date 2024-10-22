@@ -1,0 +1,28 @@
+#banner-edit-modal-component {
+  .modal__inner {
+    .modal__body {
+      background-color: #fff;
+      border-radius: 3px;
+      padding: 10px 14px;
+      margin-top: 12px;
+
+      ul.banners {
+        li {
+          .image-container {
+            width: 300px;
+            img {
+              max-width: 300px;
+              max-height: 200px;
+            }
+          }
+
+          .controls {
+            button {
+              margin-left: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

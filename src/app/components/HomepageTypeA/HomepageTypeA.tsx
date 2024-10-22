@@ -4,11 +4,7 @@ import "./HomepageTypeA.scss";
 import { ChurchResponse } from "../../../api/smart-church/smart-church-api-response";
 import { homepageTypeAFormMock } from "../../../type/homepage/homepage-type-a-mock";
 import { churchMock } from "../../../type/mock";
-import {
-  nanumBarunGothic,
-  nanumBarunGothicBold,
-  nanumBarunGothicLight,
-} from "../../layout";
+import { nanumBarunGothicBold, nanumBarunGothicLight } from "../../layout";
 import Banner from "./Banner/Banner";
 import ChurchDepartment from "./ChurchDepartment/ChurchDepartment";
 import ScrollEventRelatedParent from "./Event/ScrollEventRelatedParent";
@@ -20,33 +16,7 @@ import Service from "./Service/Service";
 import StaffGroup from "./Staff/StaffGroup";
 import Video from "./Video/Video";
 import QuillRenderer from "../Quill/QuillRenderer";
-import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
-import {
-  getLocalStorageItem,
-  setLocalStorageItem,
-} from "../../../util/local-storage-utils";
-import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../../type/homepage/homepage";
-
-const getHomepageTypeALocalStorageItem = () => {
-  const homepageTypeALocalStorageItem = getLocalStorageItem(
-    HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
-  ) as string;
-  if (homepageTypeALocalStorageItem) {
-    const parse = JSON.parse(
-      decodeURIComponent(homepageTypeALocalStorageItem),
-    ) as HomepageTypeAInterface;
-
-    return parse;
-  } else {
-    const homepageTypeAMockStr = encodeURIComponent(
-      JSON.stringify(homepageTypeAFormMock),
-    );
-    setLocalStorageItem(
-      HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
-      homepageTypeAMockStr,
-    );
-  }
-};
+import { hompageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
 
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   const church: ChurchResponse = {
@@ -56,7 +26,8 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   let homepageTypeAMock = { ...homepageTypeAFormMock };
   if (isEdit) {
     if (typeof window !== "undefined") {
-      const localStorageItem = getHomepageTypeALocalStorageItem();
+      const localStorageItem =
+        hompageTypeALocalStorageRepository.getHompageTypeA();
       if (localStorageItem) {
         homepageTypeAMock = { ...localStorageItem };
       }
