@@ -41,10 +41,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <RecoilRootWrapper>
-      <html lang="ko" className={`${nanumBarunGothicLight.className}`}>
-        <body>{children}</body>
-      </html>
-    </RecoilRootWrapper>
+    <html lang="ko" className={`${nanumBarunGothicLight.className}`}>
+      <body>{children}</body>
+    </html>
   );
 }

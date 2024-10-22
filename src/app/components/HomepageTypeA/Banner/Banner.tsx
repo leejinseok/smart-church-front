@@ -6,7 +6,7 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ChurchBanner } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BannerEditModal from "./BannerEditModal/BannerEditModal";
 
 export default function Banner({
@@ -19,6 +19,12 @@ export default function Banner({
   const [bannerEditModal, setBannerEditModal] = useState({
     visible: false,
   });
+
+  const [bannersState, setBannerState] = useState<ChurchBanner[]>([]);
+
+  useEffect(() => {
+    setBannerState([...banners]);
+  }, [banners]);
 
   const handleClickEditOverlay = () => {
     setBannerEditModal((prev) => ({
@@ -48,7 +54,7 @@ export default function Banner({
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log()}
       >
-        {banners.map((banner, bannerIndex) => {
+        {bannersState.map((banner, bannerIndex) => {
           return (
             <SwiperSlide key={bannerIndex}>
               <img

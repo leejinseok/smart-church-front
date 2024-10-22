@@ -16,7 +16,7 @@ import Service from "./Service/Service";
 import StaffGroup from "./Staff/StaffGroup";
 import Video from "./Video/Video";
 import QuillRenderer from "../Quill/QuillRenderer";
-import { hompageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
+import { homepageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
 
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   const church: ChurchResponse = {
@@ -27,7 +27,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   if (isEdit) {
     if (typeof window !== "undefined") {
       const localStorageItem =
-        hompageTypeALocalStorageRepository.getHompageTypeA();
+        homepageTypeALocalStorageRepository.getHompageTypeA();
       if (localStorageItem) {
         homepageTypeAMock = { ...localStorageItem };
       }

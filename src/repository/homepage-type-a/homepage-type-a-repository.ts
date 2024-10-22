@@ -12,9 +12,10 @@ export interface HomepageTypeARepository {
 
 export interface HompageTypeALocalStorageRepository {
   getHompageTypeA: () => HomepageTypeA | null;
+  saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => void;
 }
 
-export const hompageTypeALocalStorageRepository: HompageTypeALocalStorageRepository =
+export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageRepository =
   {
     getHompageTypeA() {
       const homepageTypeALocalStorageItem = getLocalStorageItem(
@@ -28,14 +29,12 @@ export const hompageTypeALocalStorageRepository: HompageTypeALocalStorageReposit
 
         return parse;
       }
-      const homepageTypeAMockStr = encodeURIComponent(
-        JSON.stringify(homepageTypeAFormMock),
-      );
-      setLocalStorageItem(
-        HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
-        homepageTypeAMockStr,
-      );
 
+      this.saveHomepageTypeA(homepageTypeAFormMock);
       return null;
+    },
+    saveHomepageTypeA(homepageTypeA) {
+      const encoded = encodeURIComponent(JSON.stringify(homepageTypeA));
+      setLocalStorageItem(HOMEPAGE_TYPE_A_STORAGED_DATA_KEY, encoded);
     },
   };
