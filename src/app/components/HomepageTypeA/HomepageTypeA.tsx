@@ -204,22 +204,6 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
       </main>
       <Footer church={church} />
       <ScrollEventRelatedParent />
-
-      <div className="edit-button-container">
-        <button
-          type="button"
-          className={`${nanumBarunGothicLight.className} font-size-l`}
-        >
-          홈<br />
-          페<br />
-          이<br />
-          지<br />
-          <br />
-          편<br />
-          집<br />
-          하<br />기
-        </button>
-      </div>
     </div>
   );
 }

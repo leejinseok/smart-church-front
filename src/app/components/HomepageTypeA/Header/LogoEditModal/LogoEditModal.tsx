@@ -1,24 +1,33 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import "./LogoEditModal.scss";
 import {
   ChurchLogo,
   ChurchLogoType,
   HomepageTypeA,
 } from "../../../../../type/homepage/homepage-type-a";
-import {
-  getLocalStorageItem,
-  setLocalStorageItem,
-} from "../../../../../util/local-storage-utils";
+import { getLocalStorageItem } from "../../../../../util/local-storage-utils";
 import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../../../../type/homepage/homepage";
+import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-repository";
+import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
 
 export default function LogoEditModal({
   churchLogo,
+  updateChurchLogo,
   hide,
 }: {
   churchLogo: ChurchLogo;
+  updateChurchLogo: Dispatch<SetStateAction<ChurchLogo | undefined>>;
   hide: () => void;
 }) {
-  const [churchLogoState, setChurchLogoState] = useState({ ...churchLogo });
+  const [churchLogoState, setChurchLogoState] =
+    useState<ChurchLogo>(churchLogo);
 
   const handleClickLogoType = (logoType: ChurchLogoType) => {
     setChurchLogoState((prev) => ({
@@ -51,111 +60,129 @@ export default function LogoEditModal({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    homepageTypeALocalStorageRepository.updateChurchLogo(churchLogoState);
+    updateChurchLogo((prev) => ({
+      ...prev,
+      ...churchLogoState,
+    }));
 
-    const homepageTypeALocalStorageItem = getLocalStorageItem(
-      HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
-    ) as string | undefined;
+    hide();
+  };
 
-    if (homepageTypeALocalStorageItem) {
-      const parse = JSON.parse(
-        decodeURIComponent(homepageTypeALocalStorageItem),
-      ) as HomepageTypeA;
-      parse.churchLogo = churchLogoState;
-
-      setLocalStorageItem(
-        HOMEPAGE_TYPE_A_STORAGED_DATA_KEY,
-        encodeURIComponent(JSON.stringify(parse)),
-      );
-
-      window.location.reload();
-    }
+  const handleReset = () => {
+    setChurchLogoState(() => ({ ...homepageTypeAFormMock.churchLogo }));
   };
 
   return (
     <div
       id="logo-edit-modal-component"
-      className="modal-container vertical-center font-size-m"
+      className="modal-container edit-modal vertical-center font-size-m"
       onClick={hide}
     >
       <div className="modal__inner">
-        <div className="modal__body" onClick={(e) => e.stopPropagation()}>
-          <p
-            className="font-size-m font-weight-bold"
-            style={{
-              marginBottom: 6,
-            }}
-          >
-            로고 편집
-          </p>
-
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <span className="font-weight-bold">유형</span>
-              <div className="d-flex">
+        <div className="modal__box">
+          <div className="modal__header">
+            <h3 className="font-size-m font-weight-bold modal-body__header">
+              로고 편집
+            </h3>
+          </div>
+          <div className="modal__body" onClick={(e) => e.stopPropagation()}>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <span className="form-group__title font-weight-bold">유형</span>
                 <div>
                   <div>
-                    <input
-                      id="logoType-image"
-                      type="radio"
-                      value={"LOGO" as ChurchLogoType}
-                      checked={churchLogoState.type === "LOGO"}
-                      onChange={() => handleClickLogoType("LOGO")}
-                    />
-                    <label
-                      htmlFor="logoType-image"
-                      style={{
-                        marginLeft: 4,
-                      }}
-                    >
-                      로고 이미지
-                    </label>
+                    <div>
+                      <input
+                        id="logoType-image"
+                        type="radio"
+                        value={"LOGO" as ChurchLogoType}
+                        checked={churchLogoState.type === "LOGO"}
+                        onChange={() => handleClickLogoType("LOGO")}
+                      />
+                      <label
+                        htmlFor="logoType-image"
+                        style={{
+                          marginLeft: 4,
+                        }}
+                      >
+                        로고 이미지
+                      </label>
+                    </div>
                   </div>
-                </div>
 
-                <div style={{ marginLeft: 6 }}>
                   <div>
-                    <input
-                      id="logoType-imageAndChurchName"
-                      type="radio"
-                      value={"LOGO_AND_CHURCH_NAME" as ChurchLogoType}
-                      checked={churchLogoState.type === "LOGO_AND_CHURCH_NAME"}
-                      onChange={() =>
-                        handleClickLogoType("LOGO_AND_CHURCH_NAME")
-                      }
-                    />
-                    <label
-                      htmlFor="logoType-imageAndChurchName"
-                      style={{ marginLeft: 4 }}
-                    >
-                      로고이미지 + 교회명
-                    </label>
+                    <div>
+                      <input
+                        id="logoType-imageAndChurchName"
+                        type="radio"
+                        value={"LOGO_AND_CHURCH_NAME" as ChurchLogoType}
+                        checked={
+                          churchLogoState.type === "LOGO_AND_CHURCH_NAME"
+                        }
+                        onChange={() =>
+                          handleClickLogoType("LOGO_AND_CHURCH_NAME")
+                        }
+                      />
+                      <label
+                        htmlFor="logoType-imageAndChurchName"
+                        style={{ marginLeft: 4 }}
+                      >
+                        로고 이미지 + 교회이름
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div>
+                      <input
+                        id="logoType-churchName"
+                        type="radio"
+                        value={"CHURCH_NAME" as ChurchLogoType}
+                        checked={churchLogoState.type === "CHURCH_NAME"}
+                        onChange={() => handleClickLogoType("CHURCH_NAME")}
+                      />
+                      <label
+                        htmlFor="logoType-churchName"
+                        style={{ marginLeft: 4 }}
+                      >
+                        교회이름
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="form-group form-group-logoImage">
-              <div></div>
-              <div>
-                <div>
-                  <img
-                    src={
-                      churchLogoState.image || "/images/sample-church-logo.png"
-                    }
-                    alt=""
-                  />
+              {churchLogoState.type !== "CHURCH_NAME" && (
+                <div className="form-group form-group-logoImage">
+                  <span className="font-weight-bold form-group__title">
+                    로고 이미지
+                  </span>
+
+                  <div>
+                    <div>
+                      <img
+                        src={
+                          churchLogoState.image ||
+                          "/images/sample-church-logo.png"
+                        }
+                        alt=""
+                      />
+                    </div>
+
+                    {/* <input type="file" onChange={(e) => handleChangeLogoImage(e)} /> */}
+                  </div>
                 </div>
+              )}
 
-                <input type="file" onChange={(e) => handleChangeLogoImage(e)} />
+              <div className="form-group form-group-submit d-flex">
+                <button type="button" onClick={handleReset}>
+                  초기화
+                </button>
+                <button type="submit">적용</button>
               </div>
-            </div>
-
-            <div className="form-group form-group-submit">
-              <button type="submit" className="width-100">
-                적용
-              </button>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

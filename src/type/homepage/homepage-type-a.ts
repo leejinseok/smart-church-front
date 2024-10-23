@@ -47,7 +47,7 @@ export interface Gallery {
   description: string;
 }
 
-export type ChurchLogoType = "LOGO" | "LOGO_AND_CHURCH_NAME";
+export type ChurchLogoType = "LOGO" | "LOGO_AND_CHURCH_NAME" | "CHURCH_NAME";
 export interface ChurchLogo {
   type: ChurchLogoType;
   image: string | null;

@@ -1,0 +1,14 @@
+.edit-modal {
+  .modal__inner {
+    .modal__box {
+      background-color: #fff;
+      border-radius: 5px;
+      min-width: 500px;
+
+      .modal__header {
+        padding: 10px 14px;
+        border-bottom: 1px solid #ccc;
+      }
+    }
+  }
+}

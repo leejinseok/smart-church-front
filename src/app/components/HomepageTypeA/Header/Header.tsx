@@ -50,16 +50,25 @@ export default function Header({
           className={`${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
           <div className="d-flex church-logo">
-            <div className="d-flex align-items-center">
-              <img
-                src={churchLogoState?.image || ""}
-                alt=""
-                style={{
-                  marginRight: 16,
-                  maxHeight: 50,
-                }}
-              />
-              {churchLogoState?.type === "LOGO_AND_CHURCH_NAME" && (
+            <div
+              className="d-flex align-items-center"
+              style={{
+                minWidth: 30,
+                minHeight: 30,
+              }}
+            >
+              {churchLogoState?.type !== "CHURCH_NAME" && (
+                <img
+                  src={churchLogoState?.image || ""}
+                  alt=""
+                  style={{
+                    marginRight: 16,
+                    maxHeight: 50,
+                  }}
+                />
+              )}
+
+              {churchLogoState?.type !== "LOGO" && (
                 <span className="font-size-xl">{church.name}</span>
               )}
             </div>
@@ -85,7 +94,11 @@ export default function Header({
       </div>
 
       {logoEditModal.visible && (
-        <LogoEditModal churchLogo={churchLogo} hide={hideEditModal} />
+        <LogoEditModal
+          churchLogo={churchLogoState!}
+          hide={hideEditModal}
+          updateChurchLogo={setChurchLogoState}
+        />
       )}
     </div>
   );

@@ -1,5 +1,9 @@
 import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../type/homepage/homepage";
-import { HomepageTypeA } from "../../type/homepage/homepage-type-a";
+import {
+  ChurchBanner,
+  ChurchLogo,
+  HomepageTypeA,
+} from "../../type/homepage/homepage-type-a";
 import { homepageTypeAFormMock } from "../../type/homepage/homepage-type-a-mock";
 import {
   getLocalStorageItem,
@@ -13,6 +17,8 @@ export interface HomepageTypeARepository {
 export interface HompageTypeALocalStorageRepository {
   getHompageTypeA: () => HomepageTypeA | null;
   saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => void;
+  updateChurchLogo: (churchLogo: ChurchLogo) => void;
+  updateBannners: (banners: ChurchBanner[]) => void;
 }
 
 export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageRepository =
@@ -36,5 +42,19 @@ export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageReposi
     saveHomepageTypeA(homepageTypeA) {
       const encoded = encodeURIComponent(JSON.stringify(homepageTypeA));
       setLocalStorageItem(HOMEPAGE_TYPE_A_STORAGED_DATA_KEY, encoded);
+    },
+    updateChurchLogo(churchLogo) {
+      const homepageTypeA = this.getHompageTypeA();
+      if (homepageTypeA) {
+        homepageTypeA.churchLogo = { ...churchLogo };
+        this.saveHomepageTypeA(homepageTypeA);
+      }
+    },
+    updateBannners(banners) {
+      const homepageTypeA = this.getHompageTypeA();
+      if (homepageTypeA) {
+        homepageTypeA.banners = [...banners];
+        this.saveHomepageTypeA(homepageTypeA);
+      }
     },
   };

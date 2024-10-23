@@ -38,6 +38,7 @@
   .modal__inner {
     display: flex;
     justify-content: center;
+    flex-direction: column;
 
     .modal__body {
       margin: 0;

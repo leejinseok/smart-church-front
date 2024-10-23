@@ -1,33 +1,75 @@
 #logo-edit-modal-component {
   .modal__inner {
-    .modal__body {
-      background-color: #fff;
-      border-radius: 3px;
-      padding: 10px 14px;
-      margin-top: 12px;
+    .modal__box {
+      .modal__body {
+        padding: 14px 14px;
 
-      label {
-        cursor: pointer;
-      }
-
-      .form-group {
-        margin-bottom: 12px;
-      }
-
-      .form-group-logoImage {
-        img {
-          max-width: 200px;
+        label {
+          cursor: pointer;
         }
-      }
 
-      .form-group-submit {
-        button {
-          padding: 4px 6px;
-          border-radius: 5px;
-          border: 1px solid #8a8a8a;
+        .form-group {
+          &:not(:last-child) {
+            margin-bottom: 18px;
+          }
 
-          &:hover {
-            background-color: #e4e4e4;
+          .form-group__title {
+            margin-bottom: 6px;
+            display: inline-block;
+          }
+        }
+
+        .form-group-logoImage {
+          .filebox {
+            display: flex;
+            .upload-name {
+              display: inline-block;
+              height: 40px;
+              padding: 0 10px;
+              vertical-align: middle;
+              border: 1px solid #dddddd;
+              width: 78%;
+              color: #999999;
+            }
+
+            label {
+              display: inline-flex;
+              padding: 10px 14px;
+              color: #fff;
+              vertical-align: middle;
+              background-color: #999999;
+              cursor: pointer;
+              height: 40px;
+              margin-left: 4px;
+              word-break: keep-all;
+            }
+
+            input[type="file"] {
+              position: absolute;
+              width: 0;
+              height: 0;
+              padding: 0;
+              overflow: hidden;
+              border: 0;
+            }
+          }
+          img {
+            max-width: 200px;
+          }
+        }
+
+        .form-group-submit {
+          gap: 6px;
+
+          button {
+            padding: 4px 6px;
+            border-radius: 5px;
+            border: 1px solid #8a8a8a;
+            flex: 1;
+
+            &:hover {
+              background-color: #e4e4e4;
+            }
           }
         }
       }

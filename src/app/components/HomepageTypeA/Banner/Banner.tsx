@@ -77,7 +77,11 @@ export default function Banner({
       )}
 
       {bannerEditModal.visible && (
-        <BannerEditModal hide={hideBannerEditModal} banners={banners} />
+        <BannerEditModal
+          hide={hideBannerEditModal}
+          banners={bannersState}
+          updateBanners={setBannerState}
+        />
       )}
     </div>
   );
