@@ -84,7 +84,15 @@ export default function BannerEditModal({
 
           <div className="modal__body" onClick={(e) => e.stopPropagation()}>
             <form onSubmit={handleSubmit}>
-              <div>
+              <div className="form-group">
+                <span className="font-weight-bold">노출여부</span>
+                <div>
+                  <input type="checkbox" />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <span className="font-weight-bold">배너 이미지</span>
                 <ul className="banners">
                   {bannersState.map((banner, bannerIndex) => {
                     return (
@@ -116,8 +124,10 @@ export default function BannerEditModal({
                   </li>
                 </ul>
 
-                <div>
-                  <button type="submit">변경사항 적용</button>
+                <div style={{ marginTop: 14 }}>
+                  <button type="submit" className="width-100">
+                    변경사항 적용
+                  </button>
                 </div>
               </div>
             </form>

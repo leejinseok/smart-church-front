@@ -3,17 +3,13 @@ import {
   Dispatch,
   FormEvent,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
 import "./LogoEditModal.scss";
 import {
   ChurchLogo,
   ChurchLogoType,
-  HomepageTypeA,
 } from "../../../../../type/homepage/homepage-type-a";
-import { getLocalStorageItem } from "../../../../../util/local-storage-utils";
-import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../../../../type/homepage/homepage";
 import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-repository";
 import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
 
@@ -80,37 +76,17 @@ export default function LogoEditModal({
       onClick={hide}
     >
       <div className="modal__inner">
-        <div className="modal__box">
+        <div className="modal__box" onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
             <h3 className="font-size-m font-weight-bold modal-body__header">
               로고 편집
             </h3>
           </div>
-          <div className="modal__body" onClick={(e) => e.stopPropagation()}>
+          <div className="modal__body">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <span className="form-group__title font-weight-bold">유형</span>
                 <div>
-                  <div>
-                    <div>
-                      <input
-                        id="logoType-image"
-                        type="radio"
-                        value={"LOGO" as ChurchLogoType}
-                        checked={churchLogoState.type === "LOGO"}
-                        onChange={() => handleClickLogoType("LOGO")}
-                      />
-                      <label
-                        htmlFor="logoType-image"
-                        style={{
-                          marginLeft: 4,
-                        }}
-                      >
-                        로고 이미지
-                      </label>
-                    </div>
-                  </div>
-
                   <div>
                     <div>
                       <input
@@ -129,6 +105,26 @@ export default function LogoEditModal({
                         style={{ marginLeft: 4 }}
                       >
                         로고 이미지 + 교회이름
+                      </label>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div>
+                      <input
+                        id="logoType-image"
+                        type="radio"
+                        value={"LOGO" as ChurchLogoType}
+                        checked={churchLogoState.type === "LOGO"}
+                        onChange={() => handleClickLogoType("LOGO")}
+                      />
+                      <label
+                        htmlFor="logoType-image"
+                        style={{
+                          marginLeft: 4,
+                        }}
+                      >
+                        로고 이미지
                       </label>
                     </div>
                   </div>
@@ -161,16 +157,24 @@ export default function LogoEditModal({
 
                   <div>
                     <div>
-                      <img
-                        src={
-                          churchLogoState.image ||
-                          "/images/sample-church-logo.png"
-                        }
-                        alt=""
-                      />
+                      <label htmlFor="logoImageFile">
+                        <img
+                          src={
+                            churchLogoState.image ||
+                            "/images/sample-church-logo.png"
+                          }
+                          alt=""
+                        />
+                      </label>
                     </div>
 
-                    {/* <input type="file" onChange={(e) => handleChangeLogoImage(e)} /> */}
+                    <input
+                      type="file"
+                      id="logoImageFile"
+                      placeholder="로고 이미지를 선택해주세요"
+                      accept="image/*"
+                      onChange={(e) => handleChangeLogoImage(e)}
+                    />
                   </div>
                 </div>
               )}

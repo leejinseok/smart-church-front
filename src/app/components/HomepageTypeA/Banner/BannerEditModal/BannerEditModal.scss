@@ -1,14 +1,11 @@
 #banner-edit-modal-component {
   .modal__inner {
     .modal__body {
-      background-color: #fff;
-      border-radius: 3px;
-      padding: 10px 14px;
-      margin-top: 12px;
-
+      padding: 14px 14px;
       ul.banners {
         li {
           .image-container {
+            flex: 1;
             width: 300px;
             img {
               max-width: 300px;
@@ -17,10 +14,18 @@
           }
 
           .controls {
-            button {
-              margin-left: 12px;
-            }
           }
+        }
+      }
+
+      button {
+        padding: 4px 6px;
+        border-radius: 5px;
+        border: 1px solid #8a8a8a;
+        flex: 1;
+
+        &:hover {
+          background-color: #e4e4e4;
         }
       }
     }

@@ -13,7 +13,7 @@ export default function HomepageEditOverlay({
     >
       <div className="d-flex align-items-center justify-content-center">
         <EditIcon fill="#fff" maxWidth={18} />
-        <span style={{ marginLeft: 4 }}>수정</span>
+        <span style={{ marginLeft: 4 }}>편집</span>
       </div>
     </div>
   );
