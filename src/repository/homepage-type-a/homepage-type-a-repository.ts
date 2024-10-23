@@ -7,6 +7,8 @@ import {
 import { homepageTypeAFormMock } from "../../type/homepage/homepage-type-a-mock";
 import {
   getLocalStorageItem,
+  getLocalStorageSize,
+  removeLocalStorageItem,
   setLocalStorageItem,
 } from "../../util/local-storage-utils";
 
@@ -41,6 +43,7 @@ export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageReposi
     },
     saveHomepageTypeA(homepageTypeA) {
       const encoded = encodeURIComponent(JSON.stringify(homepageTypeA));
+      removeLocalStorageItem(HOMEPAGE_TYPE_A_STORAGED_DATA_KEY);
       setLocalStorageItem(HOMEPAGE_TYPE_A_STORAGED_DATA_KEY, encoded);
     },
     updateChurchLogo(churchLogo) {

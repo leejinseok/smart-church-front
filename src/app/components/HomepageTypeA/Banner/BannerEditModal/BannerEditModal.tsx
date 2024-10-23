@@ -49,6 +49,8 @@ export default function BannerEditModal({
             return;
           }
 
+          console.log(dataURL.toString().length);
+
           setBannersState((prev) => [
             ...prev,
             {
@@ -67,6 +69,7 @@ export default function BannerEditModal({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     homepageTypeALocalStorageRepository.updateBannners(bannersState);
+
     updateBanners(bannersState);
     hide();
   };
@@ -85,46 +88,92 @@ export default function BannerEditModal({
           <div className="modal__body" onClick={(e) => e.stopPropagation()}>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <span className="font-weight-bold">노출여부</span>
-                <div>
-                  <input type="checkbox" />
+                <h3 className="font-weight-bold font-size-m form-group__header">
+                  노출여부
+                </h3>
+                <div className="d-flex form-group__body">
+                  <div>
+                    <input
+                      id="show"
+                      type="radio"
+                      value={"VISIBLE"}
+                      checked={true}
+                      onChange={() => {}}
+                    />
+                    <label
+                      htmlFor="show"
+                      style={{
+                        marginLeft: 4,
+                      }}
+                    >
+                      보이기
+                    </label>
+                  </div>
+
+                  <div
+                    style={{
+                      marginLeft: 4,
+                    }}
+                  >
+                    <input
+                      id="hide"
+                      type="radio"
+                      value={"HIDE"}
+                      checked={false}
+                      onChange={() => {}}
+                    />
+                    <label
+                      htmlFor="hide"
+                      style={{
+                        marginLeft: 4,
+                      }}
+                    >
+                      보이기 않기
+                    </label>
+                  </div>
                 </div>
               </div>
 
               <div className="form-group">
-                <span className="font-weight-bold">배너 이미지</span>
-                <ul className="banners">
-                  {bannersState.map((banner, bannerIndex) => {
-                    return (
-                      <li
-                        key={bannerIndex}
-                        className="d-flex align-items-center"
-                      >
-                        <div className="image-container">
-                          <img src={banner.imageUrl} alt="" />
-                        </div>
-                        <div className="controls">
-                          <button
-                            type="button"
-                            onClick={() => removeBanner(bannerIndex)}
-                          >
-                            <TrashIcon maxWidth={24} fill="#888" />
-                          </button>
-                        </div>
-                      </li>
-                    );
-                  })}
+                <h3 className="font-weight-bold font-size-m form-group__header">
+                  배너 이미지
+                </h3>
+                <div className="form-group__body">
+                  <ul className="banners">
+                    {bannersState.map((banner, bannerIndex) => {
+                      return (
+                        <li
+                          key={bannerIndex}
+                          className="d-flex align-items-center"
+                        >
+                          <div className="image-container">
+                            <img src={banner.imageUrl} alt="" />
+                          </div>
+                          <div className="controls">
+                            <button
+                              type="button"
+                              onClick={() => removeBanner(bannerIndex)}
+                            >
+                              <TrashIcon maxWidth={24} fill="#888" />
+                            </button>
+                          </div>
+                        </li>
+                      );
+                    })}
 
-                  <li>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={chooseFilesHandler}
-                    />
-                  </li>
-                </ul>
+                    <li>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={chooseFilesHandler}
+                      />
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-                <div style={{ marginTop: 14 }}>
+              <div className="form-group">
+                <div>
                   <button type="submit" className="width-100">
                     변경사항 적용
                   </button>
