@@ -11,6 +11,7 @@ import {
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import { useEffect, useState } from "react";
 import BannerEditModal from "./BannerEditModal/BannerEditModal";
+import VisibilityOffIcon from "../../../../components/Icon/VisibilityOffIcon";
 
 export default function Banner({
   banners,
@@ -80,6 +81,20 @@ export default function Banner({
 
       {isEdit && (
         <HomepageEditOverlay onClickListener={handleClickEditOverlay} />
+      )}
+
+      {isEdit && bannersState.items.length === 0 && (
+        <div className="no-banner-guide">
+          <h3 className="text-align-center">
+            <div className="d-flex justify-content-center align-items-center">
+              <VisibilityOffIcon maxWidth={24} fill="#838383" />
+              <span style={{ marginLeft: 8 }}>
+                배너가 존재하지 않습니다. 해당 영역은 홈페이지에 노출되지
+                않습니다.
+              </span>
+            </div>
+          </h3>
+        </div>
       )}
 
       {bannerEditModal.visible && (

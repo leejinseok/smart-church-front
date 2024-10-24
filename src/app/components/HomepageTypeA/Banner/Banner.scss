@@ -1,6 +1,13 @@
 #banner-component {
   .swiper-slide {
   }
+
+  .no-banner-guide {
+    padding-top: 32px;
+    padding-bottom: 32px;
+    background-color: #eee;
+    border-radius: 3px;
+  }
 }
 
 #banner-component:hover {
