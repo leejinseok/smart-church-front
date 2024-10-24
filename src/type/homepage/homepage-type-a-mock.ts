@@ -5,18 +5,21 @@ export const homepageTypeAFormMock: HomepageTypeA = {
     type: "LOGO_AND_CHURCH_NAME",
     image: "https://placehold.co/50x50?text=Logo",
   },
-  banners: [
-    {
-      id: 0,
-      imageUrl: "https://placehold.co/1236x500?text=Banner Image",
-      order: 0,
-    },
-    {
-      id: 1,
-      imageUrl: "https://placehold.co/1236x500?text=Banner Image",
-      order: 1,
-    },
-  ],
+  banners: {
+    visible: true,
+    items: [
+      {
+        id: 0,
+        imageUrl: "https://placehold.co/1236x500?text=Banner Image",
+        order: 0,
+      },
+      {
+        id: 1,
+        imageUrl: "https://placehold.co/1236x500?text=Banner Image",
+        order: 1,
+      },
+    ],
+  },
   churchDepartmentsAndMinistries: [
     {
       name: "부서1",

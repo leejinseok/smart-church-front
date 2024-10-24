@@ -4,7 +4,10 @@ import "./Banner.scss";
 
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { ChurchBanner } from "../../../../type/homepage/homepage-type-a";
+import {
+  ChurchBanner,
+  ChurchBanners,
+} from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import { useEffect, useState } from "react";
 import BannerEditModal from "./BannerEditModal/BannerEditModal";
@@ -13,17 +16,20 @@ export default function Banner({
   banners,
   isEdit = false,
 }: {
-  banners: ChurchBanner[];
+  banners: ChurchBanners;
   isEdit: boolean;
 }) {
   const [bannerEditModal, setBannerEditModal] = useState({
     visible: false,
   });
 
-  const [bannersState, setBannerState] = useState<ChurchBanner[]>([]);
+  const [bannersState, setBannerState] = useState<ChurchBanners>({
+    visible: false,
+    items: [],
+  });
 
   useEffect(() => {
-    setBannerState([...banners]);
+    setBannerState({ ...banners });
   }, [banners]);
 
   const handleClickEditOverlay = () => {
@@ -54,7 +60,7 @@ export default function Banner({
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log()}
       >
-        {bannersState.map((banner, bannerIndex) => {
+        {bannersState.items.map((banner, bannerIndex) => {
           return (
             <SwiperSlide key={bannerIndex}>
               <img

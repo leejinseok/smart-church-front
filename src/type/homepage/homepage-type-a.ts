@@ -53,10 +53,14 @@ export interface ChurchLogo {
   image: string | null;
 }
 
+export interface ChurchBanners {
+  visible: boolean;
+  items: ChurchBanner[];
+}
 export interface HomepageTypeA {
   churchLogo: ChurchLogo;
   churchIntro: Op[];
-  banners: ChurchBanner[];
+  banners: ChurchBanners;
   videos: ChurchVideo[];
   churchDepartmentsAndMinistries: ChurchDepartmentAndMinistry[];
   worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];

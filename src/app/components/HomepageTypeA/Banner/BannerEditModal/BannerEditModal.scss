@@ -1,6 +1,10 @@
 #banner-edit-modal-component {
   .modal__inner {
     .modal__body {
+      label {
+        cursor: pointer;
+      }
+
       padding: 14px 14px;
 
       .form-group {
@@ -15,10 +19,10 @@
         li {
           .image-container {
             flex: 1;
-            width: 300px;
             img {
-              max-width: 300px;
-              max-height: 200px;
+              width: 500px;
+              height: 202px;
+              object-fit: cover;
             }
           }
 

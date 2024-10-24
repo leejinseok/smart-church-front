@@ -4,32 +4,97 @@ import {
   FormEvent,
   SetStateAction,
   useEffect,
+  useRef,
   useState,
 } from "react";
-import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
-import { ChurchBanner } from "../../../../../type/homepage/homepage-type-a";
+import {
+  ChurchBanner,
+  ChurchBanners,
+} from "../../../../../type/homepage/homepage-type-a";
 import "./BannerEditModal.scss";
 import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-repository";
+import Sortable from "sortablejs";
+import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 
 export default function BannerEditModal({
   banners,
   updateBanners,
   hide,
 }: {
-  banners: ChurchBanner[];
-  updateBanners: Dispatch<SetStateAction<ChurchBanner[]>>;
+  banners: ChurchBanners;
+  updateBanners: Dispatch<SetStateAction<ChurchBanners>>;
   hide: () => void;
 }) {
-  const [bannersState, setBannersState] = useState<ChurchBanner[]>([]);
+  const [bannersState, setBannersState] = useState<ChurchBanners>({
+    visible: false,
+    items: [],
+  });
+  const [bannerItemsSorted, setBannerItemsSorted] = useState<ChurchBanner[]>(
+    [],
+  );
+  const [bannerItemsSortable, setBannerItemsSortable] = useState<Sortable>();
+  const bannerItemsRef = useRef(null);
+
   useEffect(() => {
     setBannersState(banners);
+    setBannerItemsSorted(banners.items);
   }, [banners]);
 
+  useEffect(() => {
+    setBannerItemsSorted(bannersState.items);
+  }, [bannersState.items]);
+
+  useEffect(() => {
+    if (!bannersState.visible) {
+      return;
+    }
+
+    const bannerItemsElement = bannerItemsRef.current;
+    if (!bannerItemsElement) {
+      return;
+    }
+
+    if (!bannerItemsSortable) {
+      setBannerItemsSortable(
+        new Sortable(bannerItemsElement, {
+          animation: 150,
+          handle: ".handle",
+          onEnd(evt) {
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            if (oldIndex === undefined || newIndex === undefined) {
+              return;
+            }
+            const updatedItems = [...bannersState.items];
+            const [movedItem] = updatedItems.splice(oldIndex, 1); // Remove item from old position
+            updatedItems.splice(newIndex, 0, movedItem); // Insert item into new position
+            setBannerItemsSorted(updatedItems); // Update state with new order
+          },
+        }),
+      );
+    }
+  }, [
+    bannerItemsSortable,
+    bannersState.visible,
+    bannersState.items,
+    banners.items,
+  ]);
+
   const removeBanner = (bannerIndex: number) => {
-    const newBanners = [...bannersState];
-    newBanners.splice(bannerIndex, 1);
-    setBannersState([...newBanners]);
+    const items = bannersState?.items;
+    if (!items) {
+      return;
+    }
+
+    const newBannerItems = [...items];
+    newBannerItems.splice(bannerIndex, 1);
+    setBannersState((prev) => {
+      return {
+        ...prev,
+        items: [...newBannerItems],
+      };
+    });
   };
 
   const chooseFilesHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,16 +114,23 @@ export default function BannerEditModal({
             return;
           }
 
-          console.log(dataURL.toString().length);
+          if (!bannersState) {
+            return;
+          }
 
-          setBannersState((prev) => [
-            ...prev,
-            {
-              id: 0,
-              imageUrl: dataURL.toString(),
-              order: 1,
-            },
-          ]);
+          setBannersState((prev) => {
+            return {
+              ...prev,
+              items: [
+                ...prev.items,
+                {
+                  id: 0,
+                  imageUrl: dataURL.toString(),
+                  order: 1,
+                },
+              ],
+            };
+          });
         }
       };
 
@@ -68,9 +140,17 @@ export default function BannerEditModal({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    homepageTypeALocalStorageRepository.updateBannners(bannersState);
+    if (!bannersState) {
+      return;
+    }
 
-    updateBanners(bannersState);
+    const newBanners: ChurchBanners = {
+      ...bannersState,
+      items: [...bannerItemsSorted],
+    };
+
+    homepageTypeALocalStorageRepository.updateBannners(newBanners);
+    updateBanners(newBanners);
     hide();
   };
   return (
@@ -96,9 +176,10 @@ export default function BannerEditModal({
                     <input
                       id="show"
                       type="radio"
-                      value={"VISIBLE"}
-                      checked={true}
-                      onChange={() => {}}
+                      checked={bannersState.visible === true}
+                      onChange={() => {
+                        setBannersState((prev) => ({ ...prev, visible: true }));
+                      }}
                     />
                     <label
                       htmlFor="show"
@@ -106,7 +187,7 @@ export default function BannerEditModal({
                         marginLeft: 4,
                       }}
                     >
-                      보이기
+                      예
                     </label>
                   </div>
 
@@ -118,9 +199,13 @@ export default function BannerEditModal({
                     <input
                       id="hide"
                       type="radio"
-                      value={"HIDE"}
-                      checked={false}
-                      onChange={() => {}}
+                      checked={bannersState.visible === false}
+                      onChange={() => {
+                        setBannersState((prev) => ({
+                          ...prev,
+                          visible: false,
+                        }));
+                      }}
                     />
                     <label
                       htmlFor="hide"
@@ -128,49 +213,62 @@ export default function BannerEditModal({
                         marginLeft: 4,
                       }}
                     >
-                      보이기 않기
+                      아니오
                     </label>
                   </div>
                 </div>
               </div>
 
-              <div className="form-group">
-                <h3 className="font-weight-bold font-size-m form-group__header">
-                  배너 이미지
-                </h3>
-                <div className="form-group__body">
-                  <ul className="banners">
-                    {bannersState.map((banner, bannerIndex) => {
-                      return (
-                        <li
-                          key={bannerIndex}
-                          className="d-flex align-items-center"
-                        >
-                          <div className="image-container">
-                            <img src={banner.imageUrl} alt="" />
-                          </div>
-                          <div className="controls">
-                            <button
-                              type="button"
-                              onClick={() => removeBanner(bannerIndex)}
+              {bannersState.visible && (
+                <div className="form-group">
+                  <h3 className="font-weight-bold font-size-m form-group__header">
+                    배너 이미지
+                  </h3>
+                  <div className="form-group__body">
+                    <ul className="banners" ref={bannerItemsRef}>
+                      {bannersState.items.map((banner, bannerIndex) => {
+                        return (
+                          <li
+                            key={bannerIndex}
+                            className="d-flex align-items-center"
+                          >
+                            <div>
+                              <div className="handle cursor-pointer">
+                                <DragpanIcon maxWidth={30} fill="#9c9c9c" />
+                              </div>
+                            </div>
+                            <div
+                              className="image-container"
+                              style={{ marginLeft: 6 }}
                             >
-                              <TrashIcon maxWidth={24} fill="#888" />
-                            </button>
-                          </div>
-                        </li>
-                      );
-                    })}
+                              <img
+                                alt="church banner image"
+                                src={banner.imageUrl}
+                              />
+                            </div>
+                            <div className="controls">
+                              <span
+                                className="cursor-pointer"
+                                onClick={() => removeBanner(bannerIndex)}
+                              >
+                                <TrashIcon maxWidth={30} fill="#9c9c9c" />
+                              </span>
+                            </div>
+                          </li>
+                        );
+                      })}
 
-                    <li>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={chooseFilesHandler}
-                      />
-                    </li>
-                  </ul>
+                      <li>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={chooseFilesHandler}
+                        />
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="form-group">
                 <div>

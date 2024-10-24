@@ -12,6 +12,16 @@ const nextConfig = {
         hostname: "www.chunhojeil.com",
         pathname: "**",
       },
+      {
+        protocol: "http",
+        hostname: "placehold.co",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        pathname: "**",
+      },
     ],
   },
 };

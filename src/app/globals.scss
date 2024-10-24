@@ -52,6 +52,14 @@ button {
   margin-right: auto;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
+input[type="file"] {
+  cursor: pointer;
+}
+
 .d-flex {
   display: flex;
 }
