@@ -19,7 +19,7 @@ export default function LogoEditModal({
   hide,
 }: {
   churchLogo: ChurchLogo;
-  updateChurchLogo: Dispatch<SetStateAction<ChurchLogo | undefined>>;
+  updateChurchLogo: Dispatch<SetStateAction<ChurchLogo>>;
   hide: () => void;
 }) {
   const [churchLogoState, setChurchLogoState] =

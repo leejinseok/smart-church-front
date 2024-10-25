@@ -8,8 +8,8 @@ export default function HomepageEditOverlay({
 }) {
   return (
     <div
-      id="homepage-edit-overlay-component"
-      onClick={(e) => onClickListener()}
+      className="homepage-edit-overlay-component"
+      onClick={() => onClickListener()}
     >
       <div className="d-flex align-items-center justify-content-center">
         <EditIcon fill="#fff" maxWidth={18} />

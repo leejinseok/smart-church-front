@@ -60,6 +60,28 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.edit-overlay-container {
+  position: relative;
+}
+
+.edit-overlay-container:hover .homepage-edit-overlay-component {
+  display: flex;
+  z-index: 3;
+}
+
+.edit-tools-container {
+  position: relative;
+}
+
+.edit-tools-container:hover .homepage-edit-tools-component {
+  display: flex;
+  z-index: 3;
+}
+
+.edit-tools-container {
+  cursor: pointer;
+}
+
 .d-flex {
   display: flex;
 }

@@ -4,7 +4,7 @@ import "./HomepageTypeA.scss";
 import { ChurchResponse } from "../../../api/smart-church/smart-church-api-response";
 import { homepageTypeAFormMock } from "../../../type/homepage/homepage-type-a-mock";
 import { churchMock } from "../../../type/mock";
-import { nanumBarunGothicBold, nanumBarunGothicLight } from "../../layout";
+import { nanumBarunGothicBold } from "../../layout";
 import Banner from "./Banner/Banner";
 import ChurchDepartment from "./ChurchDepartment/ChurchDepartment";
 import ScrollEventRelatedParent from "./Event/ScrollEventRelatedParent";
@@ -17,6 +17,7 @@ import StaffGroup from "./Staff/StaffGroup";
 import Video from "./Video/Video";
 import QuillRenderer from "../Quill/QuillRenderer";
 import { homepageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
+import ChurchIntro from "./ChurchIntro/ChurchIntro";
 
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   const church: ChurchResponse = {
@@ -58,17 +59,10 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           </section>
 
           <section>
-            <div>
-              <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
-              >
-                교회소개
-              </h3>
-
-              <div className={`font-size-l pre-line`}>
-                <QuillRenderer ops={homepageTypeAMock.churchIntro} />
-              </div>
-            </div>
+            <ChurchIntro
+              isEdit={isEdit}
+              churchIntro={homepageTypeAMock.churchIntro}
+            />
           </section>
 
           <section className="recently-videos">

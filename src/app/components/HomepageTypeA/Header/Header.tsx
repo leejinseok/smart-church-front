@@ -7,7 +7,7 @@ import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import EditModeNav from "./EditMode/EditModeNav";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LogoEditModal from "./LogoEditModal/LogoEditModal";
 import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
 
@@ -20,7 +20,9 @@ export default function Header({
   churchLogo: ChurchLogo;
   isEdit: boolean;
 }) {
-  const [churchLogoState, setChurchLogoState] = useState<ChurchLogo>();
+  const [churchLogoState, setChurchLogoState] = useState<ChurchLogo>({
+    ...churchLogo,
+  });
   const [logoEditModal, setLogoEditModal] = useState({
     visible: false,
   });
@@ -32,10 +34,6 @@ export default function Header({
   const hideEditModal = () => {
     setLogoEditModal({ visible: false });
   };
-
-  useEffect(() => {
-    setChurchLogoState(churchLogo);
-  }, [churchLogo]);
 
   return (
     <div id="header-component">
@@ -49,7 +47,7 @@ export default function Header({
         <nav
           className={`${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
         >
-          <div className="d-flex church-logo">
+          <div className="d-flex church-logo edit-overlay-container">
             <div
               className="d-flex align-items-center"
               style={{
@@ -57,7 +55,7 @@ export default function Header({
                 minHeight: 30,
               }}
             >
-              {churchLogoState?.type !== "CHURCH_NAME" && (
+              {churchLogoState.type !== "CHURCH_NAME" && (
                 <img
                   src={churchLogoState?.image || ""}
                   alt=""
@@ -68,7 +66,7 @@ export default function Header({
                 />
               )}
 
-              {churchLogoState?.type !== "LOGO" && (
+              {churchLogoState.type !== "LOGO" && (
                 <span className="font-size-xl">{church.name}</span>
               )}
             </div>

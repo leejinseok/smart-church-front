@@ -10,14 +10,6 @@
   }
 }
 
-#banner-component:hover {
-  position: relative;
-  #homepage-edit-overlay-component {
-    display: flex;
-    z-index: 2;
-  }
-}
-
 @media (max-width: 1024px) {
   #banner-component {
     .swiper-slide {

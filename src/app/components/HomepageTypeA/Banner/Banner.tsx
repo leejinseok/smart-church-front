@@ -4,10 +4,7 @@ import "./Banner.scss";
 
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  ChurchBanner,
-  ChurchBanners,
-} from "../../../../type/homepage/homepage-type-a";
+import { ChurchBanners } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import { useEffect, useState } from "react";
 import BannerEditModal from "./BannerEditModal/BannerEditModal";
@@ -29,6 +26,16 @@ export default function Banner({
     items: [],
   });
 
+  const [noBannerGuideVisible, setNoBannerGuideVisible] = useState(false);
+
+  useEffect(() => {
+    if (isEdit && (bannersState.items.length === 0 || !bannersState.visible)) {
+      setNoBannerGuideVisible(true);
+    } else {
+      setNoBannerGuideVisible(false);
+    }
+  }, [bannersState.items.length, bannersState.visible, isEdit]);
+
   useEffect(() => {
     setBannerState({ ...banners });
   }, [banners]);
@@ -48,7 +55,7 @@ export default function Banner({
   };
 
   return (
-    <div id="banner-component">
+    <div id="banner-component" className="edit-overlay-container">
       <Swiper
         modules={[Navigation, Pagination, Autoplay]}
         spaceBetween={0}
@@ -61,29 +68,30 @@ export default function Banner({
         onSwiper={(swiper) => console.log(swiper)}
         onSlideChange={() => console.log()}
       >
-        {bannersState.items.map((banner, bannerIndex) => {
-          return (
-            <SwiperSlide key={bannerIndex}>
-              <img
-                src={banner.imageUrl}
-                alt=""
-                style={{
-                  width: "100%",
-                  height: 500,
-                  objectFit: "cover",
-                  display: "block",
-                }}
-              />
-            </SwiperSlide>
-          );
-        })}
+        {bannersState.visible &&
+          bannersState.items.map((banner, bannerIndex) => {
+            return (
+              <SwiperSlide key={bannerIndex}>
+                <img
+                  src={banner.imageUrl}
+                  alt=""
+                  style={{
+                    width: "100%",
+                    height: 500,
+                    objectFit: "cover",
+                    display: "block",
+                  }}
+                />
+              </SwiperSlide>
+            );
+          })}
       </Swiper>
 
       {isEdit && (
         <HomepageEditOverlay onClickListener={handleClickEditOverlay} />
       )}
 
-      {isEdit && bannersState.items.length === 0 && (
+      {noBannerGuideVisible && (
         <div className="no-banner-guide">
           <h3 className="text-align-center">
             <div className="d-flex justify-content-center align-items-center">
