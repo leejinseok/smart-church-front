@@ -7,7 +7,7 @@ import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import EditModeNav from "./EditMode/EditModeNav";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LogoEditModal from "./LogoEditModal/LogoEditModal";
 import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
 
@@ -20,12 +20,14 @@ export default function Header({
   churchLogo: ChurchLogo;
   isEdit: boolean;
 }) {
-  const [churchLogoState, setChurchLogoState] = useState<ChurchLogo>({
-    ...churchLogo,
-  });
+  const [churchLogoState, setChurchLogoState] = useState<ChurchLogo>();
   const [logoEditModal, setLogoEditModal] = useState({
     visible: false,
   });
+
+  useEffect(() => {
+    setChurchLogoState({ ...churchLogo });
+  }, [churchLogo]);
 
   const handleClickEditClick = () => {
     setLogoEditModal({ visible: true });
@@ -55,7 +57,7 @@ export default function Header({
                 minHeight: 30,
               }}
             >
-              {churchLogoState.type !== "CHURCH_NAME" && (
+              {churchLogoState && churchLogoState.type !== "CHURCH_NAME" && (
                 <img
                   src={churchLogoState?.image || ""}
                   alt=""
@@ -66,7 +68,7 @@ export default function Header({
                 />
               )}
 
-              {churchLogoState.type !== "LOGO" && (
+              {churchLogoState && churchLogoState.type !== "LOGO" && (
                 <span className="font-size-xl">{church.name}</span>
               )}
             </div>
