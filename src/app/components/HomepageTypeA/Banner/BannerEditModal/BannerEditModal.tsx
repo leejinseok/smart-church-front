@@ -193,7 +193,7 @@ export default function BannerEditModal({
 
                   <div
                     style={{
-                      marginLeft: 4,
+                      marginLeft: 8,
                     }}
                   >
                     <input

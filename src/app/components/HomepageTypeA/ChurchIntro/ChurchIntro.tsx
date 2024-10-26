@@ -13,12 +13,12 @@ export default function ChurchIntro({
   churchIntro: Op[];
 }) {
   return (
-    <div id="church-intro-section">
+    <div id="church-intro-section" className="">
       <h3
-        className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold ${isEdit && "edit-tools-container"}`}
+        className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold d-flex align-items-center ${isEdit && "edit-tools-container"}`}
       >
         교회소개
-        <HomepageEditTools />
+        <HomepageEditTools visibilitlyControl={false} />
       </h3>
 
       <div className={`font-size-l pre-line `} style={{ position: "relative" }}>

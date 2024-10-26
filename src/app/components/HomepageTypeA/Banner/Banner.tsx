@@ -62,7 +62,7 @@ export default function Banner({
         slidesPerView={1}
         navigation
         autoplay={{ delay: 3000 }}
-        loop
+        loop={bannersState.items.length > 1}
         speed={1200}
         pagination={{ clickable: true }}
         onSwiper={(swiper) => console.log(swiper)}
@@ -77,7 +77,6 @@ export default function Banner({
                   alt=""
                   style={{
                     width: "100%",
-                    height: 500,
                     objectFit: "cover",
                     display: "block",
                   }}

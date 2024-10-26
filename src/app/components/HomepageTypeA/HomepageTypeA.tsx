@@ -53,7 +53,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
       <main>
         <div className="container">
           <section>
-            <div style={{ paddingTop: 22, paddingBottom: 0 }}>
+            <div style={{ paddingTop: 12, paddingBottom: 0 }}>
               <Banner banners={homepageTypeAMock.banners} isEdit={isEdit} />
             </div>
           </section>
@@ -197,7 +197,6 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
         </div>
       </main>
       <Footer church={church} />
-      <ScrollEventRelatedParent />
     </div>
   );
 }
