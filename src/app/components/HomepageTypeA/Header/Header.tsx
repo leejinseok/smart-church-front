@@ -45,7 +45,7 @@ export default function Header({
       >
         <EditModeNav />
         <nav
-          className={`${nanumBarunGothicBold.className} container d-flex justify-content-space-between align-items-center`}
+          className={`${nanumBarunGothicBold.className} container d-flex justify-content-center align-items-center`}
         >
           <div className="d-flex church-logo edit-overlay-container">
             <div
@@ -75,7 +75,7 @@ export default function Header({
             )}
           </div>
 
-          <div className={`d-flex align-items-center `}>
+          <div className={`d-flex align-items-center right-menu-container`}>
             {/* <span>
               <FontAwesomeIcon icon={faMessage} width={26} />
             </span> */}

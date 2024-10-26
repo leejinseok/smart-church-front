@@ -10,10 +10,14 @@
     padding-right: 22px;
     height: 88px;
     display: flex;
+    position: relative;
   }
 
   .right-menu-container {
     display: flex;
+    position: absolute;
+    right: 0;
+    margin-right: 22px;
   }
 
   .right-menu-container span {

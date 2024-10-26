@@ -37,9 +37,8 @@
 
   .swiper-slide {
     overflow: hidden;
-    height: 300px;
     img {
-      height: 100%;
+      height: 300px;
     }
   }
 
@@ -55,7 +54,6 @@
   #banner-component {
     .swiper-slide {
       img {
-        height: 100%;
       }
     }
   }
