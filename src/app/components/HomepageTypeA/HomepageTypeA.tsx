@@ -14,10 +14,11 @@ import Header from "./Header/Header";
 import Locations from "./Location/Locations";
 import Service from "./Service/Service";
 import StaffGroup from "./Staff/StaffGroup";
-import Video from "./Video/Video";
+import Video from "./Videos/Video";
 import QuillRenderer from "../Quill/QuillRenderer";
 import { homepageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
+import Videos from "./Videos/Videos";
 
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   const church: ChurchResponse = {
@@ -66,17 +67,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           </section>
 
           <section className="recently-videos">
-            <div>
-              <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
-              >
-                설교영상
-              </h3>
-
-              <div>
-                <Video video={homepageTypeAMock.videos} />
-              </div>
-            </div>
+            <Videos videos={homepageTypeAMock.videos} />
           </section>
 
           <section>

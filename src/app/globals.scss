@@ -2,8 +2,10 @@
 @import "./style/modal.scss";
 @import "./style/edit-modal.scss";
 @import "./style/reset.scss";
+@import "./style/quill.scss";
+@import "./style/button.scss";
 
-:root {
+root {
   --background: #ffffff;
   --foreground: #171717;
   --primary-color: #6635a5;

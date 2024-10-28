@@ -2,7 +2,7 @@ import { Op } from "quill/core";
 
 export default function QuillRenderer({ ops }: { ops: Op[] }) {
   return (
-    <>
+    <div>
       {ops.map((op, opIndex) => {
         const attrs = op.attributes;
         let isBold = false;
@@ -17,6 +17,6 @@ export default function QuillRenderer({ ops }: { ops: Op[] }) {
           </span>
         );
       })}
-    </>
+    </div>
   );
 }

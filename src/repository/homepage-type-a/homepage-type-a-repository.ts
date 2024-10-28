@@ -1,3 +1,4 @@
+import { Op } from "quill/core";
 import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../type/homepage/homepage";
 import {
   ChurchBanner,
@@ -22,6 +23,7 @@ export interface HompageTypeALocalStorageRepository {
   saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => void;
   updateChurchLogo: (churchLogo: ChurchLogo) => void;
   updateBannners: (banners: ChurchBanners) => void;
+  updateChurchIntro: (op: Op[]) => void;
 }
 
 export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageRepository =
@@ -58,6 +60,14 @@ export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageReposi
       const homepageTypeA = this.getHompageTypeA();
       if (homepageTypeA) {
         homepageTypeA.banners = { ...banners };
+        this.saveHomepageTypeA(homepageTypeA);
+      }
+    },
+
+    updateChurchIntro(op) {
+      const homepageTypeA = this.getHompageTypeA();
+      if (homepageTypeA) {
+        homepageTypeA.churchIntro = [...op];
         this.saveHomepageTypeA(homepageTypeA);
       }
     },

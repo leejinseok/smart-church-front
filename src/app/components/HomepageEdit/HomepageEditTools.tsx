@@ -9,8 +9,10 @@ import VisibilityIcon from "../../../components/Icon/VisibilityIcon";
 
 export default function HomepageEditTools({
   visibilitlyControl = true,
+  handleClick,
 }: {
   visibilitlyControl: boolean;
+  handleClick: () => void;
 }) {
   const [visible, setVisible] = useState(true);
   const defaultColor = "#757575";
@@ -27,8 +29,9 @@ export default function HomepageEditTools({
         <span
           onMouseEnter={() => setEditIconFill(mouseOverColor)}
           onMouseLeave={() => setEditIconFill(defaultColor)}
+          onClick={handleClick}
         >
-          <EditIcon maxWidth={26} fill={editIconFill} />
+          <EditIcon maxWidth={22} fill={editIconFill} />
         </span>
         {visibilitlyControl &&
           (visible ? (
@@ -38,7 +41,7 @@ export default function HomepageEditTools({
               onMouseLeave={() => setVisibilityIconFill(defaultColor)}
               onClick={() => setVisible(false)}
             >
-              <VisibilityIcon maxWidth={26} fill={visibilityIconFill} />
+              <VisibilityIcon maxWidth={22} fill={visibilityIconFill} />
             </span>
           ) : (
             <span
@@ -47,7 +50,7 @@ export default function HomepageEditTools({
               onMouseLeave={() => setVisibilityOffIconFill(defaultColor)}
               onClick={() => setVisible(true)}
             >
-              <VisibilityOffIcon maxWidth={26} fill={visibilityOffIconFill} />
+              <VisibilityOffIcon maxWidth={22} fill={visibilityOffIconFill} />
             </span>
           ))}
       </div>
