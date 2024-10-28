@@ -1,0 +1,36 @@
+#church-videos-edit-modal {
+  .modal__inner {
+    padding-top: 40px;
+
+    .modal__box {
+      ul.church-videos-in-edit-modal {
+        li {
+          padding: 10px;
+          input {
+            padding: 6px;
+          }
+          border-bottom: 1px solid #ccc;
+        }
+      }
+
+      .church-video-register-form {
+        padding: 10px;
+        flex-direction: column;
+        .church-register-video-container {
+          min-height: 200px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          width: 100%;
+          margin-bottom: 10px;
+          #church-register-video {
+          }
+        }
+
+        input {
+          padding: 6px;
+          margin-bottom: 4px;
+        }
+      }
+    }
+  }
+}
