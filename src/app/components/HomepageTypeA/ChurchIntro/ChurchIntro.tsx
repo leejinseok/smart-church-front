@@ -33,6 +33,7 @@ export default function ChurchIntro({
       <div className={`font-size-l pre-line `} style={{ position: "relative" }}>
         <QuillRenderer ops={churchIntro} />
       </div>
+      {churchIntroEditModalVisible && <TestModal />}
 
       {churchIntroEditModalVisible && (
         <ChurchIntroEditModal
