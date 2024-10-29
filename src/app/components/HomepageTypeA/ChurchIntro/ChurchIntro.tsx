@@ -22,7 +22,7 @@ export default function ChurchIntro({
       <h3
         className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold d-flex align-items-center ${isEdit && "edit-tools-container"}`}
       >
-        {churchIntro.title || "교회소개"}
+        {churchIntro.title}
         <HomepageEditTools
           visibilitlyControl={false}
           handleClick={() => setChurchIntroEditModalVisible(true)}

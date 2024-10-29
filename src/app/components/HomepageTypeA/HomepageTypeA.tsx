@@ -18,21 +18,25 @@ import { homepageTypeALocalStorageRepository } from "../../../repository/homepag
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
 import Videos from "./Videos/Videos";
 
+const homepageTypeADataWhenEditMode = () => {
+  if (typeof window !== "undefined") {
+    const localStorageItem =
+      homepageTypeALocalStorageRepository.getHompageTypeA();
+    if (localStorageItem) {
+      return localStorageItem;
+    }
+  }
+  return homepageTypeAFormMock;
+};
+
 export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
   const church: ChurchResponse = {
     ...churchMock,
   };
 
-  let homepageTypeAMock = { ...homepageTypeAFormMock };
-  if (isEdit) {
-    if (typeof window !== "undefined") {
-      const localStorageItem =
-        homepageTypeALocalStorageRepository.getHompageTypeA();
-      if (localStorageItem) {
-        homepageTypeAMock = { ...localStorageItem };
-      }
-    }
-  }
+  const homepageTypeAMock = isEdit
+    ? homepageTypeADataWhenEditMode()
+    : { ...homepageTypeAFormMock };
 
   const generateGalleryContentClassNameByLength = (length: number) => {
     if (length < 4) {
@@ -177,9 +181,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
                 >
                   {church.address}
                 </p>
-                <p style={{ marginTop: 16 }} className="font-size-l">
-                  {/* {churchMock.location.description} */}
-                </p>
+                <p style={{ marginTop: 16 }} className="font-size-l"></p>
               </div>
             </div>
           </section>

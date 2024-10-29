@@ -88,7 +88,13 @@ export default function ChurchIntroEditModal({
               <input
                 type="text"
                 className="font-size-m no-border"
-                value={churchIntro.title}
+                value={churchIntroState.title}
+                onChange={(e) =>
+                  setChurchIntroState((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
+                }
               />
             </div>
 
