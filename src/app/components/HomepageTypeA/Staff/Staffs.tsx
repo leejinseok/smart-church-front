@@ -35,7 +35,7 @@ const Staff = ({
         </div>
 
         <div className={`content-container`}>
-          <p className="font-size-l text-align-center">
+          <p className="font-size-m text-align-center">
             {staff.name} {staff.role}
           </p>
         </div>

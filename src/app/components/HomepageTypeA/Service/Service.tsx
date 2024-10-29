@@ -8,11 +8,11 @@ export default function Service({
 }) {
   return (
     <div id="service-component">
-      <h3 style={{ marginBottom: 16 }} className="font-size-l">
+      <h3 style={{ marginBottom: 16 }} className="font-size-m">
         예배
       </h3>
 
-      <table className="font-size-l">
+      <table className="font-size-m">
         <thead>
           <tr>
             <th>구분</th>

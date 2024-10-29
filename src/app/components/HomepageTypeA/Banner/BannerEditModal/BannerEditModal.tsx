@@ -162,7 +162,7 @@ export default function BannerEditModal({
       <div className="modal__inner">
         <div className="modal__box">
           <div className="modal__header">
-            <h3 className="font-size-m font-weight-bold">배너 편집</h3>
+            <h3 className="font-size-l font-weight-bold">배너 편집</h3>
           </div>
 
           <div className="modal__body" onClick={(e) => e.stopPropagation()}>

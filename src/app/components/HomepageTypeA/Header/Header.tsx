@@ -69,7 +69,7 @@ export default function Header({
               )}
 
               {churchLogoState && churchLogoState.type !== "LOGO" && (
-                <span className="font-size-xl">{church.name}</span>
+                <span className="font-size-xxl">{church.name}</span>
               )}
             </div>
             {isEdit && (

@@ -3,6 +3,7 @@ import { HOMEPAGE_TYPE_A_STORAGED_DATA_KEY } from "../../type/homepage/homepage"
 import {
   ChurchBanner,
   ChurchBanners,
+  ChurchIntro,
   ChurchLogo,
   HomepageTypeA,
 } from "../../type/homepage/homepage-type-a";
@@ -23,7 +24,7 @@ export interface HompageTypeALocalStorageRepository {
   saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => void;
   updateChurchLogo: (churchLogo: ChurchLogo) => void;
   updateBannners: (banners: ChurchBanners) => void;
-  updateChurchIntro: (op: Op[]) => void;
+  updateChurchIntro: (churchIntro: ChurchIntro) => void;
 }
 
 export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageRepository =
@@ -64,10 +65,10 @@ export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageReposi
       }
     },
 
-    updateChurchIntro(op) {
+    updateChurchIntro(churchIntro) {
       const homepageTypeA = this.getHompageTypeA();
       if (homepageTypeA) {
-        homepageTypeA.churchIntro = [...op];
+        homepageTypeA.churchIntro = { ...churchIntro };
         this.saveHomepageTypeA(homepageTypeA);
       }
     },

@@ -40,6 +40,15 @@ button {
   display: none;
 }
 
+.no-border {
+  border: none;
+  outline: none;
+  padding-left: 0px !important;
+}
+
+.no-border:focus-visible {
+}
+
 .container {
   width: 1024px;
   display: block;

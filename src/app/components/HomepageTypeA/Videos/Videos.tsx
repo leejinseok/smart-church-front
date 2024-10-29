@@ -15,7 +15,7 @@ export default function Videos({ videos }: { videos: ChurchVideo[] }) {
   return (
     <div id="videos">
       <h3
-        className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold edit-tools-container`}
+        className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold edit-tools-container`}
       >
         설교영상
         <HomepageEditTools

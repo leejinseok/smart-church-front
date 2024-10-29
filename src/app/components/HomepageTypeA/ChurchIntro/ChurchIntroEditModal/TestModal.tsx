@@ -26,7 +26,7 @@ export default function TestModal() {
   }, [mounted]);
 
   return (
-    <div style={{ visibility: "hidden" }}>
+    <div>
       <div id="test-text-editor"></div>
     </div>
   );

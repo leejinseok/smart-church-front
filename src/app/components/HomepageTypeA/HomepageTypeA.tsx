@@ -71,7 +71,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           <section>
             <div>
               <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 사역 및 부서소개
               </h3>
@@ -87,7 +87,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           <section className="service-guide">
             <div>
               <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 예배 및 모임안내
               </h3>
@@ -105,13 +105,13 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           <section>
             <div>
               <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 교회등록 안내
               </h3>
 
               <div>
-                <div className="font-size-l pre-line">
+                <div className="font-size-m pre-line">
                   <QuillRenderer ops={homepageTypeAMock.churchRegisterGuide} />
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           <section>
             <div>
               <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 섬기는 사람들
               </h3>
@@ -146,7 +146,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           <section className="gallery">
             <div>
               <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 사진첩
               </h3>
@@ -164,7 +164,7 @@ export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
           <section>
             <div>
               <h3
-                className={`${nanumBarunGothicBold.className} font-size-xl font-weight-bold`}
+                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 찾아오시는 길
               </h3>

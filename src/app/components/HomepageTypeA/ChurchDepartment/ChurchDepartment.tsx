@@ -11,10 +11,10 @@ export default function ChurchDepartment({
       {departments.map((department, departmentIndex) => {
         return (
           <div key={departmentIndex} className="church-department">
-            <p className="font-size-l font-weight-bold department-name">
+            <p className="font-size-m font-weight-bold department-name">
               {department.name}
             </p>
-            <p className="font-size-l">{department.description}</p>
+            <p className="font-size-m">{department.description}</p>
           </div>
         );
       })}
