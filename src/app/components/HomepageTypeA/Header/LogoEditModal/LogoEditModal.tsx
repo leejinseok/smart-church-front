@@ -10,8 +10,10 @@ import {
   ChurchLogo,
   ChurchLogoType,
 } from "../../../../../type/homepage/homepage-type-a";
-import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-repository";
+import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { getCookie } from "../../../../../util/cookie-utils";
 
 export default function LogoEditModal({
   churchLogo,
@@ -56,6 +58,16 @@ export default function LogoEditModal({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const homepageTypeAId = getCookie("homepageTypeAId");
+    if (!homepageTypeAId) {
+      return;
+    }
+
+    homepageTypeAApiRepository.updateChurchLogo(
+      +homepageTypeAId,
+      churchLogoState,
+    );
     homepageTypeALocalStorageRepository.updateChurchLogo(churchLogoState);
     updateChurchLogo((prev) => ({
       ...prev,

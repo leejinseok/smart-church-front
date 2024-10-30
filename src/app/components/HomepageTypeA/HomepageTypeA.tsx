@@ -2,7 +2,6 @@
 
 import "./HomepageTypeA.scss";
 import { ChurchResponse } from "../../../api/smart-church/smart-church-api-response";
-import { homepageTypeAFormMock } from "../../../type/homepage/homepage-type-a-mock";
 import { churchMock } from "../../../type/mock";
 import { nanumBarunGothicBold } from "../../layout";
 import Banner from "./Banner/Banner";
@@ -14,10 +13,8 @@ import Locations from "./Location/Locations";
 import Service from "./Service/Service";
 import StaffGroup from "./Staff/StaffGroup";
 import QuillRenderer from "../Quill/QuillRenderer";
-import { homepageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
 import Videos from "./Videos/Videos";
-import { headers } from "next/headers";
 import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
 
 export default function HomepageTypeA({

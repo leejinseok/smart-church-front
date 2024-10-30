@@ -1,7 +1,7 @@
 import "./ChurchIntroEditModal.scss";
 
 import { useEffect, useState } from "react";
-import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-repository";
+import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import { ChurchIntro } from "../../../../../type/homepage/homepage-type-a";
 import Quill from "quill";
 

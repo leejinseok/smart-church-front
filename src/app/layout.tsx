@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import RecoilRootWrapper from "../layout/RecoilWrapper";
+import { cookies } from "next/headers";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",

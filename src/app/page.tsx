@@ -1,13 +1,12 @@
 import "./page.scss";
 import HomepageTypeA from "./components/HomepageTypeA/HomepageTypeA";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { PageProps } from "../type/common";
 import { Metadata } from "next";
 import { HomepageTypeA as HomepageTypeAInterface } from "../type/homepage/homepage-type-a";
-import { join } from "path";
 
-const homepageTypeADataWhenEditMode = (churchUuid: string) => {
-  return fetch(`http://localhost:8088/homepageTypeA?churchUuid=${churchUuid}`);
+const homepageTypeADataWhenEditMode = (uuid: string) => {
+  return fetch(`http://localhost:8088/homepageTypeA?uuid=${uuid}`);
 };
 
 export const metadata: Metadata = {
@@ -15,28 +14,36 @@ export const metadata: Metadata = {
   description: "스마트처치",
 };
 
-export default async function Home({ params, searchParams }: PageProps) {
-  const { editMode, homepageType } = searchParams;
+export default async function Home({ searchParams }: PageProps) {
+  const { editMode } = searchParams;
   const isEdit = editMode === "true";
+  const cookieValues = cookies();
 
   const headersValue = headers();
-  let homepageData: HomepageTypeAInterface | null = null;
+  let homepageTypeAData: HomepageTypeAInterface | null = null;
   if (isEdit) {
-    const churchUuid = headersValue.get("churchUuid");
-    if (homepageType === "A") {
-      const res = await homepageTypeADataWhenEditMode(churchUuid!);
-      const json = await res.json();
-      homepageData = JSON.parse(
-        JSON.stringify(json),
-      )[0] as HomepageTypeAInterface;
-    }
+    // 편집인경우
+    // 로그인한 경우
+
+    //로그인 안한경우
+    const uuid = headersValue.get("uuid");
+    const res = await homepageTypeADataWhenEditMode(uuid!);
+    const json = await res.json();
+    // homepageTypeAData = JSON.parse(
+    //   JSON.stringify(json),
+    // )[0] as HomepageTypeAInterface;
+
+    homepageTypeAData = json[0];
+  } else {
+    const url = headersValue.get("url");
+    console.log(url);
   }
+
+  console.log(cookieValues);
 
   return (
     <div id="main-page" className={`${isEdit && "edit"}`}>
-      {homepageType === "A" && (
-        <HomepageTypeA isEdit={isEdit} homepageTypeAData={homepageData!} />
-      )}
+      <HomepageTypeA isEdit={isEdit} homepageTypeAData={homepageTypeAData!} />
     </div>
   );
 }

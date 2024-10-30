@@ -13,7 +13,7 @@ import {
   ChurchBanners,
 } from "../../../../../type/homepage/homepage-type-a";
 import "./BannerEditModal.scss";
-import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-repository";
+import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 

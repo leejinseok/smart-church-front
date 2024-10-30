@@ -1,6 +1,8 @@
-import { redirect } from "next/dist/server/api-utils";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { homepageTypeAFormMock } from "./type/homepage/homepage-type-a-mock";
+import { cookies } from "next/headers";
+import { homepageTypeAApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
 
 const convertToParams = (queryString: string) => {
   const params = new URLSearchParams(queryString);
@@ -13,7 +15,7 @@ const convertToParams = (queryString: string) => {
 };
 
 // This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const headers: HeadersInit = new Headers();
 
   const url = request.url;
@@ -24,13 +26,24 @@ export function middleware(request: NextRequest) {
 
   const editMode = params["editMode"];
   if (editMode === true) {
-    const churchUuid = params["churchUuid"];
-    if (churchUuid) {
-      headers.append("churchUuid", `${churchUuid}`);
+    const uuid = params["uuid"];
+    if (uuid) {
+      headers.append("uuid", `${uuid}`);
     } else {
-      return NextResponse.redirect(
-        `${nextUrl.origin}${search}&churchUuid=47236142-4c14-4830-941a-7b79879669a6`,
+      const defaultData = { ...homepageTypeAFormMock };
+      defaultData.id = 2;
+      defaultData.uuid = "47236142-4c14-4830-941a-7b79879669a6";
+
+      const res =
+        await homepageTypeAApiRepository.saveHomepageTypeA(defaultData);
+
+      const redirect = NextResponse.redirect(
+        `${nextUrl.origin}${search}&uuid=${defaultData.uuid}`,
       );
+
+      const homepageTypeAId = res.id;
+      redirect.cookies.set("homepageTypeAId", `${homepageTypeAId!}`);
+      return redirect;
     }
   }
 

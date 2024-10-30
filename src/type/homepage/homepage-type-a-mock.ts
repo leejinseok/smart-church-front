@@ -1,6 +1,8 @@
 import { HomepageTypeA } from "./homepage-type-a";
 
 export const homepageTypeAFormMock: HomepageTypeA = {
+  id: null,
+  uuid: null,
   churchLogo: {
     type: "LOGO_AND_CHURCH_NAME",
     image: "https://placehold.co/50x50?text=Logo",

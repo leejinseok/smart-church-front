@@ -64,6 +64,8 @@ export interface ChurchIntro {
 }
 
 export interface HomepageTypeA {
+  id: number | null;
+  uuid: string | null;
   churchLogo: ChurchLogo;
   churchIntro: ChurchIntro;
   banners: ChurchBanners;
