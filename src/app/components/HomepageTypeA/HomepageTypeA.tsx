@@ -22,6 +22,7 @@ import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/
 
 export default function HomepageTypeA({
   isEdit,
+  homepageTypeAData,
 }: {
   isEdit: boolean;
   homepageTypeAData: HomepageTypeAInterface;
@@ -30,7 +31,7 @@ export default function HomepageTypeA({
     ...churchMock,
   };
 
-  const homepageTypeAMock = { ...homepageTypeAFormMock };
+  const homepageTypeAMock = { ...homepageTypeAData };
 
   const generateGalleryContentClassNameByLength = (length: number) => {
     if (length < 4) {

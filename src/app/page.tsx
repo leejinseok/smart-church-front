@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { PageProps } from "../type/common";
 import { Metadata } from "next";
 import { HomepageTypeA as HomepageTypeAInterface } from "../type/homepage/homepage-type-a";
+import { join } from "path";
 
 const homepageTypeADataWhenEditMode = (churchUuid: string) => {
   return fetch(`http://localhost:8088/homepageTypeA?churchUuid=${churchUuid}`);
@@ -25,7 +26,9 @@ export default async function Home({ params, searchParams }: PageProps) {
     if (homepageType === "A") {
       const res = await homepageTypeADataWhenEditMode(churchUuid!);
       const json = await res.json();
-      homepageData = json as HomepageTypeAInterface;
+      homepageData = JSON.parse(
+        JSON.stringify(json),
+      )[0] as HomepageTypeAInterface;
     }
   }
 
