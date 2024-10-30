@@ -17,26 +17,20 @@ import QuillRenderer from "../Quill/QuillRenderer";
 import { homepageTypeALocalStorageRepository } from "../../../repository/homepage-type-a/homepage-type-a-repository";
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
 import Videos from "./Videos/Videos";
+import { headers } from "next/headers";
+import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
 
-const homepageTypeADataWhenEditMode = () => {
-  if (typeof window !== "undefined") {
-    const localStorageItem =
-      homepageTypeALocalStorageRepository.getHompageTypeA();
-    if (localStorageItem) {
-      return localStorageItem;
-    }
-  }
-  return homepageTypeAFormMock;
-};
-
-export default function HomepageTypeA({ isEdit }: { isEdit: boolean }) {
+export default function HomepageTypeA({
+  isEdit,
+}: {
+  isEdit: boolean;
+  homepageTypeAData: HomepageTypeAInterface;
+}) {
   const church: ChurchResponse = {
     ...churchMock,
   };
 
-  const homepageTypeAMock = isEdit
-    ? homepageTypeADataWhenEditMode()
-    : { ...homepageTypeAFormMock };
+  const homepageTypeAMock = { ...homepageTypeAFormMock };
 
   const generateGalleryContentClassNameByLength = (length: number) => {
     if (length < 4) {
