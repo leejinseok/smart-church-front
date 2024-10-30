@@ -56,7 +56,7 @@ export default function LogoEditModal({
     reader.readAsDataURL(file); // Read the file as a data URL
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const homepageTypeAId = getCookie("homepageTypeAId");
@@ -64,11 +64,11 @@ export default function LogoEditModal({
       return;
     }
 
-    homepageTypeAApiRepository.updateChurchLogo(
+    await homepageTypeAApiRepository.updateChurchLogo(
       +homepageTypeAId,
       churchLogoState,
     );
-    homepageTypeALocalStorageRepository.updateChurchLogo(churchLogoState);
+
     updateChurchLogo((prev) => ({
       ...prev,
       ...churchLogoState,

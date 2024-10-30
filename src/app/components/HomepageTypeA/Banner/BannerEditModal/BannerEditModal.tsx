@@ -16,6 +16,8 @@ import "./BannerEditModal.scss";
 import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { getCookie } from "../../../../../util/cookie-utils";
 
 export default function BannerEditModal({
   banners,
@@ -138,9 +140,14 @@ export default function BannerEditModal({
     }
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!bannersState) {
+      return;
+    }
+
+    const homepageTypeAId = getCookie("homepageTypeAId");
+    if (!homepageTypeAId) {
       return;
     }
 
@@ -149,7 +156,10 @@ export default function BannerEditModal({
       items: [...bannerItemsSorted],
     };
 
-    homepageTypeALocalStorageRepository.updateBannners(newBanners);
+    await homepageTypeAApiRepository.updateBannners(
+      +homepageTypeAId,
+      newBanners,
+    );
     updateBanners(newBanners);
     hide();
   };

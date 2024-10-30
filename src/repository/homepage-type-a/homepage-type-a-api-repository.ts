@@ -12,8 +12,14 @@ export interface HompageTypeAApiRepository {
     churchId: number,
     churchLogo: ChurchLogo,
   ) => Promise<HomepageTypeA>;
-  updateBannners: (banners: ChurchBanners) => void;
-  updateChurchIntro: (churchIntro: ChurchIntro) => void;
+  updateBannners: (
+    churchId: number,
+    banners: ChurchBanners,
+  ) => Promise<HomepageTypeA>;
+  updateChurchIntro: (
+    churchId: number,
+    churchIntro: ChurchIntro,
+  ) => Promise<HomepageTypeA>;
 }
 
 export const homepageTypeAApiRepository: HompageTypeAApiRepository = {
@@ -33,39 +39,62 @@ export const homepageTypeAApiRepository: HompageTypeAApiRepository = {
     const json = await res.json();
     return json;
   },
-  async updateChurchLogo(churchId, churchLogo) {
+  async updateChurchLogo(homepageTypeAId, churchLogo) {
     // const homepageTypeA = this.getHompageTypeA();
     // if (homepageTypeA) {
     //   homepageTypeA.churchLogo = { ...churchLogo };
     //   this.saveHomepageTypeA(homepageTypeA);
     // }
 
-    const res = await fetch(`http://localhost:8088/homepageTypeA/${churchId}`, {
-      headers: {
-        "content-type": "application/json",
+    const res = await fetch(
+      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          churchLogo: churchLogo,
+        }),
       },
-      method: "PATCH",
-      body: JSON.stringify({
-        churchLogo: churchLogo,
-      }),
-    });
+    );
 
     const json = await res.json();
     return json;
   },
-  updateBannners(banners) {
-    const homepageTypeA = this.getHompageTypeA();
-    if (homepageTypeA) {
-      homepageTypeA.banners = { ...banners };
-      this.saveHomepageTypeA(homepageTypeA);
-    }
+  async updateBannners(homepageTypeAId, banners) {
+    const res = await fetch(
+      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          banners: banners,
+        }),
+      },
+    );
+
+    const json = await res.json();
+    return json;
   },
 
-  updateChurchIntro(churchIntro) {
-    const homepageTypeA = this.getHompageTypeA();
-    if (homepageTypeA) {
-      homepageTypeA.churchIntro = { ...churchIntro };
-      this.saveHomepageTypeA(homepageTypeA);
-    }
+  async updateChurchIntro(homepageTypeAId, churchIntro) {
+    const res = await fetch(
+      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          churchIntro: churchIntro,
+        }),
+      },
+    );
+
+    const json = await res.json();
+    return json;
   },
 };
