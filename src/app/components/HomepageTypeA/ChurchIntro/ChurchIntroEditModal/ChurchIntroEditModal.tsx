@@ -1,7 +1,6 @@
 import "./ChurchIntroEditModal.scss";
 
 import { useEffect, useState } from "react";
-import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import { ChurchIntro } from "../../../../../type/homepage/homepage-type-a";
 import Quill from "quill";
 import { getCookie } from "../../../../../util/cookie-utils";
@@ -9,9 +8,11 @@ import { homepageTypeAApiRepository } from "../../../../../repository/homepage-t
 
 export default function ChurchIntroEditModal({
   churchIntro,
+  updateChurchIntro,
   hide,
 }: {
   churchIntro: ChurchIntro;
+  updateChurchIntro: (churchIntro: ChurchIntro) => void;
   hide: () => void;
 }) {
   const [mounted, setMounted] = useState(false);
@@ -63,17 +64,19 @@ export default function ChurchIntroEditModal({
     });
   }, [churchIntroEditor, churchIntroState, mounted]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const homepageTypeAId = getCookie("homepageTypeAId");
     if (!homepageTypeAId) {
       return;
     }
 
-    homepageTypeAApiRepository.updateChurchIntro(
-      homepageTypeAId,
+    await homepageTypeAApiRepository.updateChurchIntro(
+      +homepageTypeAId,
       churchIntroState,
     );
-    window.location.reload();
+
+    updateChurchIntro(churchIntroState);
+    hide();
   };
 
   return (

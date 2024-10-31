@@ -3,7 +3,10 @@
     padding-top: 40px;
 
     .modal__box {
+      max-width: 610;
+      min-width: 0;
       ul.church-videos-in-edit-modal {
+        padding-left: 0;
         li {
           padding: 10px;
           input {
@@ -13,22 +16,18 @@
         }
       }
 
-      .church-video-register-form {
-        padding: 10px;
-        flex-direction: column;
-        .church-register-video-container {
-          min-height: 200px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          width: 100%;
-          margin-bottom: 10px;
-          #church-register-video {
-          }
+      .form-group {
+        padding-left: 14px;
+        padding-right: 14px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+
+        &:first-child {
+          padding-bottom: 0;
         }
 
-        input {
-          padding: 6px;
-          margin-bottom: 4px;
+        &.church-videos {
+          padding-left: 0;
         }
       }
     }

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { ChurchVideo } from "../../../../type/homepage/homepage-type-a";
+import { ChurchVideos } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import Video from "./Video";
 import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
 import VideosEditModal from "./VideosEditModal/VideosEditModal";
 
-export default function Videos({ videos }: { videos: ChurchVideo[] }) {
-  const [videosState, setVideosState] = useState<ChurchVideo[]>([]);
+export default function Videos({ videos }: { videos: ChurchVideos }) {
+  const [videosState, setVideosState] = useState<ChurchVideos>({ ...videos });
   const [videosEditModalVisible, setVideosEditModalVisible] = useState(false);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Videos({ videos }: { videos: ChurchVideo[] }) {
       <h3
         className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold edit-tools-container`}
       >
-        설교영상
+        {videosState?.title}
         <HomepageEditTools
           handleClick={() => {
             setVideosEditModalVisible(true);
@@ -27,7 +27,7 @@ export default function Videos({ videos }: { videos: ChurchVideo[] }) {
       </h3>
 
       <div>
-        <Video video={videosState} />
+        <Video video={videosState?.page?.data || []} />
       </div>
 
       {videosEditModalVisible && (

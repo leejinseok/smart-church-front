@@ -29,6 +29,14 @@ export async function middleware(request: NextRequest) {
     const uuid = params["uuid"];
     if (uuid) {
       headers.append("uuid", `${uuid}`);
+      const res = await homepageTypeAApiRepository.getHompageTypeA(`${uuid}`);
+      if (res) {
+        const next = NextResponse.next({
+          headers,
+        });
+        next.cookies.set("homepageTypeAId", `${res.id}`);
+        return next;
+      }
     } else {
       const defaultData = { ...homepageTypeAFormMock };
       defaultData.id = 2;
@@ -47,7 +55,6 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  headers.append("url", url);
   return NextResponse.next({
     headers,
   });

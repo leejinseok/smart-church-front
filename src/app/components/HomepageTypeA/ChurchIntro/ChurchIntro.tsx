@@ -17,12 +17,14 @@ export default function ChurchIntro({
   const [churchIntroEditModalVisible, setChurchIntroEditModalVisible] =
     useState(false);
 
+  const [churchIntroState, setChurchIntroState] = useState({ ...churchIntro });
+
   return (
     <div id="church-intro-section">
       <h3
         className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold d-flex align-items-center ${isEdit && "edit-tools-container"}`}
       >
-        {churchIntro.title}
+        {churchIntroState.title}
         <HomepageEditTools
           visibilitlyControl={false}
           handleClick={() => setChurchIntroEditModalVisible(true)}
@@ -30,13 +32,16 @@ export default function ChurchIntro({
       </h3>
 
       <div className={`font-size-m pre-line `} style={{ position: "relative" }}>
-        <QuillRenderer ops={churchIntro.contents} />
+        <QuillRenderer ops={churchIntroState.contents} />
       </div>
 
       {churchIntroEditModalVisible && (
         <ChurchIntroEditModal
           hide={() => setChurchIntroEditModalVisible(false)}
-          churchIntro={churchIntro}
+          churchIntro={churchIntroState}
+          updateChurchIntro={(churchIntro) => {
+            setChurchIntroState(churchIntro);
+          }}
         />
       )}
     </div>

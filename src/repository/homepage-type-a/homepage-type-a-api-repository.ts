@@ -9,15 +9,15 @@ export interface HompageTypeAApiRepository {
   getHompageTypeA: (uuid: string) => Promise<HomepageTypeA | null>;
   saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => Promise<HomepageTypeA>;
   updateChurchLogo: (
-    churchId: number,
+    homepageTypeAId: number,
     churchLogo: ChurchLogo,
   ) => Promise<HomepageTypeA>;
   updateBannners: (
-    churchId: number,
+    homepageTypeAId: number,
     banners: ChurchBanners,
   ) => Promise<HomepageTypeA>;
   updateChurchIntro: (
-    churchId: number,
+    homepageTypeAId: number,
     churchIntro: ChurchIntro,
   ) => Promise<HomepageTypeA>;
 }
@@ -40,12 +40,6 @@ export const homepageTypeAApiRepository: HompageTypeAApiRepository = {
     return json;
   },
   async updateChurchLogo(homepageTypeAId, churchLogo) {
-    // const homepageTypeA = this.getHompageTypeA();
-    // if (homepageTypeA) {
-    //   homepageTypeA.churchLogo = { ...churchLogo };
-    //   this.saveHomepageTypeA(homepageTypeA);
-    // }
-
     const res = await fetch(
       `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
       {

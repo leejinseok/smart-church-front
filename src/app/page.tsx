@@ -29,17 +29,11 @@ export default async function Home({ searchParams }: PageProps) {
     const uuid = headersValue.get("uuid");
     const res = await homepageTypeADataWhenEditMode(uuid!);
     const json = await res.json();
-    // homepageTypeAData = JSON.parse(
-    //   JSON.stringify(json),
-    // )[0] as HomepageTypeAInterface;
 
     homepageTypeAData = json[0];
   } else {
     const url = headersValue.get("url");
-    console.log(url);
   }
-
-  console.log(cookieValues);
 
   return (
     <div id="main-page" className={`${isEdit && "edit"}`}>

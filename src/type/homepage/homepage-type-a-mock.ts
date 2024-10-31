@@ -149,18 +149,27 @@ export const homepageTypeAFormMock: HomepageTypeA = {
       ],
     },
   ],
-  videos: [
-    {
-      // url: "https://www.youtube.com/watch?v=aXqdQ2cj2sQ",
-      url: "https://www.youtube.com/watch?v=c21QZnQtGqo",
-      order: 0,
-    },
-    {
-      // url: "https://www.youtube.com/watch?v=ivtOmQ2zcDU",
-      url: "https://www.youtube.com/watch?v=c21QZnQtGqo",
-      order: 1,
-    },
-  ],
+  videos: {
+    currentPage: 0,
+    totalPages: 1,
+    size: 10,
+    totalElements: 2,
+    sort: "createdAt,DESC",
+    last: true,
+    next: false,
+    data: [
+      {
+        // url: "https://www.youtube.com/watch?v=aXqdQ2cj2sQ",
+        url: "https://www.youtube.com/watch?v=c21QZnQtGqo",
+        order: 0,
+      },
+      {
+        // url: "https://www.youtube.com/watch?v=ivtOmQ2zcDU",
+        url: "https://www.youtube.com/watch?v=c21QZnQtGqo",
+        order: 1,
+      },
+    ],
+  },
   worshipServicesAndMeetings: [
     {
       groupName: "SERVICE",

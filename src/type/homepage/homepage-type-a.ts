@@ -1,5 +1,18 @@
 import { Op } from "quill/core";
 
+export interface ChurchVideos {
+  title: string;
+  page: {
+    currentPage: number;
+    totalPages: number;
+    size: number;
+    totalElements: number;
+    sort: string;
+    last: boolean;
+    next: boolean;
+    data: ChurchVideo[];
+  };
+}
 export interface ChurchVideo {
   url: string;
   order: number;
@@ -69,7 +82,7 @@ export interface HomepageTypeA {
   churchLogo: ChurchLogo;
   churchIntro: ChurchIntro;
   banners: ChurchBanners;
-  videos: ChurchVideo[];
+  videos: ChurchVideos;
   churchDepartmentsAndMinistries: ChurchDepartmentAndMinistry[];
   worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];
   churchRegisterGuide: Op[];
