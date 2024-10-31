@@ -6,7 +6,7 @@ import { loadScript } from "../../../../util/script-utils";
 import { ChurchVideo } from "../../../../type/homepage/homepage-type-a";
 
 const videoOriginalWidth = 610;
-const videoOriginalHeight = 380;
+const videoOriginalHeight = 370;
 const videoAspectRatio = videoOriginalHeight / videoOriginalWidth;
 
 export default function Video({ video }: { video: ChurchVideo[] }) {

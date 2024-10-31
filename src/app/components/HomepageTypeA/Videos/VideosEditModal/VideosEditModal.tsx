@@ -6,6 +6,7 @@ import {
   ChurchVideos,
 } from "../../../../../type/homepage/homepage-type-a";
 import { loadScript } from "../../../../../util/script-utils";
+import TrashIcon from "../../../../../components/Icon/TrashIcon";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;
@@ -22,6 +23,7 @@ export default function VideosEditModal({
 }) {
   const [mounted, setMounted] = useState(false);
   const [videosState, setVideosState] = useState<ChurchVideos>();
+  const [videoUrl, setVideoUrl] = useState("");
 
   useEffect(() => {
     setVideosState(videos);
@@ -67,6 +69,72 @@ export default function VideosEditModal({
       callback();
     }
   }, [mounted, videosState]);
+
+  useEffect(() => {
+    const newVideoContainer = document.querySelector("#new-video-container");
+    const newVideoRemovedElement =
+      newVideoContainer?.querySelector("#new-video");
+    newVideoRemovedElement?.remove();
+
+    const newVideoElement = document.createElement("div");
+    newVideoElement.id = "new-video";
+    newVideoContainer?.appendChild(newVideoElement);
+
+    const videoId = videoUrl.split("v=")[1];
+    YT.ready(() => {
+      new YT.Player(`new-video`, {
+        height: videoOriginalHeight,
+        width: videoOriginalWidth,
+        videoId,
+        playerVars: {},
+      });
+    });
+  }, [videoUrl]);
+
+  const removeVideo = (videoIndex: number) => {
+    if (!videosState?.page.data) {
+      return;
+    }
+
+    const oldData = [...videosState.page.data];
+    oldData.splice(videoIndex, 1);
+
+    setVideosState((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        page: {
+          ...prev.page,
+          data: [...oldData],
+        },
+      };
+    });
+  };
+
+  const addVideo = () => {
+    setVideosState((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        page: {
+          ...prev.page,
+          data: [
+            ...prev.page.data,
+            {
+              order: 0,
+              url: videoUrl,
+            },
+          ],
+        },
+      };
+    });
+  };
   return (
     <div
       id="church-videos-edit-modal"
@@ -109,7 +177,7 @@ export default function VideosEditModal({
               />
             </div>
             <div className="form-group church-videos">
-              <ul className="church-videos-in-edit-modal">
+              <ul className="church-videos-in-edit-modal width-100">
                 {videosState?.page.data.map((video, videoIndex) => {
                   return (
                     <li key={videoIndex}>
@@ -118,21 +186,52 @@ export default function VideosEditModal({
                         className="church-vedio-container"
                       ></div>
 
-                      <div style={{}}>
+                      <div style={{ marginBottom: 6 }}>
                         <input
                           type="text"
                           value={video.url}
-                          className="width-100"
+                          className="width-100 font-size-l input-underline"
                         />
+                      </div>
+                      <div>
+                        <button
+                          className="button-4 width-100 d-flex align-items-center justify-content-center"
+                          onClick={() => removeVideo(videoIndex)}
+                        >
+                          삭제 <TrashIcon maxWidth={16} fill="#888" />
+                        </button>
                       </div>
                     </li>
                   );
                 })}
-              </ul>
-            </div>
 
-            <div className="form-group">
-              <input type="text" />
+                {videosState?.page && videosState?.page.data.length < 2 && (
+                  <li>
+                    <div style={{ marginBottom: 6 }}>
+                      <div id="new-video-container">
+                        <div id="new-video"></div>
+                      </div>
+                    </div>
+                    <div style={{ marginBottom: 6 }}>
+                      <input
+                        type="text"
+                        value={videoUrl}
+                        className="width-100 font-size-l input-underline"
+                        placeholder="유튜브 링크를 입력해주세요"
+                        onChange={(e) => setVideoUrl(e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <button
+                        className="button-4 width-100"
+                        onClick={() => addVideo()}
+                      >
+                        추가
+                      </button>
+                    </div>
+                  </li>
+                )}
+              </ul>
             </div>
           </div>
         </div>
