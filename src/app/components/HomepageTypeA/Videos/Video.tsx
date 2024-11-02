@@ -5,36 +5,61 @@ import { useEffect, useState } from "react";
 import { loadScript } from "../../../../util/script-utils";
 import { ChurchVideo } from "../../../../type/homepage/homepage-type-a";
 
-const videoOriginalWidth = 610;
-const videoOriginalHeight = 370;
+const videoOriginalWidth = 482;
+const videoOriginalHeight = 320;
 const videoAspectRatio = videoOriginalHeight / videoOriginalWidth;
 
 export default function Video({ video }: { video: ChurchVideo[] }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (typeof YT === "undefined" && mounted) {
-      loadScript("https://www.youtube.com/iframe_api", () => {
-        let videoIndex = 0;
-        for (const item of video) {
-          const url = item.url;
-          const videoId = url.split("v=")[1];
-
-          const loadingYoutubeIframe = (videoIndex: number) => {
-            YT.ready(() => {
-              new YT.Player(`church-video-${videoIndex}`, {
-                height: videoOriginalHeight,
-                width: videoOriginalWidth,
-                videoId,
-                playerVars: {},
-              });
-            });
-          };
-
-          loadingYoutubeIframe(videoIndex);
-          videoIndex++;
+    const callback = () => {
+      const resetIframe = (iframeElementId: string) => {
+        const iframe = document.getElementById(iframeElementId);
+        if (!iframe) {
+          return;
         }
-      });
+
+        const parentElement = iframe.parentElement;
+        if (!parentElement) {
+          return;
+        }
+        parentElement.removeChild(iframe);
+
+        const newIframe = document.createElement("div");
+        newIframe.id = iframeElementId;
+        newIframe.classList.add("church-vedio-container");
+        parentElement.appendChild(newIframe);
+      };
+
+      let videoIndex = 0;
+      for (const item of video) {
+        const url = item.url;
+        const videoId = url.split("v=")[1];
+
+        const loadingYoutubeIframe = (videoIndex: number) => {
+          const iframeElementId = `church-video-${videoIndex}`;
+          resetIframe(iframeElementId);
+
+          YT.ready(() => {
+            new YT.Player(iframeElementId, {
+              height: videoOriginalHeight,
+              width: videoOriginalWidth,
+              videoId,
+              playerVars: {},
+            });
+          });
+        };
+
+        loadingYoutubeIframe(videoIndex);
+        videoIndex++;
+      }
+    };
+
+    if (typeof YT === "undefined") {
+      loadScript("https://www.youtube.com/iframe_api", callback);
+    } else {
+      callback();
     }
   }, [mounted, video]);
 
@@ -75,7 +100,7 @@ export default function Video({ video }: { video: ChurchVideo[] }) {
       }
       window.removeEventListener("resize", videoResize);
     };
-  }, []);
+  }, [video]);
 
   const generateVideoLengthClassName = (videoLength: number) => {
     return null;
@@ -90,7 +115,7 @@ export default function Video({ video }: { video: ChurchVideo[] }) {
         {video.map((item, itemIndex) => {
           return (
             <li key={itemIndex} className="col">
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center church-video-iframe-container">
                 <div
                   id={`church-video-${itemIndex}`}
                   className="church-vedio-container"

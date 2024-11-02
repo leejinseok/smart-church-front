@@ -1,23 +1,10 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.scss";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { cookies } from "next/headers";
 
-// const geistSans = localFont({
-//   src: "./fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
+import localFont from "next/font/local";
 
 export const nanumBarunGothicLight = localFont({
   src: "../../public/fonts/nanum-barun-gothic/NanumBarunGothicLight.otf",
@@ -42,7 +29,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="ko" className={`${nanumBarunGothicLight.className}`}>
-      <body>{children}</body>
+      <body suppressHydrationWarning={true}>{children}</body>
     </html>
   );
 }

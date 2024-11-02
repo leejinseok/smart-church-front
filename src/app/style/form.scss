@@ -8,3 +8,13 @@
   padding: 0.4em 0.6em !important;
   color: #4e4e4e;
 }
+
+.input {
+  border-left: 0;
+  border-top: 0;
+  border-right: 0;
+  outline: none;
+  border-bottom: 1px solid #a8a8a8;
+  padding: 12px 6px !important;
+  font-size: inherit;
+}

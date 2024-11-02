@@ -12,7 +12,7 @@ import {
 } from "../../../../../type/homepage/homepage-type-a";
 import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
-import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 
 export default function LogoEditModal({
@@ -64,7 +64,7 @@ export default function LogoEditModal({
       return;
     }
 
-    await homepageTypeAApiRepository.updateChurchLogo(
+    await homepageTypeAMockApiRepository.updateChurchLogo(
       +homepageTypeAId,
       churchLogoState,
     );

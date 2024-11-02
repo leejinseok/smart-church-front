@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { homepageTypeAFormMock } from "./type/homepage/homepage-type-a-mock";
 import { cookies } from "next/headers";
-import { homepageTypeAApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
 
 const convertToParams = (queryString: string) => {
   const params = new URLSearchParams(queryString);
@@ -29,7 +29,9 @@ export async function middleware(request: NextRequest) {
     const uuid = params["uuid"];
     if (uuid) {
       headers.append("uuid", `${uuid}`);
-      const res = await homepageTypeAApiRepository.getHompageTypeA(`${uuid}`);
+      const res = await homepageTypeAMockApiRepository.getHompageTypeA(
+        `${uuid}`,
+      );
       if (res) {
         const next = NextResponse.next({
           headers,
@@ -39,12 +41,12 @@ export async function middleware(request: NextRequest) {
       }
     } else {
       const defaultData = { ...homepageTypeAFormMock };
-      defaultData.id = 2;
       defaultData.uuid = "47236142-4c14-4830-941a-7b79879669a6";
 
       const res =
-        await homepageTypeAApiRepository.saveHomepageTypeA(defaultData);
+        await homepageTypeAMockApiRepository.saveHomepageTypeA(defaultData);
 
+      console.log("json", res);
       const redirect = NextResponse.redirect(
         `${nextUrl.origin}${search}&uuid=${defaultData.uuid}`,
       );

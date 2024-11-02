@@ -1,0 +1,19 @@
+#church-department-edit-modal-component {
+  .modal__inner {
+    .modal__box {
+      .modal__body {
+        padding: 14px 14px;
+        width: 900px;
+
+        ul li {
+          margin-bottom: 20px;
+
+          textarea {
+            font-size: inherit;
+            min-height: 120px;
+          }
+        }
+      }
+    }
+  }
+}

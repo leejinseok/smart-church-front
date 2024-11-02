@@ -33,7 +33,9 @@ export default function Videos({ videos }: { videos: ChurchVideos }) {
       {videosEditModalVisible && (
         <VideosEditModal
           videos={videosState}
-          updateVideos={() => {}}
+          updateVideos={(videos) => {
+            setVideosState({ ...videos });
+          }}
           hide={() => setVideosEditModalVisible(false)}
         />
       )}

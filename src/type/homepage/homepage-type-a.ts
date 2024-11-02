@@ -76,6 +76,11 @@ export interface ChurchIntro {
   contents: Op[];
 }
 
+export interface ChurchDepartmentsAndMinisties {
+  title: string;
+  items: ChurchDepartmentAndMinistry[];
+}
+
 export interface HomepageTypeA {
   id: number | null;
   uuid: string | null;
@@ -83,7 +88,7 @@ export interface HomepageTypeA {
   churchIntro: ChurchIntro;
   banners: ChurchBanners;
   videos: ChurchVideos;
-  churchDepartmentsAndMinistries: ChurchDepartmentAndMinistry[];
+  churchDepartmentsAndMinistries: ChurchDepartmentsAndMinisties;
   worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];
   churchRegisterGuide: Op[];
   staffGroup: ChurchStaffGroup[];

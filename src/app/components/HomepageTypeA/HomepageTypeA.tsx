@@ -65,19 +65,24 @@ export default function HomepageTypeA({
           </section>
 
           <section>
-            <div>
-              <h3
+            {/* <h3
                 className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
                 사역 및 부서소개
-              </h3>
+              </h3> */}
 
-              <div>
+            {/* <div>
                 <ChurchDepartment
                   departments={homepageTypeAMock.churchDepartmentsAndMinistries}
                 />
-              </div>
-            </div>
+              </div> */}
+
+            <ChurchDepartment
+              isEdit={isEdit}
+              churchDepartmentsAndMinistries={
+                homepageTypeAMock.churchDepartmentsAndMinistries
+              }
+            />
           </section>
 
           <section className="service-guide">
