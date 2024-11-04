@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ChurchDepartmentsAndMinisties } from "../../../../../type/homepage/homepage-type-a";
 import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import TrashIcon from "../../../../../components/Icon/TrashIcon";
 
 export default function ChurchDepartmentEditModal({
   churchDepartmentsAndMinistries,
@@ -104,7 +105,7 @@ export default function ChurchDepartmentEditModal({
             </div>
 
             <div className="form-group">
-              <ul className="font-size-m">
+              {/* <ul className="font-size-m">
                 {churchDepartmentState.items.map((item, itemIndex) => {
                   return (
                     <li key={itemIndex}>
@@ -154,7 +155,39 @@ export default function ChurchDepartmentEditModal({
                     추가+
                   </button>
                 </li>
-              </ul>
+              </ul> */}
+
+              <table className="width-100 text-align-left">
+                <thead>
+                  <tr>
+                    <th>
+                      <span className="nowrap">이름</span>
+                    </th>
+                    <th>
+                      <span>설명</span>
+                    </th>
+                    <th>
+                      <span>관리</span>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {churchDepartmentState.items.map((item, itemIndex) => {
+                    return (
+                      <tr key={itemIndex}>
+                        <td>{item.name}</td>
+                        <td>{item.description}</td>
+                        <td>
+                          <button type="button" className="button-4">
+                            삭제
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
 
             <div style={{ paddingTop: 14 }}>
