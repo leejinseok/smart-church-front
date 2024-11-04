@@ -26,6 +26,34 @@ export default function ChurchDepartmentEditModal({
     };
   }, []);
 
+  const handleChangeDepartmentName = (value: string, index: number) => {
+    const newItems = [...churchDepartmentState.items];
+
+    newItems[index] = {
+      ...newItems[index],
+      name: value,
+    };
+
+    setChurchIntroState((prev) => ({
+      ...prev,
+      items: [...newItems],
+    }));
+  };
+
+  const handleChangeDepartmentDescription = (value: string, index: number) => {
+    const newItems = [...churchDepartmentState.items];
+
+    newItems[index] = {
+      ...newItems[index],
+      description: value,
+    };
+
+    setChurchIntroState((prev) => ({
+      ...prev,
+      items: [...newItems],
+    }));
+  };
+
   const handleSubmit = async () => {
     const homepageTypeAId = getCookie("homepageTypeAId");
     if (!homepageTypeAId) {
@@ -84,7 +112,6 @@ export default function ChurchDepartmentEditModal({
                         className="d-flex align-items-center"
                         style={{ marginBottom: 12, gap: 24 }}
                       >
-                        <span className="d-flex">제목</span>
                         <input
                           type="text"
                           className="input"
@@ -92,6 +119,12 @@ export default function ChurchDepartmentEditModal({
                             flex: 1,
                           }}
                           value={item.name}
+                          onChange={(e) =>
+                            handleChangeDepartmentName(
+                              e.target.value,
+                              itemIndex,
+                            )
+                          }
                         />
                       </div>
 
@@ -101,15 +134,26 @@ export default function ChurchDepartmentEditModal({
                           gap: 24,
                         }}
                       >
-                        <span className="nowrap">설명</span>
                         <textarea
                           value={item.description}
                           className="width-100"
+                          onChange={(e) => {
+                            handleChangeDepartmentDescription(
+                              e.target.value,
+                              itemIndex,
+                            );
+                          }}
                         />
                       </div>
                     </li>
                   );
                 })}
+
+                <li>
+                  <button type="button" className="button-4 width-100">
+                    추가+
+                  </button>
+                </li>
               </ul>
             </div>
 

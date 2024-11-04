@@ -9,12 +9,24 @@
   color: #4e4e4e;
 }
 
-.input {
-  border-left: 0;
-  border-top: 0;
-  border-right: 0;
-  outline: none;
-  border-bottom: 1px solid #a8a8a8;
-  padding: 12px 6px !important;
+// .input {
+//   border-left: 0;
+//   border-top: 0;
+//   border-right: 0;
+//   outline: none;
+//   border-bottom: 1px solid #a8a8a8;
+//   padding: 12px 6px !important;
+//   font-size: inherit;
+// }
+
+textarea,
+input {
+  font-family: inherit;
   font-size: inherit;
+  padding: 10px;
+  line-height: 1.4;
+
+  &:focus-visible {
+    outline: none;
+  }
 }

@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { homepageTypeAFormMock } from "./type/homepage/homepage-type-a-mock";
-import { cookies } from "next/headers";
 import { homepageTypeAMockApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
 
 const convertToParams = (queryString: string) => {
@@ -46,7 +45,6 @@ export async function middleware(request: NextRequest) {
       const res =
         await homepageTypeAMockApiRepository.saveHomepageTypeA(defaultData);
 
-      console.log("json", res);
       const redirect = NextResponse.redirect(
         `${nextUrl.origin}${search}&uuid=${defaultData.uuid}`,
       );

@@ -35,7 +35,7 @@ export default function ChurchDepartment({
       </h3>
 
       <div>
-        {churchDepartmentsAndMinistries.items?.map(
+        {churchDepartmentsAndMinistriesState.items?.map(
           (department, departmentIndex) => {
             return (
               <div key={departmentIndex} className="church-department">
