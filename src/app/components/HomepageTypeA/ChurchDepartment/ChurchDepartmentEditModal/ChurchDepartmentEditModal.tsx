@@ -87,7 +87,7 @@ export default function ChurchDepartmentEditModal({
             <div className="form-group">
               <p
                 className="font-weight-bold font-size-m"
-                style={{ marginBottom: 10 }}
+                style={{ marginBottom: 0 }}
               >
                 제목
               </p>
@@ -105,6 +105,12 @@ export default function ChurchDepartmentEditModal({
             </div>
 
             <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 12 }}
+              >
+                항목
+              </p>
               {/* <ul className="font-size-m">
                 {churchDepartmentState.items.map((item, itemIndex) => {
                   return (
@@ -157,40 +163,62 @@ export default function ChurchDepartmentEditModal({
                 </li>
               </ul> */}
 
-              <table className="width-100 text-align-left">
-                <thead>
-                  <tr>
-                    <th>
-                      <span className="nowrap">이름</span>
-                    </th>
-                    <th>
-                      <span>설명</span>
-                    </th>
-                    <th>
-                      <span>관리</span>
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {churchDepartmentState.items.map((item, itemIndex) => {
-                    return (
-                      <tr key={itemIndex}>
-                        <td>{item.name}</td>
-                        <td>{item.description}</td>
-                        <td>
-                          <button type="button" className="button-4">
-                            삭제
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <ul>
+                {churchDepartmentState.items.map((item, itemIndex) => {
+                  return (
+                    <li key={itemIndex}>
+                      <div className="d-flex" style={{ gap: 22 }}>
+                        <div style={{ flex: 1 }}>
+                          <div>
+                            <input
+                              type="text"
+                              className="width-100"
+                              value={item.name}
+                            />
+                          </div>
+                          <div className="d-flex">
+                            <textarea
+                              className=""
+                              style={{ maxWidth: 788, maxHeight: 200 }}
+                            >
+                              {item.description}
+                            </textarea>
+                          </div>
+                        </div>
+                        <div
+                          className="d-flex align-items-center"
+                          style={{ flexDirection: "column" }}
+                        >
+                          <div>
+                            <button type="button" className="button-4">
+                              삭제
+                            </button>
+                          </div>
+                          <div>
+                            <button type="button" className="button-4">
+                              이동
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
 
             <div style={{ paddingTop: 14 }}>
+              <button
+                className="button-4 width-100"
+                type="button"
+                onClick={handleSubmit}
+              >
+                추가 +
+              </button>
+            </div>
+          </div>
+          <div className="modal__footer">
+            <div>
               <button
                 className="button-4 width-100"
                 type="button"
