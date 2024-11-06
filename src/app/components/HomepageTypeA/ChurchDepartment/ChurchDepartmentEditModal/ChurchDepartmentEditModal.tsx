@@ -1,10 +1,15 @@
 import "./ChurchDepartmentEditModal.scss";
 
-import { useEffect, useState } from "react";
-import { ChurchDepartmentsAndMinisties } from "../../../../../type/homepage/homepage-type-a";
+import { useEffect, useRef, useState } from "react";
+import {
+  ChurchDepartmentAndMinistry,
+  ChurchDepartmentsAndMinisties,
+} from "../../../../../type/homepage/homepage-type-a";
 import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
+import Sortable from "sortablejs";
+import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 
 export default function ChurchDepartmentEditModal({
   churchDepartmentsAndMinistries,
@@ -15,10 +20,15 @@ export default function ChurchDepartmentEditModal({
   updateChurchDepartment: (churchIntro: ChurchDepartmentsAndMinisties) => void;
   hide: () => void;
 }) {
+  const itemsElementRef = useRef(null);
   const [mounted, setMounted] = useState(false);
-  const [churchDepartmentState, setChurchIntroState] = useState({
+  const [churchDepartmentState, setChurchDepartmentState] = useState({
     ...churchDepartmentsAndMinistries,
   });
+  const [itemsSorted, setItemsSorted] = useState<ChurchDepartmentAndMinistry[]>(
+    [...churchDepartmentsAndMinistries.items],
+  );
+  const [itemsSortable, setItemsSortable] = useState<Sortable>();
 
   useEffect(() => {
     setMounted(true);
@@ -26,6 +36,33 @@ export default function ChurchDepartmentEditModal({
       setMounted(false);
     };
   }, []);
+
+  useEffect(() => {
+    const itemsElement = itemsElementRef.current;
+    if (!itemsElement) {
+      return;
+    }
+
+    if (!itemsSortable) {
+      setItemsSortable(
+        new Sortable(itemsElement, {
+          animation: 150,
+          handle: ".handle",
+          onEnd(evt) {
+            const oldIndex = evt.oldIndex;
+            const newIndex = evt.newIndex;
+            if (oldIndex === undefined || newIndex === undefined) {
+              return;
+            }
+            const updatedItems = [...churchDepartmentState.items];
+            const [movedItem] = updatedItems.splice(oldIndex, 1); // Remove item from old position
+            updatedItems.splice(newIndex, 0, movedItem); // Insert item into new position
+            setItemsSorted(updatedItems);
+          },
+        }),
+      );
+    }
+  }, [churchDepartmentState.items, itemsSortable]);
 
   const handleChangeDepartmentName = (value: string, index: number) => {
     const newItems = [...churchDepartmentState.items];
@@ -35,7 +72,20 @@ export default function ChurchDepartmentEditModal({
       name: value,
     };
 
-    setChurchIntroState((prev) => ({
+    setItemsSorted((prev) => {
+      const newItemsSorted = [];
+      for (const cur of prev) {
+        if (cur.id === newItems[index].id) {
+          newItemsSorted.push(newItems[index]);
+        } else {
+          newItemsSorted.push(cur);
+        }
+      }
+
+      return newItemsSorted;
+    });
+
+    setChurchDepartmentState((prev) => ({
       ...prev,
       items: [...newItems],
     }));
@@ -49,7 +99,20 @@ export default function ChurchDepartmentEditModal({
       description: value,
     };
 
-    setChurchIntroState((prev) => ({
+    setItemsSorted((prev) => {
+      const newItemsSorted = [];
+      for (const cur of prev) {
+        if (cur.id === newItems[index].id) {
+          newItemsSorted.push(newItems[index]);
+        } else {
+          newItemsSorted.push(cur);
+        }
+      }
+
+      return newItemsSorted;
+    });
+
+    setChurchDepartmentState((prev) => ({
       ...prev,
       items: [...newItems],
     }));
@@ -66,8 +129,35 @@ export default function ChurchDepartmentEditModal({
       churchDepartmentState,
     );
 
-    updateChurchDepartment(churchDepartmentState);
+    updateChurchDepartment({
+      ...churchDepartmentState,
+      items: [...itemsSorted],
+    });
     hide();
+  };
+
+  const handleAdd = () => {
+    const newItem: ChurchDepartmentAndMinistry = {
+      id: churchDepartmentState.items.length,
+      name: "",
+      description: "",
+    };
+
+    setChurchDepartmentState((prev) => {
+      return {
+        ...prev,
+        items: [...prev.items, newItem],
+      };
+    });
+  };
+
+  const handleRemoveItem = (itemIndex: number): void => {
+    const newItems = [...churchDepartmentState.items];
+    const removeItemId = newItems[itemIndex].id;
+    newItems.splice(itemIndex, 1);
+    setChurchDepartmentState((prev) => ({ ...prev, items: [...newItems] }));
+
+    // TODO sorted에도 적용
   };
 
   return (
@@ -96,7 +186,7 @@ export default function ChurchDepartmentEditModal({
                 className="font-size-m no-border"
                 value={churchDepartmentState.title}
                 onChange={(e) =>
-                  setChurchIntroState((prev) => ({
+                  setChurchDepartmentState((prev) => ({
                     ...prev,
                     title: e.target.value,
                   }))
@@ -111,59 +201,8 @@ export default function ChurchDepartmentEditModal({
               >
                 항목
               </p>
-              {/* <ul className="font-size-m">
-                {churchDepartmentState.items.map((item, itemIndex) => {
-                  return (
-                    <li key={itemIndex}>
-                      <div
-                        className="d-flex align-items-center"
-                        style={{ marginBottom: 12, gap: 24 }}
-                      >
-                        <input
-                          type="text"
-                          className="input"
-                          style={{
-                            flex: 1,
-                          }}
-                          value={item.name}
-                          onChange={(e) =>
-                            handleChangeDepartmentName(
-                              e.target.value,
-                              itemIndex,
-                            )
-                          }
-                        />
-                      </div>
 
-                      <div
-                        className="d-flex align-items-center"
-                        style={{
-                          gap: 24,
-                        }}
-                      >
-                        <textarea
-                          value={item.description}
-                          className="width-100"
-                          onChange={(e) => {
-                            handleChangeDepartmentDescription(
-                              e.target.value,
-                              itemIndex,
-                            );
-                          }}
-                        />
-                      </div>
-                    </li>
-                  );
-                })}
-
-                <li>
-                  <button type="button" className="button-4 width-100">
-                    추가+
-                  </button>
-                </li>
-              </ul> */}
-
-              <ul>
+              <ul ref={itemsElementRef}>
                 {churchDepartmentState.items.map((item, itemIndex) => {
                   return (
                     <li key={itemIndex}>
@@ -174,29 +213,43 @@ export default function ChurchDepartmentEditModal({
                               type="text"
                               className="width-100"
                               value={item.name}
+                              onChange={(e) =>
+                                handleChangeDepartmentName(
+                                  e.target.value,
+                                  itemIndex,
+                                )
+                              }
                             />
                           </div>
                           <div className="d-flex">
                             <textarea
-                              className=""
                               style={{ maxWidth: 788, maxHeight: 200 }}
-                            >
-                              {item.description}
-                            </textarea>
+                              onChange={(e) => {
+                                handleChangeDepartmentDescription(
+                                  e.target.value,
+                                  itemIndex,
+                                );
+                              }}
+                              value={item.description}
+                            ></textarea>
                           </div>
                         </div>
                         <div
-                          className="d-flex align-items-center"
+                          className="d-flex align-items-center button-container"
                           style={{ flexDirection: "column" }}
                         >
                           <div>
-                            <button type="button" className="button-4">
-                              삭제
+                            <button type="button" className="handle no-border">
+                              <DragpanIcon maxWidth={20} fill="#888" />
                             </button>
                           </div>
                           <div>
-                            <button type="button" className="button-4">
-                              이동
+                            <button
+                              type="button"
+                              className="no-border"
+                              onClick={() => handleRemoveItem(itemIndex)}
+                            >
+                              <TrashIcon maxWidth={20} fill="#888" />
                             </button>
                           </div>
                         </div>
@@ -211,7 +264,7 @@ export default function ChurchDepartmentEditModal({
               <button
                 className="button-4 width-100"
                 type="button"
-                onClick={handleSubmit}
+                onClick={handleAdd}
               >
                 추가 +
               </button>

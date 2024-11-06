@@ -1,6 +1,8 @@
 #church-department-component {
   .church-department {
-    margin-bottom: 22px;
+    &:not(:last-child) {
+      margin-bottom: 22px;
+    }
 
     .department-name {
       margin-bottom: 10px;

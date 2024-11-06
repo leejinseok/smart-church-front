@@ -21,7 +21,7 @@ export default function VideosEditModal({
   updateVideos: (videos: ChurchVideos) => void;
 }) {
   const [mounted, setMounted] = useState(false);
-  const [videosState, setVideosState] = useState<ChurchVideos>();
+  const [videosState, setVideosState] = useState<ChurchVideos>({ ...videos });
   const [videoUrl, setVideoUrl] = useState("");
 
   useEffect(() => {
@@ -158,6 +158,30 @@ export default function VideosEditModal({
     });
   };
 
+  const handleChangeVideoUrl = (value: string, index: number) => {
+    const data = videosState?.page.data;
+    if (!data) {
+      return;
+    }
+
+    const newData = [...data];
+    newData[index].url = value;
+
+    setVideosState((prev) => {
+      if (!prev) {
+        return prev;
+      }
+
+      return {
+        ...prev,
+        page: {
+          ...prev?.page,
+          data: [...newData],
+        },
+      };
+    });
+  };
+
   const handleSubmit = async () => {
     if (!videosState) {
       return;
@@ -216,6 +240,12 @@ export default function VideosEditModal({
               />
             </div>
             <div className="form-group church-videos">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 10 }}
+              >
+                항목
+              </p>
               <ul className="church-videos-in-edit-modal width-100">
                 {videosState?.page.data.map((video, videoIndex) => {
                   return (
@@ -230,7 +260,10 @@ export default function VideosEditModal({
                       <div style={{ marginBottom: 6 }}>
                         <input
                           type="text"
-                          value={video.url}
+                          value={video.url || ""}
+                          onChange={(e) =>
+                            handleChangeVideoUrl(e.target.value, videoIndex)
+                          }
                           className="width-100 font-size-l input-underline"
                         />
                       </div>

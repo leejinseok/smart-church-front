@@ -4,6 +4,7 @@ import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
 import { useState } from "react";
 import ChurchDepartmentEditModal from "./ChurchDepartmentEditModal/ChurchDepartmentEditModal";
 import { ChurchDepartmentsAndMinisties } from "../../../../type/homepage/homepage-type-a";
+import VisibilityOffIcon from "../../../../components/Icon/VisibilityOffIcon";
 
 export default function ChurchDepartment({
   isEdit,
@@ -42,7 +43,9 @@ export default function ChurchDepartment({
                 <p className="font-size-m font-weight-bold department-name">
                   {department.name}
                 </p>
-                <p className="font-size-m">{department.description}</p>
+                <p className="font-size-m break-spaces">
+                  {department.description}
+                </p>
               </div>
             );
           },
@@ -58,6 +61,19 @@ export default function ChurchDepartment({
           hide={() => setChurchDepartmentEditModalVisible(false)}
         />
       )}
+
+      {/* {!churchDepartmentsAndMinistriesState.visible && (
+        <div className="no-banner-guide">
+          <h3 className="text-align-center">
+            <div className="d-flex justify-content-center align-items-center">
+              <VisibilityOffIcon maxWidth={24} fill="#838383" />
+              <span style={{ marginLeft: 8 }}>
+                해당 영역은 홈페이지에 노출되지 않습니다.
+              </span>
+            </div>
+          </h3>
+        </div>
+      )} */}
     </div>
   );
 }

@@ -19,6 +19,7 @@ export interface ChurchVideo {
 }
 
 export interface ChurchDepartmentAndMinistry {
+  id: number;
   name: string;
   description: string;
 }
@@ -78,6 +79,7 @@ export interface ChurchIntro {
 
 export interface ChurchDepartmentsAndMinisties {
   title: string;
+  visible: boolean;
   items: ChurchDepartmentAndMinistry[];
 }
 
