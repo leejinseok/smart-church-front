@@ -64,6 +64,33 @@ export default function ChurchDepartmentEditModal({
     }
   }, [churchDepartmentState.items, itemsSortable]);
 
+  useEffect(() => {
+    for (const item of churchDepartmentState.items) {
+      setItemsSorted((prev) => {
+        const newSortedItems = [];
+        let matched = false;
+        for (const cur of prev) {
+          if (cur.id === item.id) {
+            matched = true;
+            newSortedItems.push({
+              ...item,
+            });
+          } else {
+            newSortedItems.push(cur);
+          }
+        }
+
+        if (matched) {
+          return newSortedItems;
+        }
+
+        newSortedItems.push(item);
+
+        return newSortedItems;
+      });
+    }
+  }, [churchDepartmentState.items]);
+
   const handleChangeDepartmentName = (value: string, index: number) => {
     const newItems = [...churchDepartmentState.items];
 
@@ -76,7 +103,7 @@ export default function ChurchDepartmentEditModal({
       const newItemsSorted = [];
       for (const cur of prev) {
         if (cur.id === newItems[index].id) {
-          newItemsSorted.push(newItems[index]);
+          newItemsSorted.push({ ...newItems[index] });
         } else {
           newItemsSorted.push(cur);
         }
@@ -138,7 +165,7 @@ export default function ChurchDepartmentEditModal({
 
   const handleAdd = () => {
     const newItem: ChurchDepartmentAndMinistry = {
-      id: churchDepartmentState.items.length,
+      id: churchDepartmentState.items.length + 1,
       name: "",
       description: "",
     };
@@ -153,11 +180,8 @@ export default function ChurchDepartmentEditModal({
 
   const handleRemoveItem = (itemIndex: number): void => {
     const newItems = [...churchDepartmentState.items];
-    const removeItemId = newItems[itemIndex].id;
     newItems.splice(itemIndex, 1);
     setChurchDepartmentState((prev) => ({ ...prev, items: [...newItems] }));
-
-    // TODO sorted에도 적용
   };
 
   return (
@@ -201,6 +225,8 @@ export default function ChurchDepartmentEditModal({
               >
                 항목
               </p>
+
+              <pre>{JSON.stringify(itemsSorted, null, 4)}</pre>
 
               <ul ref={itemsElementRef}>
                 {churchDepartmentState.items.map((item, itemIndex) => {
