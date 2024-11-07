@@ -20,15 +20,12 @@ export default function ChurchDepartmentEditModal({
   updateChurchDepartment: (churchIntro: ChurchDepartmentsAndMinisties) => void;
   hide: () => void;
 }) {
-  const itemsElementRef = useRef(null);
+  const itemsElementRef = useRef<HTMLUListElement>(null);
   const [mounted, setMounted] = useState(false);
   const [churchDepartmentState, setChurchDepartmentState] = useState({
     ...churchDepartmentsAndMinistries,
   });
-  const [itemsSorted, setItemsSorted] = useState<ChurchDepartmentAndMinistry[]>(
-    [...churchDepartmentsAndMinistries.items],
-  );
-  const [itemsSortable, setItemsSortable] = useState<Sortable>();
+  const [itemsSortable] = useState<Sortable>();
 
   useEffect(() => {
     setMounted(true);
@@ -44,52 +41,12 @@ export default function ChurchDepartmentEditModal({
     }
 
     if (!itemsSortable) {
-      setItemsSortable(
-        new Sortable(itemsElement, {
-          animation: 150,
-          handle: ".handle",
-          onEnd(evt) {
-            const oldIndex = evt.oldIndex;
-            const newIndex = evt.newIndex;
-            if (oldIndex === undefined || newIndex === undefined) {
-              return;
-            }
-            const updatedItems = [...churchDepartmentState.items];
-            const [movedItem] = updatedItems.splice(oldIndex, 1); // Remove item from old position
-            updatedItems.splice(newIndex, 0, movedItem); // Insert item into new position
-            setItemsSorted(updatedItems);
-          },
-        }),
-      );
-    }
-  }, [churchDepartmentState.items, itemsSortable]);
-
-  useEffect(() => {
-    for (const item of churchDepartmentState.items) {
-      setItemsSorted((prev) => {
-        const newSortedItems = [];
-        let matched = false;
-        for (const cur of prev) {
-          if (cur.id === item.id) {
-            matched = true;
-            newSortedItems.push({
-              ...item,
-            });
-          } else {
-            newSortedItems.push(cur);
-          }
-        }
-
-        if (matched) {
-          return newSortedItems;
-        }
-
-        newSortedItems.push(item);
-
-        return newSortedItems;
+      new Sortable(itemsElement, {
+        animation: 150,
+        handle: ".handle",
       });
     }
-  }, [churchDepartmentState.items]);
+  }, [itemsSortable]);
 
   const handleChangeDepartmentName = (value: string, index: number) => {
     const newItems = [...churchDepartmentState.items];
@@ -98,19 +55,6 @@ export default function ChurchDepartmentEditModal({
       ...newItems[index],
       name: value,
     };
-
-    setItemsSorted((prev) => {
-      const newItemsSorted = [];
-      for (const cur of prev) {
-        if (cur.id === newItems[index].id) {
-          newItemsSorted.push({ ...newItems[index] });
-        } else {
-          newItemsSorted.push(cur);
-        }
-      }
-
-      return newItemsSorted;
-    });
 
     setChurchDepartmentState((prev) => ({
       ...prev,
@@ -126,19 +70,6 @@ export default function ChurchDepartmentEditModal({
       description: value,
     };
 
-    setItemsSorted((prev) => {
-      const newItemsSorted = [];
-      for (const cur of prev) {
-        if (cur.id === newItems[index].id) {
-          newItemsSorted.push(newItems[index]);
-        } else {
-          newItemsSorted.push(cur);
-        }
-      }
-
-      return newItemsSorted;
-    });
-
     setChurchDepartmentState((prev) => ({
       ...prev,
       items: [...newItems],
@@ -151,14 +82,30 @@ export default function ChurchDepartmentEditModal({
       return;
     }
 
+    const itemsElement = itemsElementRef.current;
+    if (!itemsElement) {
+      return;
+    }
+
+    const newChurchDepartmentsAndMinistries: ChurchDepartmentsAndMinisties = {
+      ...churchDepartmentState,
+      items: [],
+    };
+    for (let i = 0; i < itemsElement.children.length; i++) {
+      const cur = itemsElement.children[i];
+      const dataIndex = cur.getAttribute("data-index");
+      newChurchDepartmentsAndMinistries.items.push(
+        churchDepartmentState.items[+dataIndex!],
+      );
+    }
+
     await homepageTypeAMockApiRepository.updateChurchDepartmentsAndMinistries(
       +homepageTypeAId,
-      churchDepartmentState,
+      newChurchDepartmentsAndMinistries,
     );
 
     updateChurchDepartment({
-      ...churchDepartmentState,
-      items: [...itemsSorted],
+      ...newChurchDepartmentsAndMinistries,
     });
     hide();
   };
@@ -226,12 +173,14 @@ export default function ChurchDepartmentEditModal({
                 항목
               </p>
 
-              <pre>{JSON.stringify(itemsSorted, null, 4)}</pre>
-
               <ul ref={itemsElementRef}>
                 {churchDepartmentState.items.map((item, itemIndex) => {
                   return (
-                    <li key={itemIndex}>
+                    <li
+                      key={itemIndex}
+                      data-id={item.id}
+                      data-index={itemIndex}
+                    >
                       <div className="d-flex" style={{ gap: 22 }}>
                         <div style={{ flex: 1 }}>
                           <div>
