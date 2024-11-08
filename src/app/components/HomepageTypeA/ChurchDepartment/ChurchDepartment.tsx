@@ -5,6 +5,8 @@ import { useState } from "react";
 import ChurchDepartmentEditModal from "./ChurchDepartmentEditModal/ChurchDepartmentEditModal";
 import { ChurchDepartmentsAndMinisties } from "../../../../type/homepage/homepage-type-a";
 import VisibilityOffIcon from "../../../../components/Icon/VisibilityOffIcon";
+import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
+import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";
 
 export default function ChurchDepartment({
   isEdit,
@@ -24,35 +26,58 @@ export default function ChurchDepartment({
   ] = useState({ ...churchDepartmentsAndMinistries });
 
   return (
-    <div id="church-department-component">
-      <h3
-        className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold ${isEdit && "edit-tools-container"}`}
-      >
-        {churchDepartmentsAndMinistriesState.title}
-        <HomepageEditTools
-          visibilitlyControl={false}
-          handleClick={() => setChurchDepartmentEditModalVisible(true)}
-        />
-      </h3>
+    <>
+      {churchDepartmentsAndMinistriesState.visible ? (
+        <div
+          id="church-department-component"
+          className={`${isEdit && "edit-overlay-container"}`}
+        >
+          <>
+            <h3
+              className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
+            >
+              {churchDepartmentsAndMinistriesState.title}
+            </h3>
 
-      <div>
-        {churchDepartmentsAndMinistriesState.items?.map(
-          (department, departmentIndex) => {
-            return (
-              <div key={departmentIndex} className="church-department">
-                <p className="font-size-m font-weight-bold department-name">
-                  {department.name}
-                </p>
-                <p className="font-size-m break-spaces">
-                  {department.description}
-                </p>
-              </div>
-            );
-          },
-        )}
-      </div>
+            <div>
+              {churchDepartmentsAndMinistriesState.items?.map(
+                (department, departmentIndex) => {
+                  return (
+                    <div key={departmentIndex} className="church-department">
+                      <p className="font-size-m font-weight-bold department-name">
+                        {department.name}
+                      </p>
+                      <p className="font-size-m break-spaces">
+                        {department.description}
+                      </p>
+                    </div>
+                  );
+                },
+              )}
+            </div>
+          </>
 
-      {churchDepartmentEditModalVisible && (
+          {isEdit && (
+            <HomepageEditOverlay
+              onClickListener={() => {
+                setChurchDepartmentEditModalVisible(true);
+              }}
+            />
+          )}
+        </div>
+      ) : (
+        isEdit && (
+          <InvisibleContentGuide
+            text="사역 및 부서소개는 미공개 처리 되었습니다."
+            onClick={() => {
+              setChurchDepartmentEditModalVisible(true);
+            }}
+          />
+        )
+      )}
+
+      {/* 편집 modal */}
+      {isEdit && churchDepartmentEditModalVisible && (
         <ChurchDepartmentEditModal
           updateChurchDepartment={(value) =>
             setChurchDepartmentsAndMinistries(value)
@@ -61,19 +86,6 @@ export default function ChurchDepartment({
           hide={() => setChurchDepartmentEditModalVisible(false)}
         />
       )}
-
-      {/* {!churchDepartmentsAndMinistriesState.visible && (
-        <div className="no-banner-guide">
-          <h3 className="text-align-center">
-            <div className="d-flex justify-content-center align-items-center">
-              <VisibilityOffIcon maxWidth={24} fill="#838383" />
-              <span style={{ marginLeft: 8 }}>
-                해당 영역은 홈페이지에 노출되지 않습니다.
-              </span>
-            </div>
-          </h3>
-        </div>
-      )} */}
-    </div>
+    </>
   );
 }

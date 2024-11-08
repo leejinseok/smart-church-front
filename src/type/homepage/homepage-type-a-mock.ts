@@ -156,6 +156,7 @@ export const homepageTypeAFormMock: HomepageTypeA = {
     },
   ],
   videos: {
+    visible: true,
     title: "설교영상",
     page: {
       currentPage: 0,

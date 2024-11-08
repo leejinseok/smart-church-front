@@ -10,6 +10,7 @@ import { homepageTypeAMockApiRepository } from "../../../../../repository/homepa
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
+import Toggle from "../../../Toggle/Toggle";
 
 export default function ChurchDepartmentEditModal({
   churchDepartmentsAndMinistries,
@@ -144,8 +145,21 @@ export default function ChurchDepartmentEditModal({
               >
                 노출여부
               </p>
-              <div></div>
+              <div>
+                <Toggle
+                  isActive={churchDepartmentState.visible}
+                  onClick={() => {
+                    setChurchDepartmentState((prev) => {
+                      return {
+                        ...prev,
+                        visible: !prev.visible,
+                      };
+                    });
+                  }}
+                />
+              </div>
             </div>
+
             <div className="form-group">
               <p
                 className="font-weight-bold font-size-m"

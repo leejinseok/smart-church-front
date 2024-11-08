@@ -6,6 +6,7 @@ import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
 import { useState } from "react";
 import ChurchIntroEditModal from "./ChurchIntroEditModal/ChurchIntroEditModal";
 import { ChurchIntro as ChurchIntroInterface } from "../../../../type/homepage/homepage-type-a";
+import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 
 export default function ChurchIntro({
   isEdit,
@@ -20,19 +21,33 @@ export default function ChurchIntro({
   const [churchIntroState, setChurchIntroState] = useState({ ...churchIntro });
 
   return (
-    <div id="church-intro-section">
-      <h3
-        className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold d-flex align-items-center ${isEdit && "edit-tools-container"}`}
+    <>
+      <div
+        id="church-intro-section"
+        className={`${isEdit && "edit-overlay-container"}`}
       >
-        {churchIntroState.title}
-        <HomepageEditTools
-          visibilitlyControl={false}
-          handleClick={() => setChurchIntroEditModalVisible(true)}
-        />
-      </h3>
+        <h3
+          className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold d-flex align-items-center`}
+        >
+          {churchIntroState.title}
+          {/* <HomepageEditTools
+            visibilitlyControl={false}
+            handleClick={() => setChurchIntroEditModalVisible(true)}
+          /> */}
+        </h3>
 
-      <div className={`font-size-m pre-line `} style={{ position: "relative" }}>
-        <QuillRenderer ops={churchIntroState.contents} />
+        <div
+          className={`font-size-m pre-line `}
+          style={{ position: "relative" }}
+        >
+          <QuillRenderer ops={churchIntroState.contents} />
+        </div>
+
+        <HomepageEditOverlay
+          onClickListener={() => {
+            setChurchIntroEditModalVisible(true);
+          }}
+        />
       </div>
 
       {churchIntroEditModalVisible && (
@@ -44,6 +59,6 @@ export default function ChurchIntro({
           }}
         />
       )}
-    </div>
+    </>
   );
 }

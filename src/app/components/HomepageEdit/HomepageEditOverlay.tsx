@@ -1,5 +1,6 @@
-import EditIcon from "../../../components/Icon/EditIcon";
 import "./HomepageEditOverlay.scss";
+
+import EditIcon from "../../../components/Icon/EditIcon";
 
 export default function HomepageEditOverlay({
   onClickListener,

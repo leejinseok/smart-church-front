@@ -61,7 +61,7 @@ export default function HomepageTypeA({
           </section>
 
           <section className="recently-videos">
-            <Videos videos={homepageTypeAMock.videos} />
+            <Videos isEdit={isEdit} videos={homepageTypeAMock.videos} />
           </section>
 
           <section>
