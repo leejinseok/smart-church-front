@@ -18,6 +18,7 @@ import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
+import Toggle from "../../../Toggle/Toggle";
 
 export default function BannerEditModal({
   banners,
@@ -182,7 +183,17 @@ export default function BannerEditModal({
                   노출여부
                 </h3>
                 <div className="d-flex form-group__body">
-                  <div>
+                  <Toggle
+                    isActive={bannersState.visible}
+                    onClick={() => {
+                      setBannersState((prev) => ({
+                        ...prev,
+                        visible: !prev.visible,
+                      }));
+                    }}
+                  />
+
+                  {/* <div>
                     <input
                       id="show"
                       type="radio"
@@ -199,9 +210,9 @@ export default function BannerEditModal({
                     >
                       예
                     </label>
-                  </div>
+                  </div> */}
 
-                  <div
+                  {/* <div
                     style={{
                       marginLeft: 8,
                     }}
@@ -225,7 +236,7 @@ export default function BannerEditModal({
                     >
                       아니오
                     </label>
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

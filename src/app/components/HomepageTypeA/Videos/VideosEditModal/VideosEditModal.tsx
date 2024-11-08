@@ -92,6 +92,10 @@ export default function VideosEditModal({
       return;
     }
 
+    if (!videoUrl) {
+      return;
+    }
+
     const newVideoContainer = document.querySelector("#new-video-container");
     const newVideoRemovedElement =
       newVideoContainer?.querySelector("#new-video");
@@ -208,7 +212,7 @@ export default function VideosEditModal({
       <div className="modal__inner">
         <div className="modal__box" onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
-            <h3 className="font-size-m font-weight-bold">교회영상 편집</h3>
+            <h3 className="font-size-l font-weight-bold">교회영상 편집</h3>
             <p>
               교회를 대표할 수 있는 영상 한두가지를 추가해보세요 (설교영상,
               소개영상, 행사영상 ...)
@@ -226,7 +230,7 @@ export default function VideosEditModal({
               <input
                 type="text"
                 className="font-size-m no-border"
-                value={videosState?.title}
+                value={videosState.title}
                 onChange={(e) => {
                   if (videosState) {
                     setVideosState((prev) => {

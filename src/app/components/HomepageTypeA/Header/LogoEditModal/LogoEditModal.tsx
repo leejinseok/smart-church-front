@@ -90,7 +90,7 @@ export default function LogoEditModal({
       <div className="modal__inner">
         <div className="modal__box" onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
-            <h3 className="font-size-m font-weight-bold modal-body__header">
+            <h3 className="font-size-l font-weight-bold modal-body__header">
               로고 편집
             </h3>
           </div>

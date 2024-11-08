@@ -26,7 +26,7 @@ export default function ServicesEditModal({
       <div className="modal__inner">
         <div className="modal__box" onClick={(e) => e.stopPropagation()}>
           <div className="modal__header">
-            <h3 className="font-size-m font-weight-bold">
+            <h3 className="font-size-l font-weight-bold">
               예배 및 모임안내 편집
             </h3>
           </div>
