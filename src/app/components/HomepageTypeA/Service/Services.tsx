@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { WorshipServicesAndMeetingsInformationGroup } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import Service from "./Service";
+import ServicesEditModal from "./EditModal/ServicesEditModal";
 
 export default function Services({
   isEdit,
@@ -10,6 +12,9 @@ export default function Services({
   isEdit: boolean;
   worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];
 }) {
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [worshipServicesAndMeetingsState, setWorshipServicesAndMeetingsState] =
+    useState([...worshipServicesAndMeetings]);
   return (
     <>
       <div className={`${isEdit && "edit-overlay-container"}`}>
@@ -20,13 +25,28 @@ export default function Services({
         </h3>
 
         <div>
-          {worshipServicesAndMeetings.map((service, serviceIndex) => {
+          {worshipServicesAndMeetingsState.map((service, serviceIndex) => {
             return <Service key={serviceIndex} service={service} />;
           })}
         </div>
 
-        {isEdit && <HomepageEditOverlay onClickListener={() => {}} />}
+        {isEdit && (
+          <HomepageEditOverlay
+            onClickListener={() => {
+              setEditModalVisible(true);
+            }}
+          />
+        )}
       </div>
+
+      {isEdit && editModalVisible && (
+        <ServicesEditModal
+          worshipServicesAndMeetings={worshipServicesAndMeetingsState}
+          hide={() => {
+            setEditModalVisible(false);
+          }}
+        />
+      )}
     </>
   );
 }
