@@ -16,6 +16,7 @@ import QuillRenderer from "../Quill/QuillRenderer";
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
 import Videos from "./Videos/Videos";
 import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
+import Services from "./Service/Services";
 
 export default function HomepageTypeA({
   isEdit,
@@ -86,21 +87,12 @@ export default function HomepageTypeA({
           </section>
 
           <section className="service-guide">
-            <div>
-              <h3
-                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
-              >
-                예배 및 모임안내
-              </h3>
-
-              <div>
-                {homepageTypeAMock.worshipServicesAndMeetings.map(
-                  (service, serviceIndex) => {
-                    return <Service key={serviceIndex} service={service} />;
-                  },
-                )}
-              </div>
-            </div>
+            <Services
+              isEdit={isEdit}
+              worshipServicesAndMeetings={
+                homepageTypeAMock.worshipServicesAndMeetings
+              }
+            />
           </section>
 
           <section>

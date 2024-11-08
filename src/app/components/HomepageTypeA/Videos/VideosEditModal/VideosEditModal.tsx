@@ -82,12 +82,16 @@ export default function VideosEditModal({
 
     if (typeof YT === "undefined" && mounted) {
       loadScript("https://www.youtube.com/iframe_api", callback);
-    } else {
+    } else if (typeof YT === "object") {
       callback();
     }
   }, [mounted, videosState.page]);
 
   useEffect(() => {
+    if (typeof YT === "undefined") {
+      return;
+    }
+
     const newVideoContainer = document.querySelector("#new-video-container");
     const newVideoRemovedElement =
       newVideoContainer?.querySelector("#new-video");

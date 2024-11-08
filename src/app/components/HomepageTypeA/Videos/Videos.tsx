@@ -5,6 +5,7 @@ import Video from "./Video";
 import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
 import VideosEditModal from "./VideosEditModal/VideosEditModal";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
+import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";
 
 export default function Videos({
   isEdit,
@@ -25,27 +26,32 @@ export default function Videos({
   };
   return (
     <>
-      <div id="videos" className="edit-overlay-container">
-        <h3
-          className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
-        >
-          {videosState?.title}
-          {/* <HomepageEditTools
-          handleClick={() => {
-            setVideosEditModalVisible(true);
-          }}
-          visibilitlyControl={false}
-        /> */}
-        </h3>
+      {videosState.visible ? (
+        <div id="videos" className="edit-overlay-container">
+          <h3
+            className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
+          >
+            {videosState.title}
+          </h3>
 
-        <div>
-          <Video video={videosState?.page?.data || []} />
+          <div>
+            <Video video={videosState.page?.data || []} />
+          </div>
+
+          {isEdit && (
+            <HomepageEditOverlay onClickListener={handleClickEditOverlay} />
+          )}
         </div>
-
-        {isEdit && (
-          <HomepageEditOverlay onClickListener={handleClickEditOverlay} />
-        )}
-      </div>
+      ) : (
+        isEdit && (
+          <InvisibleContentGuide
+            text="교회영상 항목은 현재 미공개 처리 되었습니다."
+            onClick={() => {
+              setVideosEditModalVisible(true);
+            }}
+          />
+        )
+      )}
 
       {videosEditModalVisible && (
         <VideosEditModal
