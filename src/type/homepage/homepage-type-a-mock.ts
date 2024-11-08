@@ -182,7 +182,7 @@ export const homepageTypeAFormMock: HomepageTypeA = {
   },
   worshipServicesAndMeetings: [
     {
-      groupName: "SERVICE",
+      groupName: "예배",
       items: [
         {
           name: "주일 1부예배",
