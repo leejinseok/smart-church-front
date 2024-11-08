@@ -1,6 +1,7 @@
 import { Op } from "quill/core";
 
 export interface ChurchVideos {
+  visible: boolean;
   title: string;
   page: {
     currentPage: number;

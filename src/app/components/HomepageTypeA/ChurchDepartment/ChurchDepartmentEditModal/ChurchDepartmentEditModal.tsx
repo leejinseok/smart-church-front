@@ -21,18 +21,10 @@ export default function ChurchDepartmentEditModal({
   hide: () => void;
 }) {
   const itemsElementRef = useRef<HTMLUListElement>(null);
-  const [mounted, setMounted] = useState(false);
   const [churchDepartmentState, setChurchDepartmentState] = useState({
     ...churchDepartmentsAndMinistries,
   });
   const [itemsSortable] = useState<Sortable>();
-
-  useEffect(() => {
-    setMounted(true);
-    return () => {
-      setMounted(false);
-    };
-  }, []);
 
   useEffect(() => {
     const itemsElement = itemsElementRef.current;
@@ -145,6 +137,15 @@ export default function ChurchDepartmentEditModal({
             </h3>
           </div>
           <div className="modal__body">
+            <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 12 }}
+              >
+                노출여부
+              </p>
+              <div></div>
+            </div>
             <div className="form-group">
               <p
                 className="font-weight-bold font-size-m"

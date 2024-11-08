@@ -6,6 +6,7 @@ import { loadScript } from "../../../../../util/script-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
+import Toggle from "../../../Toggle/Toggle";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;
@@ -37,10 +38,6 @@ export default function VideosEditModal({
 
   useEffect(() => {
     const callback = () => {
-      if (!videosState) {
-        return;
-      }
-
       const resetIframe = (iframeElementId: string) => {
         const iframe = document.getElementById(iframeElementId);
         if (!iframe) {
@@ -88,7 +85,7 @@ export default function VideosEditModal({
     } else {
       callback();
     }
-  }, [mounted, videosState]);
+  }, [mounted, videosState.page]);
 
   useEffect(() => {
     const newVideoContainer = document.querySelector("#new-video-container");
@@ -236,6 +233,25 @@ export default function VideosEditModal({
                       return { ...prev, title: e.target.value };
                     });
                   }
+                }}
+              />
+            </div>
+            <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 10 }}
+              >
+                노출여부
+              </p>
+              <Toggle
+                isActive={videosState.visible}
+                onClick={() => {
+                  setVideosState((prev) => {
+                    return {
+                      ...prev,
+                      visible: !prev.visible,
+                    };
+                  });
                 }}
               />
             </div>
