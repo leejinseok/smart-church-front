@@ -40,18 +40,83 @@ export default function ServicesEditModal({
                       key={itemIndex}
                       className={`${item.groupName === selectedGroup && "active"}`}
                     >
-                      <span>{item.groupName}</span>
+                      <input
+                        type="text"
+                        style={{ paddingRight: 0, padding: 0 }}
+                        value={item.groupName}
+                        size={item.groupName.length + 1}
+                        className="no-border transparent"
+                        onChange={(e) => {
+                          setWorshipServicesAndMeetingsState((prev) => {
+                            const newGroupName = e.target.value;
+                            const newValue = [...prev];
+                            const groupName = newValue[itemIndex].groupName;
+                            newValue[itemIndex].groupName = newGroupName;
+                            if (selectedGroup === groupName) {
+                              setSelectedGroup(newGroupName);
+                            }
+                            return newValue;
+                          });
+                        }}
+                      />
                     </li>
                   );
                 })}
               </ul>
 
               <div>
-                {worshipServicesAndMeetingsState
-                  .find((item) => item.groupName === selectedGroup)
-                  ?.items.map((selectedItem, selectedItems) => {
-                    return <div key={selectedItems}>{selectedItem.name}</div>;
-                  })}
+                <div
+                  style={{
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <table style={{ borderCollapse: "collapse" }}>
+                    <thead>
+                      <tr>
+                        <th>구분</th>
+                        <th>시간</th>
+                        <th>장소</th>
+                        <th>설정</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {worshipServicesAndMeetingsState
+                        .find((item) => item.groupName === selectedGroup)
+                        ?.items.map((selectedItem, selectedItems) => {
+                          return (
+                            <tr key={selectedItems}>
+                              <td>
+                                <input
+                                  className="no-border text-align-center"
+                                  type="text"
+                                  value={selectedItem.name}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  className="no-border text-align-center"
+                                  type="text"
+                                  value={selectedItem.time}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  className="no-border text-align-center"
+                                  type="text"
+                                  value={selectedItem.location}
+                                />
+                              </td>
+                              <td className="text-align-center">
+                                <button>삭제</button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>

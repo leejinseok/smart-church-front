@@ -13,7 +13,6 @@ import {
   ChurchBanners,
 } from "../../../../../type/homepage/homepage-type-a";
 import "./BannerEditModal.scss";
-import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
@@ -192,51 +191,6 @@ export default function BannerEditModal({
                       }));
                     }}
                   />
-
-                  {/* <div>
-                    <input
-                      id="show"
-                      type="radio"
-                      checked={bannersState.visible === true}
-                      onChange={() => {
-                        setBannersState((prev) => ({ ...prev, visible: true }));
-                      }}
-                    />
-                    <label
-                      htmlFor="show"
-                      style={{
-                        marginLeft: 4,
-                      }}
-                    >
-                      예
-                    </label>
-                  </div> */}
-
-                  {/* <div
-                    style={{
-                      marginLeft: 8,
-                    }}
-                  >
-                    <input
-                      id="hide"
-                      type="radio"
-                      checked={bannersState.visible === false}
-                      onChange={() => {
-                        setBannersState((prev) => ({
-                          ...prev,
-                          visible: false,
-                        }));
-                      }}
-                    />
-                    <label
-                      htmlFor="hide"
-                      style={{
-                        marginLeft: 4,
-                      }}
-                    >
-                      아니오
-                    </label>
-                  </div> */}
                 </div>
               </div>
 
