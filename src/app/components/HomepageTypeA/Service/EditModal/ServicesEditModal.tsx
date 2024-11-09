@@ -51,59 +51,6 @@ export default function ServicesEditModal({
 
           <div className="modal__body">
             <div className="form-group">
-              {/* <ul className="groups d-flex">
-                {worshipServicesAndMeetingsState.map((item, itemIndex) => {
-                  return (
-                    <li
-                      style={{ flex: 1 }}
-                      key={itemIndex}
-                      className={`${item.groupName === selectedGroup && "active"}`}
-                      onClick={() => {
-                        setSelectedGroup(item.groupName);
-                      }}
-                    >
-                      <div className="position-relative">
-                        {selectedGroup === item.groupName ? (
-                          <input
-                            type="text"
-                            style={{ paddingRight: 0, padding: 0 }}
-                            value={item.groupName}
-                            size={item.groupName.length + 1}
-                            className="no-border transparent"
-                            onChange={(e) => {
-                              setWorshipServicesAndMeetingsState((prev) => {
-                                const newGroupName = e.target.value;
-                                const newValue = [...prev];
-                                const groupName = newValue[itemIndex].groupName;
-                                newValue[itemIndex].groupName = newGroupName;
-                                if (selectedGroup === groupName) {
-                                  setSelectedGroup(newGroupName);
-                                }
-                                return newValue;
-                              });
-                            }}
-                          />
-                        ) : (
-                          <span>{item.groupName}</span>
-                        )}
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            position: "absolute",
-                            top: "50%",
-                            right: 0,
-                            transform: "translateY(-50%)",
-                          }}
-                        >
-                          <TrashIcon maxWidth={20} />
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul> */}
               <ul id="services-and-meetins">
                 {worshipServicesAndMeetingsState.map(
                   (groupItem, groupItemIndex) => {
