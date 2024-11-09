@@ -2,6 +2,7 @@ import "./ServicesEditModal.scss";
 
 import { useState } from "react";
 import { WorshipServicesAndMeetingsInformationGroup } from "../../../../../type/homepage/homepage-type-a";
+import TrashIcon from "../../../../../components/Icon/TrashIcon";
 
 export default function ServicesEditModal({
   hide,
@@ -33,32 +34,55 @@ export default function ServicesEditModal({
 
           <div className="modal__body">
             <div className="form-group">
-              <ul className="groups">
+              <ul className="groups d-flex">
                 {worshipServicesAndMeetingsState.map((item, itemIndex) => {
                   return (
                     <li
+                      style={{ flex: 1 }}
                       key={itemIndex}
                       className={`${item.groupName === selectedGroup && "active"}`}
+                      onClick={() => {
+                        setSelectedGroup(item.groupName);
+                      }}
                     >
-                      <input
-                        type="text"
-                        style={{ paddingRight: 0, padding: 0 }}
-                        value={item.groupName}
-                        size={item.groupName.length + 1}
-                        className="no-border transparent"
-                        onChange={(e) => {
-                          setWorshipServicesAndMeetingsState((prev) => {
-                            const newGroupName = e.target.value;
-                            const newValue = [...prev];
-                            const groupName = newValue[itemIndex].groupName;
-                            newValue[itemIndex].groupName = newGroupName;
-                            if (selectedGroup === groupName) {
-                              setSelectedGroup(newGroupName);
-                            }
-                            return newValue;
-                          });
-                        }}
-                      />
+                      <div className="position-relative">
+                        {selectedGroup === item.groupName ? (
+                          <input
+                            type="text"
+                            style={{ paddingRight: 0, padding: 0 }}
+                            value={item.groupName}
+                            size={item.groupName.length + 1}
+                            className="no-border transparent"
+                            onChange={(e) => {
+                              setWorshipServicesAndMeetingsState((prev) => {
+                                const newGroupName = e.target.value;
+                                const newValue = [...prev];
+                                const groupName = newValue[itemIndex].groupName;
+                                newValue[itemIndex].groupName = newGroupName;
+                                if (selectedGroup === groupName) {
+                                  setSelectedGroup(newGroupName);
+                                }
+                                return newValue;
+                              });
+                            }}
+                          />
+                        ) : (
+                          <span>{item.groupName}</span>
+                        )}
+
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            position: "absolute",
+                            top: "50%",
+                            right: 0,
+                            transform: "translateY(-50%)",
+                          }}
+                        >
+                          <TrashIcon maxWidth={20} />
+                        </div>
+                      </div>
                     </li>
                   );
                 })}
@@ -67,12 +91,14 @@ export default function ServicesEditModal({
               <div>
                 <div
                   style={{
-                    paddingTop: 10,
                     paddingBottom: 10,
                     border: "1px solid #ccc",
                   }}
                 >
-                  <table style={{ borderCollapse: "collapse" }}>
+                  <table
+                    style={{ borderCollapse: "collapse" }}
+                    className="width-100"
+                  >
                     <thead>
                       <tr>
                         <th>구분</th>

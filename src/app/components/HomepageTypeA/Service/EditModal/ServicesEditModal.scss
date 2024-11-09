@@ -1,6 +1,7 @@
 #services-edit-modal {
   .modal__body {
     padding: 12px 14px;
+    width: 1200px;
 
     ul.groups {
       &::after {
@@ -14,6 +15,7 @@
         }
         border-radius: 5px 5px 0 0;
         border: 1px solid #acacac;
+        border-bottom: 0;
         float: left;
         padding: 4px 14px;
         cursor: pointer;
@@ -25,10 +27,18 @@
     }
 
     table {
+      tr {
+        th {
+          background-color: #eee;
+          padding: 8px 0;
+        }
+      }
       td {
-        padding: 8px 12px;
+        padding: 16px 0;
+        text-align: center;
         input {
           padding: 0;
+          width: 100%;
         }
       }
     }
