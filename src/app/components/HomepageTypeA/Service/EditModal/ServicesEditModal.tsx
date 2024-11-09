@@ -1,8 +1,10 @@
 import "./ServicesEditModal.scss";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WorshipServicesAndMeetingsInformationGroup } from "../../../../../type/homepage/homepage-type-a";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
+import Sortable from "sortablejs";
+import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 
 export default function ServicesEditModal({
   hide,
@@ -17,6 +19,21 @@ export default function ServicesEditModal({
   const [selectedGroup, setSelectedGroup] = useState(
     worshipServicesAndMeetingsState[0].groupName,
   );
+
+  useEffect(() => {
+    const groupsLength = worshipServicesAndMeetingsState.length;
+    for (let i = 0; i < groupsLength; i++) {
+      const element = document.querySelector(
+        `#services-and-meetins`,
+      ) as HTMLElement;
+
+      if (element) {
+        new Sortable(element, {
+          handle: "#services-and-meetins .group-handle",
+        });
+      }
+    }
+  }, [worshipServicesAndMeetingsState]);
 
   return (
     <div
@@ -34,7 +51,7 @@ export default function ServicesEditModal({
 
           <div className="modal__body">
             <div className="form-group">
-              <ul className="groups d-flex">
+              {/* <ul className="groups d-flex">
                 {worshipServicesAndMeetingsState.map((item, itemIndex) => {
                   return (
                     <li
@@ -86,9 +103,96 @@ export default function ServicesEditModal({
                     </li>
                   );
                 })}
+              </ul> */}
+              <ul id="services-and-meetins">
+                {worshipServicesAndMeetingsState.map(
+                  (groupItem, groupItemIndex) => {
+                    return (
+                      <li key={groupItemIndex}>
+                        <div className="d-flex">
+                          <div
+                            style={{ justifyContent: "flex-start" }}
+                            className="d-flex align-items-center"
+                          >
+                            <div
+                              style={{ transform: "translateY(2px)" }}
+                              className="cursor-pointer group-handle"
+                              title="이동"
+                            >
+                              <DragpanIcon maxWidth={18} fill="#888" />
+                            </div>
+                            <div
+                              style={{ transform: "translateY(2px)" }}
+                              className="cursor-pointer"
+                              title="삭제"
+                            >
+                              <TrashIcon maxWidth={18} fill="#888" />
+                            </div>
+                          </div>
+
+                          <input
+                            type="text"
+                            value={groupItem.groupName}
+                            className="no-border"
+                            style={{
+                              paddingLeft: 0,
+                              marginLeft: 12,
+                            }}
+                          />
+                        </div>
+                        <table
+                          style={{ borderCollapse: "collapse" }}
+                          className="width-100"
+                        >
+                          <thead>
+                            <tr>
+                              <th>구분</th>
+                              <th>시간</th>
+                              <th>장소</th>
+                              <th>설정</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {groupItem.items.map((item, itemIndex) => {
+                              return (
+                                <tr key={itemIndex}>
+                                  <td>
+                                    <input
+                                      className="no-border text-align-center"
+                                      type="text"
+                                      value={item.name}
+                                    />
+                                  </td>
+                                  <td>
+                                    <input
+                                      className="no-border text-align-center"
+                                      type="text"
+                                      value={item.time}
+                                    />
+                                  </td>
+                                  <td>
+                                    <input
+                                      className="no-border text-align-center"
+                                      type="text"
+                                      value={item.location}
+                                    />
+                                  </td>
+                                  <td className="text-align-center">
+                                    <button>삭제</button>
+                                    <button className="handle">이동</button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </li>
+                    );
+                  },
+                )}
               </ul>
 
-              <div>
+              {/* <div>
                 <div
                   style={{
                     paddingBottom: 10,
@@ -143,7 +247,7 @@ export default function ServicesEditModal({
                     </tbody>
                   </table>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
