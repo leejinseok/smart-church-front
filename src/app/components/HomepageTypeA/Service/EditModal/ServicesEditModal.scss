@@ -3,26 +3,43 @@
     padding: 12px 14px;
     width: 1200px;
 
-    ul.groups {
-      &::after {
-        clear: both;
+    .group-items-container {
+      ul.head,
+      ul.group-item {
         display: table;
-        content: "";
+        width: 100%;
+
+        li {
+          display: table-row;
+
+          &[draggable="true"] {
+            background-color: #fcf4db;
+          }
+
+          &.head {
+            background-color: #eee;
+            > div {
+              padding: 8px 0;
+            }
+          }
+
+          > div {
+            display: table-cell;
+            text-align: center;
+            padding: 4px 0;
+
+            input {
+              background-color: transparent;
+            }
+          }
+        }
       }
-      li {
-        &:not(:last-child) {
-          border-right: 0;
-        }
-        border-radius: 5px 5px 0 0;
-        border: 1px solid #acacac;
-        border-bottom: 0;
-        float: left;
-        padding: 4px 14px;
-        cursor: pointer;
-        &.active {
-          background-color: #acacac;
-          color: #fff;
-        }
+
+      .button-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-top: 12px;
       }
     }
 
