@@ -25,15 +25,20 @@ export interface ChurchDepartmentAndMinistry {
   description: string;
 }
 
-export interface WorshipServicesAndMeetingsInformationGroup {
+export interface WorshipServicesAndMeetingsGroup {
   groupName: string;
-  items: WorshipServicesAndMeetingsInformation[];
+  items: WorshipServicesAndMeetingsGroupItem[];
 }
 
-export interface WorshipServicesAndMeetingsInformation {
+export interface WorshipServicesAndMeetingsGroupItem {
   name: string;
   time: string;
   location: string;
+}
+
+export interface WorshipServicesAndMeetings {
+  title: string;
+  items: WorshipServicesAndMeetingsGroup[];
 }
 
 export interface ChurchBanner {
@@ -92,7 +97,7 @@ export interface HomepageTypeA {
   banners: ChurchBanners;
   videos: ChurchVideos;
   churchDepartmentsAndMinistries: ChurchDepartmentsAndMinisties;
-  worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];
+  worshipServicesAndMeetings: WorshipServicesAndMeetings;
   churchRegisterGuide: Op[];
   staffGroup: ChurchStaffGroup[];
   gallery: Gallery[];

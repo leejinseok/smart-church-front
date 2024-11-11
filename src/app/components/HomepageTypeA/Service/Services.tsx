@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { WorshipServicesAndMeetingsInformationGroup } from "../../../../type/homepage/homepage-type-a";
+import { WorshipServicesAndMeetings } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import Service from "./Service";
@@ -10,11 +10,11 @@ export default function Services({
   worshipServicesAndMeetings,
 }: {
   isEdit: boolean;
-  worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];
+  worshipServicesAndMeetings: WorshipServicesAndMeetings;
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [worshipServicesAndMeetingsState, setWorshipServicesAndMeetingsState] =
-    useState([...worshipServicesAndMeetings]);
+    useState({ ...worshipServicesAndMeetings });
   return (
     <>
       <div className={`${isEdit && "edit-overlay-container"}`}>
@@ -25,9 +25,11 @@ export default function Services({
         </h3>
 
         <div>
-          {worshipServicesAndMeetingsState.map((service, serviceIndex) => {
-            return <Service key={serviceIndex} service={service} />;
-          })}
+          {worshipServicesAndMeetingsState.items.map(
+            (service, serviceIndex) => {
+              return <Service key={serviceIndex} service={service} />;
+            },
+          )}
         </div>
 
         {isEdit && (
@@ -42,6 +44,11 @@ export default function Services({
       {isEdit && editModalVisible && (
         <ServicesEditModal
           worshipServicesAndMeetings={worshipServicesAndMeetingsState}
+          updateWorshipServicesAndMeetings={(
+            newValue: WorshipServicesAndMeetings,
+          ) => {
+            setWorshipServicesAndMeetingsState(newValue);
+          }}
           hide={() => {
             setEditModalVisible(false);
           }}

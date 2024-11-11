@@ -1,7 +1,7 @@
 import "./ServicesEditModal.scss";
 
 import { useEffect, useState } from "react";
-import { WorshipServicesAndMeetingsInformationGroup } from "../../../../../type/homepage/homepage-type-a";
+import { WorshipServicesAndMeetings } from "../../../../../type/homepage/homepage-type-a";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
@@ -9,15 +9,19 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 export default function ServicesEditModal({
   hide,
   worshipServicesAndMeetings,
+  updateWorshipServicesAndMeetings,
 }: {
   hide: () => void;
-  worshipServicesAndMeetings: WorshipServicesAndMeetingsInformationGroup[];
+  worshipServicesAndMeetings: WorshipServicesAndMeetings;
+  updateWorshipServicesAndMeetings: (
+    newValue: WorshipServicesAndMeetings,
+  ) => void;
 }) {
   const [worshipServicesAndMeetingsState, setWorshipServicesAndMeetingsState] =
-    useState([...worshipServicesAndMeetings]);
+    useState({ ...worshipServicesAndMeetings });
 
   useEffect(() => {
-    const groupsLength = worshipServicesAndMeetingsState.length;
+    const groupsLength = worshipServicesAndMeetingsState.items.length;
     for (let i = 0; i < groupsLength; i++) {
       const element = document.querySelector(
         `#services-and-meetins`,
@@ -42,8 +46,8 @@ export default function ServicesEditModal({
   }, [worshipServicesAndMeetingsState]);
 
   const addGroupItem = (groupIndex: number) => {
-    const newValue = [...worshipServicesAndMeetingsState];
-    newValue[groupIndex].items.push({
+    const newValue = { ...worshipServicesAndMeetingsState };
+    newValue.items[groupIndex].items.push({
       location: "",
       name: "",
       time: "",
@@ -56,9 +60,9 @@ export default function ServicesEditModal({
     groupIndex: number,
     groupItemIndex: number,
   ) => {
-    const newValue = [...worshipServicesAndMeetingsState];
-    const cur = newValue[groupIndex].items[groupItemIndex];
-    newValue[groupIndex].items[groupItemIndex] = {
+    const newValue = { ...worshipServicesAndMeetingsState };
+    const cur = newValue.items[groupIndex].items[groupItemIndex];
+    newValue.items[groupIndex].items[groupItemIndex] = {
       ...cur,
       name: value,
     };
@@ -71,9 +75,9 @@ export default function ServicesEditModal({
     groupIndex: number,
     groupItemIndex: number,
   ) => {
-    const newValue = [...worshipServicesAndMeetingsState];
-    const cur = newValue[groupIndex].items[groupItemIndex];
-    newValue[groupIndex].items[groupItemIndex] = {
+    const newValue = { ...worshipServicesAndMeetingsState };
+    const cur = newValue.items[groupIndex].items[groupItemIndex];
+    newValue.items[groupIndex].items[groupItemIndex] = {
       ...cur,
       time: value,
     };
@@ -86,9 +90,9 @@ export default function ServicesEditModal({
     groupIndex: number,
     groupItemIndex: number,
   ) => {
-    const newValue = [...worshipServicesAndMeetingsState];
-    const cur = newValue[groupIndex].items[groupItemIndex];
-    newValue[groupIndex].items[groupItemIndex] = {
+    const newValue = { ...worshipServicesAndMeetingsState };
+    const cur = newValue.items[groupIndex].items[groupItemIndex];
+    newValue.items[groupIndex].items[groupItemIndex] = {
       ...cur,
       location: value,
     };
@@ -101,10 +105,52 @@ export default function ServicesEditModal({
       return;
     }
 
-    const newValue = [...worshipServicesAndMeetingsState];
-    newValue[groupIndex].items.splice(groupItemIndex, 1);
+    const newValue = { ...worshipServicesAndMeetingsState };
+    newValue.items[groupIndex].items.splice(groupItemIndex, 1);
 
     setWorshipServicesAndMeetingsState(newValue);
+  };
+
+  const handleSubmit = () => {
+    const newWorshipServicesAndMeetings = JSON.parse(
+      JSON.stringify(worshipServicesAndMeetingsState),
+    ) as WorshipServicesAndMeetings;
+
+    for (
+      let groupItemIndex = 0;
+      groupItemIndex < newWorshipServicesAndMeetings.items.length;
+      groupItemIndex++
+    ) {
+      const groupItem = newWorshipServicesAndMeetings.items[groupItemIndex];
+      const prevGroupItemItems = groupItem.items;
+      const newGroupItemItems = [];
+
+      const itemsElement = document.querySelectorAll(
+        `#services-and-meetins-${groupItemIndex} li`,
+      );
+
+      if (itemsElement) {
+        for (
+          let groupItemItemIndex = 0;
+          groupItemItemIndex < itemsElement.length;
+          groupItemItemIndex++
+        ) {
+          const itemElement = itemsElement[groupItemItemIndex];
+          const dataIndex = itemElement.getAttribute("data-index");
+
+          if (dataIndex) {
+            newGroupItemItems.push(prevGroupItemItems[+dataIndex!]);
+          }
+        }
+      }
+
+      newWorshipServicesAndMeetings.items[groupItemIndex].items = [
+        ...newGroupItemItems,
+      ];
+    }
+
+    updateWorshipServicesAndMeetings(newWorshipServicesAndMeetings);
+    hide();
   };
 
   return (
@@ -124,137 +170,152 @@ export default function ServicesEditModal({
           <div className="modal__body">
             <div className="form-group">
               <ul id="services-and-meetins">
-                {worshipServicesAndMeetingsState.map((group, groupIndex) => {
-                  return (
-                    <li key={groupIndex}>
-                      <div className="d-flex">
-                        <div
-                          style={{ justifyContent: "flex-start" }}
-                          className="d-flex align-items-center"
-                        >
+                {worshipServicesAndMeetingsState.items.map(
+                  (group, groupIndex) => {
+                    return (
+                      <li key={groupIndex}>
+                        <div className="d-flex">
                           <div
-                            style={{ transform: "translateY(2px)" }}
-                            className="cursor-pointer group-handle"
-                            title="이동"
+                            style={{ justifyContent: "flex-start" }}
+                            className="d-flex align-items-center"
                           >
-                            <DragpanIcon maxWidth={18} fill="#888" />
+                            <div
+                              style={{ transform: "translateY(2px)" }}
+                              className="cursor-pointer group-handle"
+                              title="이동"
+                            >
+                              <DragpanIcon maxWidth={18} fill="#888" />
+                            </div>
+                            <div
+                              style={{ transform: "translateY(2px)" }}
+                              className="cursor-pointer"
+                              title="삭제"
+                            >
+                              <TrashIcon maxWidth={18} fill="#888" />
+                            </div>
                           </div>
-                          <div
-                            style={{ transform: "translateY(2px)" }}
-                            className="cursor-pointer"
-                            title="삭제"
-                          >
-                            <TrashIcon maxWidth={18} fill="#888" />
-                          </div>
+
+                          <input
+                            type="text"
+                            value={group.groupName}
+                            className="no-border"
+                            style={{
+                              paddingLeft: 0,
+                              marginLeft: 12,
+                            }}
+                          />
                         </div>
 
-                        <input
-                          type="text"
-                          value={group.groupName}
-                          className="no-border"
-                          style={{
-                            paddingLeft: 0,
-                            marginLeft: 12,
-                          }}
-                        />
-                      </div>
-
-                      <div className="group-items-container">
-                        <ul
-                          className="group-item"
-                          id={`services-and-meetins-${groupIndex}`}
-                        >
-                          <li className="head">
-                            <div>구분</div>
-                            <div>시간</div>
-                            <div>장소</div>
-                            <div>설정</div>
-                          </li>
-                          {group.items.map((item, itemIndex) => {
-                            return (
-                              <li key={itemIndex}>
-                                <div>
-                                  <input
-                                    className="no-border text-align-center"
-                                    type="text"
-                                    placeholder="구분"
-                                    value={item.name}
-                                    onChange={(e) =>
-                                      handleChangeName(
-                                        e.target.value,
-                                        groupIndex,
-                                        itemIndex,
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div>
-                                  <input
-                                    className="no-border text-align-center"
-                                    type="text"
-                                    placeholder="시간"
-                                    value={item.time}
-                                    onChange={(e) =>
-                                      handleChangeTime(
-                                        e.target.value,
-                                        groupIndex,
-                                        itemIndex,
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div>
-                                  <input
-                                    className="no-border text-align-center"
-                                    type="text"
-                                    placeholder="장소"
-                                    value={item.location}
-                                    onChange={(e) =>
-                                      handleChangeLocation(
-                                        e.target.value,
-                                        groupIndex,
-                                        itemIndex,
-                                      )
-                                    }
-                                  />
-                                </div>
-                                <div>
-                                  <button
-                                    type="button"
-                                    className="group-item-handle no-border transparent"
-                                    title="이동"
-                                  >
-                                    <DragpanIcon maxWidth={20} fill="#555555" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="no-border transparent"
-                                    title="삭제"
-                                    onClick={() =>
-                                      deleteGroupItem(groupIndex, itemIndex)
-                                    }
-                                  >
-                                    <TrashIcon maxWidth={20} fill="#555555" />
-                                  </button>
-                                </div>
-                              </li>
-                            );
-                          })}
-                        </ul>
-
-                        <div className="d-flex button-container">
-                          <button
-                            className="button-4"
-                            onClick={() => addGroupItem(groupIndex)}
+                        <div className="group-items-container">
+                          <ul
+                            className="group-item"
+                            id={`services-and-meetins-${groupIndex}`}
                           >
-                            추가 +
-                          </button>
+                            <li className="head">
+                              <div>구분</div>
+                              <div>시간</div>
+                              <div>장소</div>
+                              <div>설정</div>
+                            </li>
+                            {group.items.map((item, itemIndex) => {
+                              return (
+                                <li key={itemIndex} data-index={itemIndex}>
+                                  <div>
+                                    <input
+                                      className="no-border text-align-center"
+                                      type="text"
+                                      placeholder="구분"
+                                      value={item.name}
+                                      onChange={(e) =>
+                                        handleChangeName(
+                                          e.target.value,
+                                          groupIndex,
+                                          itemIndex,
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  <div>
+                                    <input
+                                      className="no-border text-align-center"
+                                      type="text"
+                                      placeholder="시간"
+                                      value={item.time}
+                                      onChange={(e) =>
+                                        handleChangeTime(
+                                          e.target.value,
+                                          groupIndex,
+                                          itemIndex,
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  <div>
+                                    <input
+                                      className="no-border text-align-center"
+                                      type="text"
+                                      placeholder="장소"
+                                      value={item.location}
+                                      onChange={(e) =>
+                                        handleChangeLocation(
+                                          e.target.value,
+                                          groupIndex,
+                                          itemIndex,
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                  <div>
+                                    <button
+                                      type="button"
+                                      className="group-item-handle no-border transparent"
+                                      title="이동"
+                                    >
+                                      <DragpanIcon
+                                        maxWidth={20}
+                                        fill="#555555"
+                                      />
+                                    </button>
+                                    <button
+                                      type="button"
+                                      className="no-border transparent"
+                                      title="삭제"
+                                      onClick={() =>
+                                        deleteGroupItem(groupIndex, itemIndex)
+                                      }
+                                    >
+                                      <TrashIcon maxWidth={20} fill="#555555" />
+                                    </button>
+                                  </div>
+                                </li>
+                              );
+                            })}
+                          </ul>
+
+                          <div className="d-flex button-container">
+                            <button
+                              className="button-4"
+                              onClick={() => addGroupItem(groupIndex)}
+                            >
+                              추가 +
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  );
-                })}
+                      </li>
+                    );
+                  },
+                )}
               </ul>
+            </div>
+
+            <div className="form-group">
+              <button
+                type="button"
+                className="button-4 width-100"
+                onClick={() => handleSubmit()}
+              >
+                적용
+              </button>
             </div>
           </div>
         </div>

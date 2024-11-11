@@ -1,10 +1,10 @@
-import { WorshipServicesAndMeetingsInformationGroup } from "../../../../type/homepage/homepage-type-a";
+import { WorshipServicesAndMeetingsGroup } from "../../../../type/homepage/homepage-type-a";
 import "./Service.scss";
 
 export default function Service({
   service,
 }: {
-  service: WorshipServicesAndMeetingsInformationGroup;
+  service: WorshipServicesAndMeetingsGroup;
 }) {
   return (
     <>

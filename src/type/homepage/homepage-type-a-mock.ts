@@ -180,46 +180,49 @@ export const homepageTypeAFormMock: HomepageTypeA = {
       ],
     },
   },
-  worshipServicesAndMeetings: [
-    {
-      groupName: "예배",
-      items: [
-        {
-          name: "주일 1부예배",
-          time: "오전 8시 30분",
-          location: "본당 (지하 2층)",
-        },
-        {
-          name: "주일 2부예배",
-          time: "오전 11시 30분",
-          location: "본당 (지하 2층)",
-        },
-        {
-          name: "주일 3부예배",
-          time: "오후 2시",
-          location: "본당 (지하 2층)",
-        },
-        {
-          name: "젊은이부 예배",
-          time: "주일 오후 2시",
-          location: "벧엘성전 (4층)",
-        },
-        {
-          name: "수요예배",
-          time: "오후 7시 30분",
-          location: "본당 (지하2층)",
-        },
-        {
-          name: "금요예배",
-          time: "오후 9시",
-          location: "본당 (지하2층)",
-        },
-        {
-          name: "새벽예배",
-          time: "매일 오전 5시",
-          location: "본당 (지하2층)",
-        },
-      ],
-    },
-  ],
+  worshipServicesAndMeetings: {
+    title: "예배 및 모임안내",
+    items: [
+      {
+        groupName: "예배",
+        items: [
+          {
+            name: "주일 1부예배",
+            time: "오전 8시 30분",
+            location: "본당 (지하 2층)",
+          },
+          {
+            name: "주일 2부예배",
+            time: "오전 11시 30분",
+            location: "본당 (지하 2층)",
+          },
+          {
+            name: "주일 3부예배",
+            time: "오후 2시",
+            location: "본당 (지하 2층)",
+          },
+          {
+            name: "젊은이부 예배",
+            time: "주일 오후 2시",
+            location: "벧엘성전 (4층)",
+          },
+          {
+            name: "수요예배",
+            time: "오후 7시 30분",
+            location: "본당 (지하2층)",
+          },
+          {
+            name: "금요예배",
+            time: "오후 9시",
+            location: "본당 (지하2층)",
+          },
+          {
+            name: "새벽예배",
+            time: "매일 오전 5시",
+            location: "본당 (지하2층)",
+          },
+        ],
+      },
+    ],
+  },
 };
