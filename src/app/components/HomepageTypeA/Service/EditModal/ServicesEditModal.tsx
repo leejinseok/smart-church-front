@@ -153,6 +153,12 @@ export default function ServicesEditModal({
     hide();
   };
 
+  const handleChangeGroupName = (value: string, groupIndex: number) => {
+    const newValue = { ...worshipServicesAndMeetingsState };
+    newValue.items[groupIndex].groupName = value;
+    setWorshipServicesAndMeetingsState(newValue);
+  };
+
   return (
     <div
       id="services-edit-modal"
@@ -198,6 +204,9 @@ export default function ServicesEditModal({
                           <input
                             type="text"
                             value={group.groupName}
+                            onChange={(e) => {
+                              handleChangeGroupName(e.target.value, groupIndex);
+                            }}
                             className="no-border"
                             style={{
                               paddingLeft: 0,
