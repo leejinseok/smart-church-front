@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { WorshipServicesAndMeetings } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
@@ -15,6 +15,14 @@ export default function Services({
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [worshipServicesAndMeetingsState, setWorshipServicesAndMeetingsState] =
     useState({ ...worshipServicesAndMeetings });
+
+  useEffect(() => {
+    if (editModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [editModalVisible]);
   return (
     <>
       <div className={`${isEdit && "edit-overlay-container"}`}>

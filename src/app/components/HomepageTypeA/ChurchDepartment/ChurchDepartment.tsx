@@ -1,6 +1,6 @@
 import "./ChurchDepartment.scss";
 import { nanumBarunGothicBold } from "../../../layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChurchDepartmentEditModal from "./ChurchDepartmentEditModal/ChurchDepartmentEditModal";
 import { ChurchDepartmentsAndMinisties } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
@@ -22,6 +22,14 @@ export default function ChurchDepartment({
     churchDepartmentsAndMinistriesState,
     setChurchDepartmentsAndMinistries,
   ] = useState({ ...churchDepartmentsAndMinistries });
+
+  useEffect(() => {
+    if (churchDepartmentEditModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [churchDepartmentEditModalVisible]);
 
   return (
     <>

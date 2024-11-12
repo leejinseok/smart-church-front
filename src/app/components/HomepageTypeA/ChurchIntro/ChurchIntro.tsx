@@ -2,8 +2,7 @@ import "./ChurchIntro.scss";
 
 import { nanumBarunGothicBold } from "../../../layout";
 import QuillRenderer from "../../Quill/QuillRenderer";
-import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChurchIntroEditModal from "./ChurchIntroEditModal/ChurchIntroEditModal";
 import { ChurchIntro as ChurchIntroInterface } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
@@ -19,6 +18,14 @@ export default function ChurchIntro({
     useState(false);
 
   const [churchIntroState, setChurchIntroState] = useState({ ...churchIntro });
+
+  useEffect(() => {
+    if (churchIntroEditModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [churchIntroEditModalVisible]);
 
   return (
     <>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ChurchVideos } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import Video from "./Video";
-import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
 import VideosEditModal from "./VideosEditModal/VideosEditModal";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";
@@ -18,8 +17,12 @@ export default function Videos({
   const [videosEditModalVisible, setVideosEditModalVisible] = useState(false);
 
   useEffect(() => {
-    setVideosState(videos);
-  }, [videos]);
+    if (videosEditModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [videosEditModalVisible]);
 
   const handleClickEditOverlay = () => {
     setVideosEditModalVisible(true);

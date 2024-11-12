@@ -28,6 +28,14 @@ export default function Banner({
     setBannerState({ ...banners });
   }, [banners]);
 
+  useEffect(() => {
+    if (bannerEditModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [bannerEditModalVisible]);
+
   const handleClickEditOverlay = () => {
     setBannerEditModalVisible(true);
   };
