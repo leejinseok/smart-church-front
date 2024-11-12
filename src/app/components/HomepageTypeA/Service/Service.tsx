@@ -10,7 +10,7 @@ export default function Service({
     <>
       <div id="service-component">
         <h3 style={{ marginBottom: 16 }} className="font-size-m">
-          예배
+          {service.groupName}
         </h3>
 
         <table className="font-size-m">

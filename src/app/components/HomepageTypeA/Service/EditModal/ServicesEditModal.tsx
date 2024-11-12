@@ -207,6 +207,42 @@ export default function ServicesEditModal({
 
           <div className="modal__body">
             <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 0 }}
+              >
+                제목
+              </p>
+              <input
+                type="text"
+                className="font-size-m no-border"
+                value={worshipServicesAndMeetingsState.title}
+                onChange={(e) =>
+                  setWorshipServicesAndMeetingsState((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="form-group">
+              <div className="d-flex">
+                <p
+                  className="font-weight-bold font-size-m"
+                  style={{ marginBottom: 0 }}
+                >
+                  항목
+                </p>
+
+                <span
+                  className="d-flex cursor-pointer"
+                  style={{ marginLeft: 6 }}
+                  onClick={() => addGroup()}
+                >
+                  <AddIcon maxWidth={18} fill="#4b4b4b" />
+                </span>
+              </div>
+
               <ul id="services-and-meetings">
                 {worshipServicesAndMeetingsState.items.map(
                   (group, groupIndex) => {
@@ -228,6 +264,7 @@ export default function ServicesEditModal({
                             </div>
                             <input
                               type="text"
+                              placeholder="예배, 모임"
                               value={group.groupName}
                               onChange={(e) => {
                                 handleChangeGroupName(
@@ -251,17 +288,10 @@ export default function ServicesEditModal({
                           >
                             <div
                               className="cursor-pointer"
-                              onClick={() => addGroupItem(groupIndex)}
-                              title="추가"
-                            >
-                              <AddIcon maxWidth={22} fill="#888" />
-                            </div>
-                            <div
-                              className="cursor-pointer"
                               onClick={() => deleteGroup(groupIndex)}
                               title="삭제"
                             >
-                              <TrashIcon maxWidth={18} fill="#888" />
+                              <TrashIcon maxWidth={22} fill="#888" />
                             </div>
                           </div>
                         </div>
@@ -350,6 +380,15 @@ export default function ServicesEditModal({
                                 </li>
                               );
                             })}
+
+                            <li className="footer">
+                              <button
+                                className="button-4"
+                                onClick={() => addGroupItem(groupIndex)}
+                              >
+                                추가 +
+                              </button>
+                            </li>
                           </ul>
                         </div>
                       </li>
@@ -357,18 +396,6 @@ export default function ServicesEditModal({
                   },
                 )}
               </ul>
-            </div>
-
-            <div
-              className="d-flex button-container"
-              style={{
-                marginBottom: 12,
-                justifyContent: "flex-end",
-              }}
-            >
-              <button className="button-4" onClick={() => addGroup()}>
-                추가 +
-              </button>
             </div>
           </div>
 
