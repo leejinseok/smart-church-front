@@ -1,10 +1,8 @@
 import "./ChurchDepartment.scss";
 import { nanumBarunGothicBold } from "../../../layout";
-import HomepageEditTools from "../../HomepageEdit/HomepageEditTools";
 import { useState } from "react";
 import ChurchDepartmentEditModal from "./ChurchDepartmentEditModal/ChurchDepartmentEditModal";
 import { ChurchDepartmentsAndMinisties } from "../../../../type/homepage/homepage-type-a";
-import VisibilityOffIcon from "../../../../components/Icon/VisibilityOffIcon";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";
 

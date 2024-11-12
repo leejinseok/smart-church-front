@@ -105,14 +105,16 @@ export const homepageTypeAFormMock: HomepageTypeA = {
         "근로조건의 기준은 인간의 존엄성을 보장하도록 법률로 정한다. 재판의 전심절차로서 행정심판을 할 수 있다.",
     },
   ],
-  staffGroup: [
-    {
-      type: "NONE",
-      staffs: [
-        {
-          name: "김스마트",
-          role: "담임목사",
-          description: `
+  churchStaffs: {
+    title: "섬기는 사람들",
+    groups: [
+      {
+        type: "NONE",
+        staffs: [
+          {
+            name: "김스마트",
+            role: "담임목사",
+            description: `
             학력
             감리교 신학대학교 졸업
             감리교 신학대학원 졸업
@@ -120,41 +122,42 @@ export const homepageTypeAFormMock: HomepageTypeA = {
             집필
             미주크리스챤 저널: “소 그룹 리더의 영적 치유” 필자 (2003-‘06.1, 2010)
           `,
-          email: "kim@smart-church.com",
-          tel: "010-1004-1004",
-          profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
-          department: null,
-        },
-        {
-          name: "박스마트",
-          role: "부목사",
-          description: "",
-          email: "park@smart-church.com",
-          tel: "",
-          profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
-          department: "아동부",
-        },
-        {
-          name: "홍스마트",
-          role: "부목사",
-          description: "",
-          email: "park@smart-church.com",
-          tel: "010-1004-1004",
-          profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
-          department: "선교부",
-        },
-        {
-          name: "유스마트",
-          role: "부목사",
-          description: "",
-          email: "park@smart-church.com",
-          tel: "010-1004-1004",
-          profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
-          department: "교육부",
-        },
-      ],
-    },
-  ],
+            email: "kim@smart-church.com",
+            tel: "010-1004-1004",
+            profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
+            department: null,
+          },
+          {
+            name: "박스마트",
+            role: "부목사",
+            description: "",
+            email: "park@smart-church.com",
+            tel: "",
+            profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
+            department: "아동부",
+          },
+          {
+            name: "홍스마트",
+            role: "부목사",
+            description: "",
+            email: "park@smart-church.com",
+            tel: "010-1004-1004",
+            profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
+            department: "선교부",
+          },
+          {
+            name: "유스마트",
+            role: "부목사",
+            description: "",
+            email: "park@smart-church.com",
+            tel: "010-1004-1004",
+            profileImageUrl: "https://placehold.co/292x250?text=Staff Image",
+            department: "교육부",
+          },
+        ],
+      },
+    ],
+  },
   videos: {
     visible: true,
     title: "설교영상",
@@ -182,7 +185,7 @@ export const homepageTypeAFormMock: HomepageTypeA = {
   },
   worshipServicesAndMeetings: {
     title: "예배 및 모임안내",
-    items: [
+    groups: [
       {
         groupName: "예배",
         items: [

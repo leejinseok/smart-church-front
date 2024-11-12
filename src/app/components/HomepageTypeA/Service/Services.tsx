@@ -25,7 +25,7 @@ export default function Services({
         </h3>
 
         <div>
-          {worshipServicesAndMeetingsState.items.map(
+          {worshipServicesAndMeetingsState.groups.map(
             (service, serviceIndex) => {
               return <Service key={serviceIndex} service={service} />;
             },

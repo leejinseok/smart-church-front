@@ -38,7 +38,7 @@ export interface WorshipServicesAndMeetingsGroupItem {
 
 export interface WorshipServicesAndMeetings {
   title: string;
-  items: WorshipServicesAndMeetingsGroup[];
+  groups: WorshipServicesAndMeetingsGroup[];
 }
 
 export interface ChurchBanner {
@@ -61,6 +61,11 @@ export interface ChurchStaffGroup {
   type: string;
   staffs: ChurchStaff[];
 }
+
+export type ChurchStaffs = {
+  title: string;
+  groups: ChurchStaffGroup[];
+};
 
 export interface Gallery {
   imageUrl: string;
@@ -99,6 +104,6 @@ export interface HomepageTypeA {
   churchDepartmentsAndMinistries: ChurchDepartmentsAndMinisties;
   worshipServicesAndMeetings: WorshipServicesAndMeetings;
   churchRegisterGuide: Op[];
-  staffGroup: ChurchStaffGroup[];
+  churchStaffs: ChurchStaffs;
   gallery: Gallery[];
 }

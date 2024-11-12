@@ -24,7 +24,7 @@ export default function ServicesEditModal({
     useState({ ...worshipServicesAndMeetings });
 
   useEffect(() => {
-    const groupsLength = worshipServicesAndMeetingsState.items.length;
+    const groupsLength = worshipServicesAndMeetingsState.groups.length;
     for (let i = 0; i < groupsLength; i++) {
       const element = document.querySelector(
         `#services-and-meetings`,
@@ -50,7 +50,7 @@ export default function ServicesEditModal({
 
   const addGroupItem = (groupIndex: number) => {
     const newValue = { ...worshipServicesAndMeetingsState };
-    newValue.items[groupIndex].items.push({
+    newValue.groups[groupIndex].items.push({
       location: "",
       name: "",
       time: "",
@@ -64,8 +64,8 @@ export default function ServicesEditModal({
     groupItemIndex: number,
   ) => {
     const newValue = { ...worshipServicesAndMeetingsState };
-    const cur = newValue.items[groupIndex].items[groupItemIndex];
-    newValue.items[groupIndex].items[groupItemIndex] = {
+    const cur = newValue.groups[groupIndex].items[groupItemIndex];
+    newValue.groups[groupIndex].items[groupItemIndex] = {
       ...cur,
       name: value,
     };
@@ -79,8 +79,8 @@ export default function ServicesEditModal({
     groupItemIndex: number,
   ) => {
     const newValue = { ...worshipServicesAndMeetingsState };
-    const cur = newValue.items[groupIndex].items[groupItemIndex];
-    newValue.items[groupIndex].items[groupItemIndex] = {
+    const cur = newValue.groups[groupIndex].items[groupItemIndex];
+    newValue.groups[groupIndex].items[groupItemIndex] = {
       ...cur,
       time: value,
     };
@@ -94,8 +94,8 @@ export default function ServicesEditModal({
     groupItemIndex: number,
   ) => {
     const newValue = { ...worshipServicesAndMeetingsState };
-    const cur = newValue.items[groupIndex].items[groupItemIndex];
-    newValue.items[groupIndex].items[groupItemIndex] = {
+    const cur = newValue.groups[groupIndex].items[groupItemIndex];
+    newValue.groups[groupIndex].items[groupItemIndex] = {
       ...cur,
       location: value,
     };
@@ -109,7 +109,7 @@ export default function ServicesEditModal({
     }
 
     const newValue = { ...worshipServicesAndMeetingsState };
-    newValue.items.splice(groupIndex, 1);
+    newValue.groups.splice(groupIndex, 1);
     setWorshipServicesAndMeetingsState(newValue);
   };
 
@@ -119,7 +119,7 @@ export default function ServicesEditModal({
     }
 
     const newValue = { ...worshipServicesAndMeetingsState };
-    newValue.items[groupIndex].items.splice(groupItemIndex, 1);
+    newValue.groups[groupIndex].items.splice(groupItemIndex, 1);
 
     setWorshipServicesAndMeetingsState(newValue);
   };
@@ -130,35 +130,35 @@ export default function ServicesEditModal({
     ) as WorshipServicesAndMeetings;
 
     for (
-      let groupItemIndex = 0;
-      groupItemIndex < newWorshipServicesAndMeetings.items.length;
-      groupItemIndex++
+      let groupIndex = 0;
+      groupIndex < newWorshipServicesAndMeetings.groups.length;
+      groupIndex++
     ) {
-      const groupItem = newWorshipServicesAndMeetings.items[groupItemIndex];
-      const prevGroupItemItems = groupItem.items;
-      const newGroupItemItems = [];
+      const curGroup = newWorshipServicesAndMeetings.groups[groupIndex];
+      const prevGroupItems = curGroup.items;
+      const newGroupItems = [];
 
       const itemsElement = document.querySelectorAll(
-        `#services-and-meetings-${groupItemIndex} li`,
+        `#services-and-meetings-${groupIndex} li`,
       );
 
       if (itemsElement) {
         for (
-          let groupItemItemIndex = 0;
-          groupItemItemIndex < itemsElement.length;
-          groupItemItemIndex++
+          let groupItemIndex = 0;
+          groupItemIndex < itemsElement.length;
+          groupItemIndex++
         ) {
-          const itemElement = itemsElement[groupItemItemIndex];
+          const itemElement = itemsElement[groupItemIndex];
           const dataIndex = itemElement.getAttribute("data-index");
 
           if (dataIndex) {
-            newGroupItemItems.push(prevGroupItemItems[+dataIndex!]);
+            newGroupItems.push(prevGroupItems[+dataIndex!]);
           }
         }
       }
 
-      newWorshipServicesAndMeetings.items[groupItemIndex].items = [
-        ...newGroupItemItems,
+      newWorshipServicesAndMeetings.groups[groupIndex].items = [
+        ...newGroupItems,
       ];
     }
 
@@ -178,13 +178,13 @@ export default function ServicesEditModal({
 
   const handleChangeGroupName = (value: string, groupIndex: number) => {
     const newValue = { ...worshipServicesAndMeetingsState };
-    newValue.items[groupIndex].groupName = value;
+    newValue.groups[groupIndex].groupName = value;
     setWorshipServicesAndMeetingsState(newValue);
   };
 
   const addGroup = () => {
     const newValue = { ...worshipServicesAndMeetingsState };
-    newValue.items.push({
+    newValue.groups.push({
       groupName: "",
       items: [],
     });
@@ -244,7 +244,7 @@ export default function ServicesEditModal({
               </div>
 
               <ul id="services-and-meetings">
-                {worshipServicesAndMeetingsState.items.map(
+                {worshipServicesAndMeetingsState.groups.map(
                   (group, groupIndex) => {
                     return (
                       <li key={groupIndex}>
@@ -307,20 +307,23 @@ export default function ServicesEditModal({
                               <div>장소</div>
                               <div>설정</div>
                             </li>
-                            {group.items.map((item, itemIndex) => {
+                            {group.items.map((groupItem, groupItemIndex) => {
                               return (
-                                <li key={itemIndex} data-index={itemIndex}>
+                                <li
+                                  key={groupItemIndex}
+                                  data-index={groupItemIndex}
+                                >
                                   <div>
                                     <input
                                       className="no-border text-align-center"
                                       type="text"
                                       placeholder="구분"
-                                      value={item.name}
+                                      value={groupItem.name}
                                       onChange={(e) =>
                                         handleChangeName(
                                           e.target.value,
                                           groupIndex,
-                                          itemIndex,
+                                          groupItemIndex,
                                         )
                                       }
                                     />
@@ -330,12 +333,12 @@ export default function ServicesEditModal({
                                       className="no-border text-align-center"
                                       type="text"
                                       placeholder="시간"
-                                      value={item.time}
+                                      value={groupItem.time}
                                       onChange={(e) =>
                                         handleChangeTime(
                                           e.target.value,
                                           groupIndex,
-                                          itemIndex,
+                                          groupItemIndex,
                                         )
                                       }
                                     />
@@ -345,12 +348,12 @@ export default function ServicesEditModal({
                                       className="no-border text-align-center"
                                       type="text"
                                       placeholder="장소"
-                                      value={item.location}
+                                      value={groupItem.location}
                                       onChange={(e) =>
                                         handleChangeLocation(
                                           e.target.value,
                                           groupIndex,
-                                          itemIndex,
+                                          groupItemIndex,
                                         )
                                       }
                                     />
@@ -371,7 +374,10 @@ export default function ServicesEditModal({
                                       className="no-border transparent"
                                       title="삭제"
                                       onClick={() =>
-                                        deleteGroupItem(groupIndex, itemIndex)
+                                        deleteGroupItem(
+                                          groupIndex,
+                                          groupItemIndex,
+                                        )
                                       }
                                     >
                                       <TrashIcon maxWidth={20} fill="#555555" />
@@ -382,12 +388,21 @@ export default function ServicesEditModal({
                             })}
 
                             <li className="footer">
-                              <button
-                                className="button-4"
-                                onClick={() => addGroupItem(groupIndex)}
-                              >
-                                추가 +
-                              </button>
+                              <div>
+                                <button
+                                  style={{
+                                    display: "table-cell",
+                                    marginTop: 12,
+                                  }}
+                                  className="button-4"
+                                  onClick={() => addGroupItem(groupIndex)}
+                                >
+                                  {group.groupName} 추가 +
+                                </button>
+                              </div>
+                              <div></div>
+                              <div></div>
+                              <div></div>
                             </li>
                           </ul>
                         </div>

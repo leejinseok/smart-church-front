@@ -10,13 +10,11 @@ import Footer from "./Footer/Footer";
 import Gallery from "./Gallery/Gallery";
 import Header from "./Header/Header";
 import Locations from "./Location/Locations";
-import Service from "./Service/Service";
-import StaffGroup from "./Staff/StaffGroup";
-import QuillRenderer from "../Quill/QuillRenderer";
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
 import Videos from "./Videos/Videos";
 import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
 import Services from "./Service/Services";
+import ChurchStaffs from "./Staffs/ChurchStaffs";
 
 export default function HomepageTypeA({
   isEdit,
@@ -94,7 +92,7 @@ export default function HomepageTypeA({
               }
             />
           </section>
-
+          {/* 
           <section>
             <div>
               <h3
@@ -109,31 +107,13 @@ export default function HomepageTypeA({
                 </div>
               </div>
             </div>
-          </section>
+          </section> */}
 
           <section>
-            <div>
-              <h3
-                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
-              >
-                섬기는 사람들
-              </h3>
-
-              <div>
-                <div>
-                  {homepageTypeAMock.staffGroup.map(
-                    (staffGroup, staffGroupIndex) => {
-                      return (
-                        <StaffGroup
-                          key={staffGroupIndex}
-                          staffGroup={staffGroup}
-                        />
-                      );
-                    },
-                  )}
-                </div>
-              </div>
-            </div>
+            <ChurchStaffs
+              isEdit={isEdit}
+              churchStaffs={homepageTypeAMock.churchStaffs}
+            />
           </section>
 
           <section className="gallery">
