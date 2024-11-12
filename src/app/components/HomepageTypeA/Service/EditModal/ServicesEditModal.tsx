@@ -5,6 +5,9 @@ import { WorshipServicesAndMeetings } from "../../../../../type/homepage/homepag
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { getCookie } from "../../../../../util/cookie-utils";
+import AddIcon from "../../../../../components/Icon/AddIcon";
 
 export default function ServicesEditModal({
   hide,
@@ -24,21 +27,21 @@ export default function ServicesEditModal({
     const groupsLength = worshipServicesAndMeetingsState.items.length;
     for (let i = 0; i < groupsLength; i++) {
       const element = document.querySelector(
-        `#services-and-meetins`,
+        `#services-and-meetings`,
       ) as HTMLElement;
 
       if (element) {
         new Sortable(element, {
-          handle: "#services-and-meetins .group-handle",
+          handle: "#services-and-meetings .group-handle",
         });
 
         const itemsElement = element.querySelector(
-          `#services-and-meetins-${i}`,
+          `#services-and-meetings-${i}`,
         ) as HTMLElement;
 
         if (itemsElement) {
           new Sortable(itemsElement, {
-            handle: `#services-and-meetins-${i} .group-item-handle`,
+            handle: `#services-and-meetings-${i} .group-item-handle`,
           });
         }
       }
@@ -100,6 +103,16 @@ export default function ServicesEditModal({
     setWorshipServicesAndMeetingsState(newValue);
   };
 
+  const deleteGroup = (groupIndex: number) => {
+    if (!confirm("삭제하시겠습니까?")) {
+      return;
+    }
+
+    const newValue = { ...worshipServicesAndMeetingsState };
+    newValue.items.splice(groupIndex, 1);
+    setWorshipServicesAndMeetingsState(newValue);
+  };
+
   const deleteGroupItem = (groupIndex: number, groupItemIndex: number) => {
     if (!confirm("삭제하시겠습니까?")) {
       return;
@@ -111,7 +124,7 @@ export default function ServicesEditModal({
     setWorshipServicesAndMeetingsState(newValue);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const newWorshipServicesAndMeetings = JSON.parse(
       JSON.stringify(worshipServicesAndMeetingsState),
     ) as WorshipServicesAndMeetings;
@@ -126,7 +139,7 @@ export default function ServicesEditModal({
       const newGroupItemItems = [];
 
       const itemsElement = document.querySelectorAll(
-        `#services-and-meetins-${groupItemIndex} li`,
+        `#services-and-meetings-${groupItemIndex} li`,
       );
 
       if (itemsElement) {
@@ -149,6 +162,16 @@ export default function ServicesEditModal({
       ];
     }
 
+    const homepageTypeAId = getCookie("homepageTypeAId");
+    if (!homepageTypeAId) {
+      return;
+    }
+
+    await homepageTypeAMockApiRepository.updateWorkshipServicesAndMeetings(
+      homepageTypeAId,
+      newWorshipServicesAndMeetings,
+    );
+
     updateWorshipServicesAndMeetings(newWorshipServicesAndMeetings);
     hide();
   };
@@ -156,6 +179,15 @@ export default function ServicesEditModal({
   const handleChangeGroupName = (value: string, groupIndex: number) => {
     const newValue = { ...worshipServicesAndMeetingsState };
     newValue.items[groupIndex].groupName = value;
+    setWorshipServicesAndMeetingsState(newValue);
+  };
+
+  const addGroup = () => {
+    const newValue = { ...worshipServicesAndMeetingsState };
+    newValue.items.push({
+      groupName: "",
+      items: [],
+    });
     setWorshipServicesAndMeetingsState(newValue);
   };
 
@@ -175,15 +207,17 @@ export default function ServicesEditModal({
 
           <div className="modal__body">
             <div className="form-group">
-              <ul id="services-and-meetins">
+              <ul id="services-and-meetings">
                 {worshipServicesAndMeetingsState.items.map(
                   (group, groupIndex) => {
                     return (
                       <li key={groupIndex}>
                         <div className="d-flex">
                           <div
-                            style={{ justifyContent: "flex-start" }}
                             className="d-flex align-items-center"
+                            style={{
+                              flex: 1,
+                            }}
                           >
                             <div
                               style={{ transform: "translateY(2px)" }}
@@ -192,33 +226,50 @@ export default function ServicesEditModal({
                             >
                               <DragpanIcon maxWidth={18} fill="#888" />
                             </div>
+                            <input
+                              type="text"
+                              value={group.groupName}
+                              onChange={(e) => {
+                                handleChangeGroupName(
+                                  e.target.value,
+                                  groupIndex,
+                                );
+                              }}
+                              className="no-border"
+                              style={{
+                                paddingLeft: 0,
+                                marginLeft: 4,
+                              }}
+                            />
+                          </div>
+
+                          <div
+                            style={{
+                              justifyContent: "flex-start",
+                            }}
+                            className="d-flex align-items-center"
+                          >
                             <div
-                              style={{ transform: "translateY(2px)" }}
                               className="cursor-pointer"
+                              onClick={() => addGroupItem(groupIndex)}
+                              title="추가"
+                            >
+                              <AddIcon maxWidth={22} fill="#888" />
+                            </div>
+                            <div
+                              className="cursor-pointer"
+                              onClick={() => deleteGroup(groupIndex)}
                               title="삭제"
                             >
                               <TrashIcon maxWidth={18} fill="#888" />
                             </div>
                           </div>
-
-                          <input
-                            type="text"
-                            value={group.groupName}
-                            onChange={(e) => {
-                              handleChangeGroupName(e.target.value, groupIndex);
-                            }}
-                            className="no-border"
-                            style={{
-                              paddingLeft: 0,
-                              marginLeft: 12,
-                            }}
-                          />
                         </div>
 
                         <div className="group-items-container">
                           <ul
                             className="group-item"
-                            id={`services-and-meetins-${groupIndex}`}
+                            id={`services-and-meetings-${groupIndex}`}
                           >
                             <li className="head">
                               <div>구분</div>
@@ -300,21 +351,18 @@ export default function ServicesEditModal({
                               );
                             })}
                           </ul>
-
-                          <div className="d-flex button-container">
-                            <button
-                              className="button-4"
-                              onClick={() => addGroupItem(groupIndex)}
-                            >
-                              추가 +
-                            </button>
-                          </div>
                         </div>
                       </li>
                     );
                   },
                 )}
               </ul>
+
+              <div className="d-flex button-container">
+                <button className="button-4" onClick={() => addGroup()}>
+                  추가 +
+                </button>
+              </div>
             </div>
 
             <div className="form-group">

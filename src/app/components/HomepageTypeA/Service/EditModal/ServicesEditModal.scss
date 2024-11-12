@@ -3,6 +3,12 @@
     padding: 12px 14px;
     width: 1200px;
 
+    #services-and-meetings {
+      > li {
+        margin-bottom: 18px;
+      }
+    }
+
     .group-items-container {
       ul.head,
       ul.group-item {
@@ -30,6 +36,9 @@
 
             input {
               background-color: transparent;
+              height: 70px;
+              padding: 0;
+              width: 100%;
             }
           }
         }
@@ -40,23 +49,6 @@
         align-items: center;
         justify-content: flex-end;
         margin-top: 12px;
-      }
-    }
-
-    table {
-      tr {
-        th {
-          background-color: #eee;
-          padding: 8px 0;
-        }
-      }
-      td {
-        padding: 16px 0;
-        text-align: center;
-        input {
-          padding: 0;
-          width: 100%;
-        }
       }
     }
   }
