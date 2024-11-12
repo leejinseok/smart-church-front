@@ -357,23 +357,29 @@ export default function ServicesEditModal({
                   },
                 )}
               </ul>
-
-              <div className="d-flex button-container">
-                <button className="button-4" onClick={() => addGroup()}>
-                  추가 +
-                </button>
-              </div>
             </div>
 
-            <div className="form-group">
-              <button
-                type="button"
-                className="button-4 width-100"
-                onClick={() => handleSubmit()}
-              >
-                적용
+            <div
+              className="d-flex button-container"
+              style={{
+                marginBottom: 12,
+                justifyContent: "flex-end",
+              }}
+            >
+              <button className="button-4" onClick={() => addGroup()}>
+                추가 +
               </button>
             </div>
+          </div>
+
+          <div className="modal__footer">
+            <button
+              type="button"
+              className="button-4 width-100"
+              onClick={() => handleSubmit()}
+            >
+              적용
+            </button>
           </div>
         </div>
       </div>
