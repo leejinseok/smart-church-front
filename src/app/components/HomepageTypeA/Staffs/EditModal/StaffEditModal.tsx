@@ -1,3 +1,5 @@
+import "./StaffEditModal.scss";
+
 import { ChurchStaff } from "../../../../../type/homepage/homepage-type-a";
 
 export default function StaffEditModal({
@@ -26,8 +28,33 @@ export default function StaffEditModal({
           </div>
 
           <div className="modal__body">
-            <div className="form-group">
+            <div className="form-group form-group__image">
               <img src={staff.profileImageUrl} alt="" />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="">이름</label>
+              <input type="text" value={staff.name || ""} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="">역할</label>
+              <input type="text" value={staff.role || ""} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="">부서</label>
+              <input type="text" value={staff.department || ""} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="">이메일</label>
+              <input type="email" value={staff.email || ""} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="">상세</label>
+              <textarea value={staff.description || ""} />
             </div>
           </div>
         </div>
