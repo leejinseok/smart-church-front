@@ -76,22 +76,24 @@ export default function Staffs({ staffs }: { staffs: StaffInterface[] }) {
   }, [staffModal]);
 
   return (
-    <div id="staffs-component">
-      <ul className="clearfix staff-list">
-        {staffs.map((staff, staffIndex) => {
-          return (
-            <Staff
-              key={staffIndex}
-              staff={staff}
-              handleClickStaff={handleClickStaff}
-            />
-          );
-        })}
-      </ul>
+    <>
+      <div id="staffs-component">
+        <ul className="clearfix staff-list">
+          {staffs.map((staff, staffIndex) => {
+            return (
+              <Staff
+                key={staffIndex}
+                staff={staff}
+                handleClickStaff={handleClickStaff}
+              />
+            );
+          })}
+        </ul>
 
-      {staffModal.visible && (
-        <StaffModal staff={staffModal.data!} hideModal={hideModal} />
-      )}
-    </div>
+        {staffModal.visible && (
+          <StaffModal staff={staffModal.data!} hideModal={hideModal} />
+        )}
+      </div>
+    </>
   );
 }

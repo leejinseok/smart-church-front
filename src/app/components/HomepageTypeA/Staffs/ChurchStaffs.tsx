@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { ChurchStaffs as ChurchStaffsType } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import StaffGroup from "../Staff/StaffGroup";
+import StaffsEditModal from "./EditModal/StaffsEditModal";
 
 export default function ChurchStaffs({
   isEdit,
@@ -10,6 +12,11 @@ export default function ChurchStaffs({
   isEdit: boolean;
   churchStaffs: ChurchStaffsType;
 }) {
+  const [churchStaffsState, setChurchStaffsState] = useState({
+    ...churchStaffs,
+  });
+  const [editModalVisible, setEditModalVisible] = useState(false);
+
   return (
     <>
       <div
@@ -32,8 +39,24 @@ export default function ChurchStaffs({
           </div>
         </div>
 
-        {isEdit && <HomepageEditOverlay onClickListener={() => {}} />}
+        {isEdit && (
+          <HomepageEditOverlay
+            onClickListener={() => {
+              setEditModalVisible(true);
+            }}
+          />
+        )}
       </div>
+
+      {isEdit && editModalVisible && (
+        <StaffsEditModal
+          hide={() => setEditModalVisible(false)}
+          churchStaffs={churchStaffs}
+          updateStaffs={(churchStaffs) => {
+            setChurchStaffsState(churchStaffs);
+          }}
+        />
+      )}
     </>
   );
 }

@@ -21,7 +21,11 @@ export default function ServicesEditModal({
   ) => void;
 }) {
   const [worshipServicesAndMeetingsState, setWorshipServicesAndMeetingsState] =
-    useState({ ...worshipServicesAndMeetings });
+    useState(
+      JSON.parse(
+        JSON.stringify(worshipServicesAndMeetings),
+      ) as WorshipServicesAndMeetings,
+    );
 
   useEffect(() => {
     const groupsLength = worshipServicesAndMeetingsState.groups.length;
@@ -114,10 +118,6 @@ export default function ServicesEditModal({
   };
 
   const deleteGroupItem = (groupIndex: number, groupItemIndex: number) => {
-    if (!confirm("삭제하시겠습니까?")) {
-      return;
-    }
-
     const newValue = { ...worshipServicesAndMeetingsState };
     newValue.groups[groupIndex].items.splice(groupItemIndex, 1);
 
@@ -125,10 +125,9 @@ export default function ServicesEditModal({
   };
 
   const handleSubmit = async () => {
-    const newWorshipServicesAndMeetings = JSON.parse(
-      JSON.stringify(worshipServicesAndMeetingsState),
-    ) as WorshipServicesAndMeetings;
-
+    const newWorshipServicesAndMeetings = {
+      ...worshipServicesAndMeetingsState,
+    };
     for (
       let groupIndex = 0;
       groupIndex < newWorshipServicesAndMeetings.groups.length;
