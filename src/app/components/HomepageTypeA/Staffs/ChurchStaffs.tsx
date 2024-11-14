@@ -26,7 +26,7 @@ export default function ChurchStaffs({
         <h3
           className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
         >
-          {churchStaffs.title}
+          {churchStaffsState.title}
         </h3>
 
         <div>
