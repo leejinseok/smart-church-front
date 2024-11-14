@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ChurchStaffs as ChurchStaffsType } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
-import StaffGroup from "../Staff/StaffGroup";
+import StaffGroup from "./StaffGroup";
 import StaffsEditModal from "./EditModal/StaffsEditModal";
 
 export default function ChurchStaffs({
@@ -26,12 +26,12 @@ export default function ChurchStaffs({
         <h3
           className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
         >
-          섬기는 사람들
+          {churchStaffs.title}
         </h3>
 
         <div>
           <div>
-            {churchStaffs.groups.map((staffGroup, staffGroupIndex) => {
+            {churchStaffsState.groups.map((staffGroup, staffGroupIndex) => {
               return (
                 <StaffGroup key={staffGroupIndex} staffGroup={staffGroup} />
               );
@@ -51,7 +51,7 @@ export default function ChurchStaffs({
       {isEdit && editModalVisible && (
         <StaffsEditModal
           hide={() => setEditModalVisible(false)}
-          churchStaffs={churchStaffs}
+          churchStaffs={churchStaffsState}
           updateStaffs={(churchStaffs) => {
             setChurchStaffsState(churchStaffs);
           }}

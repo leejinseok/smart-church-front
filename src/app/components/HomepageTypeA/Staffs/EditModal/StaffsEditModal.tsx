@@ -7,6 +7,8 @@ import {
 } from "../../../../../type/homepage/homepage-type-a";
 import Sortable from "sortablejs";
 import StaffEditModal from "./StaffEditModal";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { getCookie } from "../../../../../util/cookie-utils";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -23,6 +25,7 @@ export default function StaffsEditModal({
 
   const [staffEditModal, setStaffEditModal] = useState({
     visible: false,
+    groupIndex: null as null | number,
     staff: null as null | ChurchStaff,
     staffIndex: null as null | number,
   });
@@ -44,7 +47,26 @@ export default function StaffsEditModal({
     }
   }, []);
 
-  const handleSubmit = () => {};
+  const removeStaff = (groupIndex: number, staffIndex: number) => {
+    const newValue = { ...churchStaffsState };
+    newValue.groups[groupIndex].staffs.splice(staffIndex, 1);
+
+    setChurchStaffsState(newValue);
+  };
+
+  const handleSubmit = async () => {
+    const homepageTypeAId = getCookie("homepageTypeAId");
+    if (!homepageTypeAId) {
+      return;
+    }
+
+    await homepageTypeAMockApiRepository.updateChurchStaffs(
+      homepageTypeAId,
+      churchStaffsState,
+    );
+    updateStaffs({ ...churchStaffsState });
+    hide();
+  };
   return (
     <>
       <div
@@ -98,6 +120,7 @@ export default function StaffsEditModal({
                         <th>사진</th>
                         <th>역할</th>
                         <th>부서</th>
+                        <th>이메일</th>
                         <th>설정</th>
                       </tr>
                     </thead>
@@ -115,8 +138,9 @@ export default function StaffsEditModal({
                                   alt=""
                                 />
                               </td>
-                              <td>{staff.role}</td>
-                              <td>{staff.department}</td>
+                              <td>{staff.role || "-"}</td>
+                              <td>{staff.department || "-"}</td>
+                              <td>{staff.email || "-"}</td>
                               <td>
                                 <div className="nowrap button-container">
                                   <button
@@ -131,6 +155,7 @@ export default function StaffsEditModal({
                                     onClick={() => {
                                       setStaffEditModal({
                                         visible: true,
+                                        groupIndex: 0,
                                         staff: staff,
                                         staffIndex: staffIndex,
                                       });
@@ -138,7 +163,13 @@ export default function StaffsEditModal({
                                   >
                                     편집
                                   </button>
-                                  <button type="button" className="button-4">
+                                  <button
+                                    type="button"
+                                    className="button-4"
+                                    onClick={() => {
+                                      removeStaff(0, staffIndex);
+                                    }}
+                                  >
                                     삭제
                                   </button>
                                 </div>
@@ -149,6 +180,35 @@ export default function StaffsEditModal({
                       )}
                     </tbody>
                   </table>
+
+                  <div
+                    className="text-align-right"
+                    style={{
+                      marginTop: 12,
+                    }}
+                  >
+                    <button
+                      className="button-4"
+                      onClick={() => {
+                        setStaffEditModal({
+                          visible: true,
+                          groupIndex: 0,
+                          staff: {
+                            name: "",
+                            department: "",
+                            description: "",
+                            email: "",
+                            profileImageUrl: "",
+                            role: "",
+                            tel: "",
+                          },
+                          staffIndex: null,
+                        });
+                      }}
+                    >
+                      추가+
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,12 +229,24 @@ export default function StaffsEditModal({
         <StaffEditModal
           staff={staffEditModal.staff!}
           staffIndex={staffEditModal.staffIndex!}
-          updateStaff={(staff, staffIndex) => {
-            console.log("hi");
+          updateStaff={(staff) => {
+            const newValue = { ...churchStaffsState };
+
+            if (!staffEditModal.staffIndex) {
+              newValue.groups[staffEditModal.groupIndex!].staffs.push({
+                ...staff,
+              });
+            } else {
+              newValue.groups[staffEditModal.groupIndex!].staffs[
+                staffEditModal.staffIndex!
+              ] = { ...staff };
+            }
+            setChurchStaffsState(newValue);
           }}
           hide={() =>
             setStaffEditModal({
               visible: false,
+              groupIndex: null,
               staff: null,
               staffIndex: null,
             })

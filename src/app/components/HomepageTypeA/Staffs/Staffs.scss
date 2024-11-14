@@ -22,8 +22,9 @@
         margin-right: auto;
 
         img {
-          max-width: 100%;
-          height: fit-content;
+          width: 227px;
+          height: 194px;
+          object-fit: cover;
         }
       }
 
