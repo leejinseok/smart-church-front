@@ -2,6 +2,8 @@ import "./StaffEditModal.scss";
 
 import { ChurchStaff } from "../../../../../type/homepage/homepage-type-a";
 import { ChangeEvent, useState } from "react";
+import CheckIcon from "../../../../../components/Icon/CheckIcon";
+import CloseIcon from "../../../../../components/Icon/CloseIcon";
 
 export default function StaffEditModal({
   staff,
@@ -134,8 +136,24 @@ export default function StaffEditModal({
           </div>
 
           <div className="modal__footer text-align-right">
-            <button type="button" className="button-4" onClick={handleSubmit}>
+            <button
+              type="button"
+              className="button-4 cancel"
+              onClick={hide}
+              style={{
+                marginRight: 4,
+              }}
+            >
+              취소
+              <CloseIcon maxWidth={18} />
+            </button>
+            <button
+              type="button"
+              className="button-4 submit"
+              onClick={handleSubmit}
+            >
               적용
+              <CheckIcon maxWidth={18} />
             </button>
           </div>
         </div>

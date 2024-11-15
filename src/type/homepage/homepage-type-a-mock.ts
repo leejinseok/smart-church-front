@@ -93,18 +93,21 @@ export const homepageTypeAFormMock: HomepageTypeA = {
       attributes: {},
     },
   ],
-  gallery: [
-    {
-      imageUrl: "https://placehold.co/610x380?text=Gallery Image",
-      description:
-        "국가는 농업 및 어업을 보호·육성하기 위하여 농·어촌종합개발과 그 지원등 필요한 계획을 수립·시행하여야 한다.",
-    },
-    {
-      imageUrl: "https://placehold.co/610x380?text=Gallery Image",
-      description:
-        "근로조건의 기준은 인간의 존엄성을 보장하도록 법률로 정한다. 재판의 전심절차로서 행정심판을 할 수 있다.",
-    },
-  ],
+  gallery: {
+    title: "갤러리",
+    items: [
+      {
+        imageUrl: "https://placehold.co/610x380?text=Gallery Image",
+        description:
+          "국가는 농업 및 어업을 보호·육성하기 위하여 농·어촌종합개발과 그 지원등 필요한 계획을 수립·시행하여야 한다.",
+      },
+      {
+        imageUrl: "https://placehold.co/610x380?text=Gallery Image",
+        description:
+          "근로조건의 기준은 인간의 존엄성을 보장하도록 법률로 정한다. 재판의 전심절차로서 행정심판을 할 수 있다.",
+      },
+    ],
+  },
   churchStaffs: {
     title: "섬기는 사람들",
     groups: [

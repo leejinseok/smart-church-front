@@ -68,8 +68,11 @@ export type ChurchStaffs = {
 };
 
 export interface Gallery {
-  imageUrl: string;
-  description: string;
+  title: string;
+  items: {
+    imageUrl: string;
+    description: string;
+  }[];
 }
 
 export type ChurchLogoType = "LOGO" | "LOGO_AND_CHURCH_NAME" | "CHURCH_NAME";
@@ -105,5 +108,5 @@ export interface HomepageTypeA {
   worshipServicesAndMeetings: WorshipServicesAndMeetings;
   churchRegisterGuide: Op[];
   churchStaffs: ChurchStaffs;
-  gallery: Gallery[];
+  gallery: Gallery;
 }

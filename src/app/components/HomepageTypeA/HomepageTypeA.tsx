@@ -29,14 +29,6 @@ export default function HomepageTypeA({
 
   const homepageTypeAMock = { ...homepageTypeAData };
 
-  const generateGalleryContentClassNameByLength = (length: number) => {
-    if (length < 4) {
-      return `gallery-length-${length}`;
-    }
-
-    return "gallery-length-many";
-  };
-
   return (
     <div id="homepage-type-a-component">
       <Header
@@ -117,21 +109,7 @@ export default function HomepageTypeA({
           </section>
 
           <section className="gallery">
-            <div>
-              <h3
-                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
-              >
-                사진첩
-              </h3>
-
-              <div className="gallery-content">
-                <div
-                  className={`${generateGalleryContentClassNameByLength(homepageTypeAMock.gallery.length)} gallery-content__container clearfix`}
-                >
-                  <Gallery gallery={homepageTypeAMock.gallery} />
-                </div>
-              </div>
-            </div>
+            <Gallery isEdit={isEdit} gallery={homepageTypeAMock.gallery} />
           </section>
 
           <section>

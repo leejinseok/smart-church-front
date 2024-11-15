@@ -34,3 +34,27 @@ input {
     outline: none;
   }
 }
+
+button {
+  &.submit {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgb(33, 167, 133);
+    color: #fff;
+    border: 1px solid rgb(36, 150, 116);
+    &:hover {
+      background-color: rgb(116, 199, 175);
+    }
+  }
+
+  &.cancel {
+    display: inline-flex;
+    align-items: center;
+    background-color: rgb(185, 47, 47);
+    color: #fff;
+    border: 1px solid rgb(150, 36, 36);
+    &:hover {
+      background-color: rgb(216, 107, 107);
+    }
+  }
+}

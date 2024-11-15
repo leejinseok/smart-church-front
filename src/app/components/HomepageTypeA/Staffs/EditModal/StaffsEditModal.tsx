@@ -12,6 +12,7 @@ import { getCookie } from "../../../../../util/cookie-utils";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import EditIcon from "../../../../../components/Icon/EditIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
+import CheckIcon from "../../../../../components/Icon/CheckIcon";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -40,11 +41,6 @@ export default function StaffsEditModal({
     if (staffsTableElement) {
       new Sortable(staffsTableElement, {
         handle: ".handle",
-        onChange: (evt) => {
-          evt.preventDefault();
-          evt.stopPropagation();
-          evt.stopImmediatePropagation();
-        },
       });
     }
   }, []);
@@ -236,13 +232,14 @@ export default function StaffsEditModal({
                 </div>
               </div>
             </div>
-            <div className="modal__footer">
+            <div className="modal__footer text-align-right">
               <button
                 type="button"
-                className="button-4 width-100"
+                className="button-4 submit"
                 onClick={() => handleSubmit()}
               >
                 적용
+                <CheckIcon maxWidth={18} />
               </button>
             </div>
           </div>
