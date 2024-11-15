@@ -9,6 +9,9 @@ import Sortable from "sortablejs";
 import StaffEditModal from "./StaffEditModal";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
+import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
+import EditIcon from "../../../../../components/Icon/EditIcon";
+import TrashIcon from "../../../../../components/Icon/TrashIcon";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -38,7 +41,6 @@ export default function StaffsEditModal({
       new Sortable(staffsTableElement, {
         handle: ".handle",
         onChange: (evt) => {
-          console.log(evt);
           evt.preventDefault();
           evt.stopPropagation();
           evt.stopImmediatePropagation();
@@ -60,11 +62,30 @@ export default function StaffsEditModal({
       return;
     }
 
+    const tableRowsElement = document.querySelectorAll(
+      "#staffs-table-tbody tr",
+    );
+
+    if (!tableRowsElement) {
+      return;
+    }
+
+    const newChurchStaffs = { ...churchStaffs };
+
+    const sorted = [];
+    for (let i = 0; i < tableRowsElement.length; i++) {
+      const tableRow = tableRowsElement[i];
+      const dataIndex = tableRow.getAttribute("data-index");
+      sorted.push(churchStaffsState.groups[0].staffs[+dataIndex!]);
+    }
+    newChurchStaffs.groups[0].staffs = sorted;
+
     await homepageTypeAMockApiRepository.updateChurchStaffs(
       homepageTypeAId,
-      churchStaffsState,
+      newChurchStaffs,
     );
-    updateStaffs({ ...churchStaffsState });
+
+    updateStaffs(newChurchStaffs);
     hide();
   };
   return (
@@ -129,7 +150,7 @@ export default function StaffsEditModal({
                       {churchStaffsState.groups[0].staffs.map(
                         (staff, staffIndex) => {
                           return (
-                            <tr key={staffIndex}>
+                            <tr key={staffIndex} data-index={staffIndex}>
                               <td>{staff.name}</td>
                               <td>
                                 <img
@@ -142,16 +163,17 @@ export default function StaffsEditModal({
                               <td>{staff.department || "-"}</td>
                               <td>{staff.email || "-"}</td>
                               <td>
-                                <div className="nowrap button-container">
+                                <div className="nowrap button-container d-flex">
                                   <button
                                     type="button"
-                                    className="button-4 handle"
+                                    className="button-4 handle d-flex align-items-center"
                                   >
-                                    이동
+                                    <span>이동</span>
+                                    <DragpanIcon maxWidth={18} fill="#888" />
                                   </button>
                                   <button
                                     type="button"
-                                    className="button-4"
+                                    className="button-4  d-flex align-items-center "
                                     onClick={() => {
                                       setStaffEditModal({
                                         visible: true,
@@ -161,16 +183,18 @@ export default function StaffsEditModal({
                                       });
                                     }}
                                   >
-                                    편집
+                                    <span>편집</span>
+                                    <EditIcon maxWidth={18} fill="#888" />
                                   </button>
                                   <button
                                     type="button"
-                                    className="button-4"
+                                    className="button-4  d-flex align-items-center"
                                     onClick={() => {
                                       removeStaff(0, staffIndex);
                                     }}
                                   >
-                                    삭제
+                                    <span>삭제</span>
+                                    <TrashIcon maxWidth={18} fill="#888" />
                                   </button>
                                 </div>
                               </td>

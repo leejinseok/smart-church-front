@@ -9,6 +9,11 @@
           padding: 12px 0;
 
           table {
+            tr[draggable="true"] {
+              td {
+                background-color: #fcf4db;
+              }
+            }
             th {
               background-color: #eee;
               padding: 8px 0;
@@ -34,6 +39,11 @@
                 .button-container {
                   button {
                     margin-right: 8px;
+
+                    svg {
+                      min-width: 18px;
+                      margin-left: 2px;
+                    }
 
                     &:last-child {
                       margin-right: 0;
