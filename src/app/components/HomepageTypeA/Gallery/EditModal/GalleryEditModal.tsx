@@ -1,3 +1,5 @@
+import "./GalleryEditModal.scss";
+
 import { useState } from "react";
 import { Gallery } from "../../../../../type/homepage/homepage-type-a";
 
@@ -10,7 +12,7 @@ export default function GalleryEditModal({
   updateGallery: (gallery: Gallery) => void;
   hide: () => void;
 }) {
-  const [galleryState, setgalleryState] = useState({ ...gallery });
+  const [galleryState, setGalleryState] = useState({ ...gallery });
 
   const handleSubmit = () => {
     updateGallery(galleryState);
@@ -29,7 +31,62 @@ export default function GalleryEditModal({
 
           <div className="modal__body">
             <div className="form-group">
-              <div></div>
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 0 }}
+              >
+                제목
+              </p>
+
+              <input
+                type="text"
+                className="font-size-m no-border"
+                value={galleryState.title}
+                onChange={(e) =>
+                  setGalleryState((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 12 }}
+              >
+                항목
+              </p>
+
+              <table className="width-100">
+                <thead>
+                  <th>이미지</th>
+                  <th>설명</th>
+                  <th>설정</th>
+                </thead>
+
+                <tbody id="gallery-images">
+                  {galleryState.items.map((item, itemIndex) => {
+                    return (
+                      <tr key={itemIndex}>
+                        <td>
+                          <img src={item.imageUrl} alt="" />
+                        </td>
+                        <td>
+                          <textarea value={item.description}></textarea>
+                        </td>
+                        <td>
+                          <div className="nowrap button-container">
+                            <button className="button-4">이동</button>
+                            <button className="button-4">삭제</button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

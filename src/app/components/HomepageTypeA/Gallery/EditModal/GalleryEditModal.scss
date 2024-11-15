@@ -2,6 +2,60 @@
   .modal__inner {
     .modal__box {
       width: 900px;
+      .modal__body {
+        padding: 0 22px;
+
+        .form-group {
+          padding: 12px 0;
+          table {
+            tr[draggable="true"] {
+              td {
+                background-color: #fcf4db;
+              }
+            }
+            th {
+              background-color: #eee;
+              padding: 8px 0;
+            }
+            td {
+              vertical-align: middle;
+              border: 1px solid #eee;
+              border-collapse: collapse;
+              padding: 12px;
+              text-align: center;
+              img {
+                width: 100px;
+                height: 80px;
+                object-fit: cover;
+              }
+              textarea {
+                width: 500px;
+                height: 100px;
+                border-radius: 3px;
+              }
+              &:last-child {
+                width: 0;
+                word-break: keep-all;
+
+                .button-container {
+                  button {
+                    margin-right: 8px;
+
+                    svg {
+                      min-width: 18px;
+                      margin-left: 2px;
+                    }
+
+                    &:last-child {
+                      margin-right: 0;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
