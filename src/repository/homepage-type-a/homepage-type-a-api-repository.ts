@@ -5,11 +5,16 @@ import {
   ChurchLogo,
   ChurchStaffs,
   ChurchVideos,
+  Gallery,
   HomepageTypeA,
   WorshipServicesAndMeetings,
 } from "../../type/homepage/homepage-type-a";
 
 export interface HompageTypeAApiRepository {
+  updateGallery(
+    homepageTypeAId: string,
+    newValue: Gallery,
+  ): Promise<HomepageTypeA>;
   updateChurchStaffs(
     homepageTypeAId: string,
     churchStaffsState: ChurchStaffs,
@@ -190,6 +195,26 @@ export const homepageTypeAMockApiRepository: HompageTypeAApiRepository = {
         method: "PATCH",
         body: JSON.stringify({
           churchStaffs: churchStaffs,
+        }),
+      },
+    );
+
+    const json = await res.json();
+    return json;
+  },
+  async updateGallery(
+    homepageTypeAId: string,
+    gallery: Gallery,
+  ): Promise<HomepageTypeA> {
+    const res = await fetch(
+      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "PATCH",
+        body: JSON.stringify({
+          gallery: gallery,
         }),
       },
     );

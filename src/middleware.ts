@@ -22,10 +22,10 @@ export async function middleware(request: NextRequest) {
   const search = nextUrl.search;
 
   const params = convertToParams(search);
-
   const editMode = params["editMode"];
+  const uuid = params["uuid"];
+
   if (editMode === true) {
-    const uuid = params["uuid"];
     if (uuid) {
       headers.append("uuid", `${uuid}`);
       const res = await homepageTypeAMockApiRepository.getHompageTypeA(
@@ -52,6 +52,17 @@ export async function middleware(request: NextRequest) {
       const homepageTypeAId = res.id;
       redirect.cookies.set("homepageTypeAId", `${homepageTypeAId!}`);
       return redirect;
+    }
+  } else {
+    headers.append("uuid", `${uuid}`);
+    const res = await homepageTypeAMockApiRepository.getHompageTypeA(`${uuid}`);
+    if (res) {
+      const next = NextResponse.next({
+        headers,
+      });
+
+      next.cookies.set("homepageTypeAId", `${res.id}`);
+      return next;
     }
   }
 

@@ -10,6 +10,7 @@ import EditModeNav from "./EditMode/EditModeNav";
 import { useEffect, useState } from "react";
 import LogoEditModal from "./LogoEditModal/LogoEditModal";
 import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
+import TinyNav from "./TinyNav/TinyNav";
 
 export default function Header({
   church,
@@ -42,10 +43,10 @@ export default function Header({
       <div
         className="nav-container"
         style={{
-          paddingTop: isEdit ? 40 : 0,
+          paddingTop: isEdit ? 40 : 32,
         }}
       >
-        <EditModeNav />
+        {isEdit ? <EditModeNav /> : <TinyNav />}
         <nav
           className={`${nanumBarunGothicBold.className} container d-flex justify-content-center align-items-center`}
         >

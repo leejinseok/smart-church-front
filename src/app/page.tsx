@@ -33,6 +33,10 @@ export default async function Home({ searchParams }: PageProps) {
     homepageTypeAData = json[0];
   } else {
     const url = headersValue.get("url");
+    const uuid = headersValue.get("uuid");
+    const res = await homepageTypeADataWhenEditMode(uuid!);
+    const json = await res.json();
+    homepageTypeAData = json[0];
   }
 
   return (
