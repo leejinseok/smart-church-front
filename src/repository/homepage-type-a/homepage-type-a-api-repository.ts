@@ -9,6 +9,7 @@ import {
   HomepageTypeA,
   WorshipServicesAndMeetings,
 } from "../../type/homepage/homepage-type-a";
+import { homepageTypeAFormMock } from "../../type/homepage/homepage-type-a-mock";
 
 export interface HompageTypeAApiRepository {
   updateGallery(
@@ -67,7 +68,7 @@ export interface HompageTypeAApiRepository {
 
 const apiKey = "7b362dad-d4e9-4cd9-9fdc-7f5ae6be61d8";
 export const homepageTypeAApiRepository = {
-  async getHompageTypeA(homepageUuid: string) {
+  async getHompage(homepageUuid: string): Promise<HomepageTypeA> {
     const res = await fetch(
       `http://localhost:8088/homepages/type-a/${homepageUuid}`,
       {
@@ -79,5 +80,34 @@ export const homepageTypeAApiRepository = {
     const json = await res.json();
 
     return json;
+  },
+
+  async saveHomepage(data: HomepageTypeA): Promise<HomepageTypeA> {
+    const res = await fetch(`http://localhost:8088/homepages/type-a`, {
+      headers: {
+        "x-api-key": apiKey,
+      },
+      body: JSON.stringify(data),
+    });
+    const json = await res.json();
+    return json;
+  },
+
+  async updateHomepage(
+    uuid: string,
+    userUuid: string,
+    data: Partial<HomepageTypeA>,
+  ) {
+    await fetch(`http://localhost:8088/homepages/type-a/${uuid}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+        "x-api-key": apiKey,
+        "x-user-uuid": userUuid,
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    });
   },
 };

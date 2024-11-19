@@ -5,6 +5,7 @@ import { ChurchIntro } from "../../../../../type/homepage/homepage-type-a";
 import Quill from "quill";
 import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function ChurchIntroEditModal({
   churchIntro,
@@ -65,14 +66,27 @@ export default function ChurchIntroEditModal({
   }, [churchIntroEditor, churchIntroState, mounted]);
 
   const handleSubmit = async () => {
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    // const homepageTypeAId = getCookie("homepageTypeAId");
+    // if (!homepageTypeAId) {
+    //   return;
+    // }
+
+    // await homepageTypeAMockApiRepository.updateChurchIntro(
+    //   +homepageTypeAId,
+    //   churchIntroState,
+    // );
+
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
 
-    await homepageTypeAMockApiRepository.updateChurchIntro(
-      +homepageTypeAId,
-      churchIntroState,
+    const userUuid = getCookie("userUuid");
+
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      { churchIntro: churchIntroState },
     );
 
     updateChurchIntro(churchIntroState);

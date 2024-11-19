@@ -14,6 +14,7 @@ import { homepageTypeALocalStorageRepository } from "../../../../../repository/h
 import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function LogoEditModal({
   churchLogo,
@@ -59,14 +60,27 @@ export default function LogoEditModal({
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    // const homepageTypeAId = getCookie("homepageTypeAId");
+    // if (!homepageTypeAId) {
+    //   return;
+    // }
+    // await homepageTypeAMockApiRepository.updateChurchLogo(
+    //   +homepageTypeAId,
+    //   churchLogoState,
+    // );
+
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
 
-    await homepageTypeAMockApiRepository.updateChurchLogo(
-      +homepageTypeAId,
-      churchLogoState,
+    const userUuid = getCookie("userUuid");
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        churchLogo: churchLogoState,
+      },
     );
 
     updateChurchLogo((prev) => ({

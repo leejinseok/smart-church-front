@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { homepageTypeAFormMock } from "./type/homepage/homepage-type-a-mock";
-import { homepageTypeAMockApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { homepageTypeAApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
-import { getCookie } from "./util/cookie-utils";
 
 const convertToParams = (queryString: string) => {
   const params = new URLSearchParams(queryString);
@@ -31,37 +29,36 @@ export async function middleware(request: NextRequest) {
     if (uuid) {
       headers.append("uuid", `${uuid}`);
 
-      const res = await homepageTypeAApiRepository.getHompageTypeA(`${uuid}`);
+      const res = await homepageTypeAApiRepository.getHompage(`${uuid}`);
       if (res) {
         const next = NextResponse.next({
           headers,
         });
 
-        next.cookies.set("homepageTypeAId", `${res.id}`);
+        next.cookies.set("homepageUuid", `${res.uuid}`);
         return next;
       }
     } else {
-      // const defaultData = { ...homepageTypeAFormMock };
-      // defaultData.uuid = "47236142-4c14-4830-941a-7b79879669a6";
-      // const res =
-      //   await homepageTypeAMockApiRepository.saveHomepageTypeA(defaultData);
-      // const redirect = NextResponse.redirect(
-      //   `${nextUrl.origin}${search}&uuid=${defaultData.uuid}`,
-      // );
-      // const homepageTypeAId = res.id;
-      // redirect.cookies.set("homepageTypeAId", `${homepageTypeAId!}`);
-      // return redirect;
+      const defaultData = { ...homepageTypeAFormMock };
+      const homepage =
+        await homepageTypeAApiRepository.saveHomepage(defaultData);
+      const redirect = NextResponse.redirect(
+        `${nextUrl.origin}${search}&uuid=${homepage.uuid}`,
+      );
+      const homepageUuid = homepage.uuid;
+      redirect.cookies.set("homepageUuid", `${homepageUuid!}`);
+      return redirect;
     }
   } else {
-    // headers.append("uuid", `${uuid}`);
-    // const res = await homepageTypeAMockApiRepository.getHompageTypeA(`${uuid}`);
-    // if (res) {
-    //   const next = NextResponse.next({
-    //     headers,
-    //   });
-    //   next.cookies.set("homepageTypeAId", `${res.id}`);
-    //   return next;
-    // }
+    headers.append("uuid", `${uuid}`);
+    const homepage = await homepageTypeAApiRepository.getHompage(`${uuid}`);
+    if (homepage) {
+      const next = NextResponse.next({
+        headers,
+      });
+      next.cookies.set("homepageUuid", `${homepage.uuid}`);
+      return next;
+    }
   }
 
   return NextResponse.next({

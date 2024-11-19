@@ -18,6 +18,7 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function BannerEditModal({
   banners,
@@ -145,21 +146,26 @@ export default function BannerEditModal({
     if (!bannersState) {
       return;
     }
-
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
+
+    const userUuid = getCookie("userUuid");
 
     const newBanners: ChurchBanners = {
       ...bannersState,
       items: [...bannerItemsSorted],
     };
 
-    await homepageTypeAMockApiRepository.updateBannners(
-      +homepageTypeAId,
-      newBanners,
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        banners: newBanners,
+      },
     );
+
     updateBanners(newBanners);
     hide();
   };

@@ -25,11 +25,11 @@ export default async function Home({ searchParams }: PageProps) {
     //로그인 안한경우
     const uuid = headersValue.get("uuid");
     console.log("uuid", uuid);
-    homepageTypeAData = await homepageTypeAApiRepository.getHompageTypeA(uuid!);
+    homepageTypeAData = await homepageTypeAApiRepository.getHompage(uuid!);
   } else {
     const url = headersValue.get("url");
     const uuid = headersValue.get("uuid");
-    homepageTypeAData = await homepageTypeAApiRepository.getHompageTypeA(uuid!);
+    homepageTypeAData = await homepageTypeAApiRepository.getHompage(uuid!);
   }
 
   return (
