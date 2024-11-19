@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ChurchVideos } from "../../../../../type/homepage/homepage-type-a";
 import { loadScript } from "../../../../../util/script-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 

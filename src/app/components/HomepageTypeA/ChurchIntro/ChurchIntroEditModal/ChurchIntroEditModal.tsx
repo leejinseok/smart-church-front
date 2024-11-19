@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ChurchIntro } from "../../../../../type/homepage/homepage-type-a";
 import Quill from "quill";
 import { getCookie } from "../../../../../util/cookie-utils";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 
 export default function ChurchIntroEditModal({
   churchIntro,

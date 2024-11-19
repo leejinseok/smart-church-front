@@ -15,7 +15,7 @@ import {
 import "./BannerEditModal.scss";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 

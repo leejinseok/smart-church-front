@@ -7,7 +7,7 @@ import {
 } from "../../../../../type/homepage/homepage-type-a";
 import Sortable from "sortablejs";
 import StaffEditModal from "./StaffEditModal";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import EditIcon from "../../../../../components/Icon/EditIcon";

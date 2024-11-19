@@ -6,7 +6,7 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import Sortable from "sortablejs";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 
 export default function GalleryEditModal({

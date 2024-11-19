@@ -13,213 +13,71 @@ import {
 export interface HompageTypeAApiRepository {
   updateGallery(
     homepageTypeAId: string,
+    userUuid: string,
     newValue: Gallery,
   ): Promise<HomepageTypeA>;
   updateChurchStaffs(
     homepageTypeAId: string,
+    userUuid: string,
     churchStaffsState: ChurchStaffs,
   ): Promise<HomepageTypeA>;
   updateWorkshipServicesAndMeetings(
     homepageTypeAId: string,
+    userUuid: string,
     newWorshipServicesAndMeetings: WorshipServicesAndMeetings,
   ): Promise<HomepageTypeA>;
   updateChurchDepartmentsAndMinistries(
     homepageTypeAId: number,
+    userUuid: string,
     churchDepartmentState: ChurchDepartmentsAndMinisties,
   ): Promise<HomepageTypeA>;
-  getHompageTypeA: (uuid: string) => Promise<HomepageTypeA | null>;
-  saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => Promise<HomepageTypeA>;
+  getHompageTypeA: (
+    uuid: string,
+    userUuid: string,
+  ) => Promise<HomepageTypeA | null>;
+  saveHomepageTypeA: (
+    homepageTypeA: HomepageTypeA,
+    userUuid: string,
+  ) => Promise<HomepageTypeA>;
 
   updateChurchLogo: (
     homepageTypeAId: number,
+    userUuid: string,
     churchLogo: ChurchLogo,
   ) => Promise<HomepageTypeA>;
 
   updateBannners: (
     homepageTypeAId: number,
+    userUuid: string,
     banners: ChurchBanners,
   ) => Promise<HomepageTypeA>;
 
   updateChurchIntro: (
     homepageTypeAId: number,
+    userUuid: string,
     churchIntro: ChurchIntro,
   ) => Promise<HomepageTypeA>;
 
   updateVideos: (
     homepageTypeAId: number,
+    userUuid: string,
     churchVideos: ChurchVideos,
   ) => Promise<HomepageTypeA>;
 }
 
-export const homepageTypeAMockApiRepository: HompageTypeAApiRepository = {
-  async getHompageTypeA(uuid) {
-    const res = await fetch(`http://localhost:8088/homepageTypeA?uuid=${uuid}`);
-    const json = await res.json();
-    return json[0];
-  },
-  async saveHomepageTypeA(homepageTypeA) {
-    const res = await fetch("http://localhost:8088/homepageTypeA", {
-      headers: {
-        "content-type": "application/json",
-      },
-      method: "post",
-      body: JSON.stringify({
-        ...homepageTypeA,
-      }),
-    });
-
-    const json = await res.json();
-    return json;
-  },
-  async updateChurchLogo(homepageTypeAId, churchLogo) {
+const apiKey = "7b362dad-d4e9-4cd9-9fdc-7f5ae6be61d8";
+export const homepageTypeAApiRepository = {
+  async getHompageTypeA(homepageUuid: string) {
     const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
+      `http://localhost:8088/homepages/type-a/${homepageUuid}`,
       {
         headers: {
-          "content-type": "application/json",
+          "x-api-key": apiKey,
         },
-        method: "PATCH",
-        body: JSON.stringify({
-          churchLogo: churchLogo,
-        }),
       },
     );
-
     const json = await res.json();
-    return json;
-  },
-  async updateBannners(homepageTypeAId, banners) {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          banners: banners,
-        }),
-      },
-    );
 
-    const json = await res.json();
-    return json;
-  },
-
-  async updateChurchIntro(homepageTypeAId, churchIntro) {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          churchIntro: churchIntro,
-        }),
-      },
-    );
-
-    const json = await res.json();
-    return json;
-  },
-
-  async updateVideos(homepageTypeAId, churchVideos) {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          videos: churchVideos,
-        }),
-      },
-    );
-
-    const json = await res.json();
-    return json;
-  },
-  async updateChurchDepartmentsAndMinistries(
-    homepageTypeAId,
-    churchDepartmentsAndMinistries,
-  ) {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          churchDepartmentsAndMinistries,
-        }),
-      },
-    );
-
-    const json = await res.json();
-    return json;
-  },
-
-  async updateWorkshipServicesAndMeetings(
-    homepageTypeAId,
-    worshipServicesAndMeetings,
-  ) {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          worshipServicesAndMeetings: worshipServicesAndMeetings,
-        }),
-      },
-    );
-
-    const json = await res.json();
-    return json;
-  },
-  async updateChurchStaffs(
-    homepageTypeAId,
-    churchStaffs,
-  ): Promise<HomepageTypeA> {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          churchStaffs: churchStaffs,
-        }),
-      },
-    );
-
-    const json = await res.json();
-    return json;
-  },
-  async updateGallery(
-    homepageTypeAId: string,
-    gallery: Gallery,
-  ): Promise<HomepageTypeA> {
-    const res = await fetch(
-      `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
-      {
-        headers: {
-          "content-type": "application/json",
-        },
-        method: "PATCH",
-        body: JSON.stringify({
-          gallery: gallery,
-        }),
-      },
-    );
-
-    const json = await res.json();
     return json;
   },
 };

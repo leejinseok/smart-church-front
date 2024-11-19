@@ -6,7 +6,7 @@ import {
   ChurchDepartmentsAndMinisties,
 } from "../../../../../type/homepage/homepage-type-a";
 import { getCookie } from "../../../../../util/cookie-utils";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";

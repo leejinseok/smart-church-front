@@ -4,10 +4,7 @@ import { cookies, headers } from "next/headers";
 import { PageProps } from "../type/common";
 import { Metadata } from "next";
 import { HomepageTypeA as HomepageTypeAInterface } from "../type/homepage/homepage-type-a";
-
-const homepageTypeADataWhenEditMode = (uuid: string) => {
-  return fetch(`http://localhost:8088/homepageTypeA?uuid=${uuid}`);
-};
+import { homepageTypeAApiRepository } from "../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export const metadata: Metadata = {
   title: "스마트처치 | 미리보기 페이지",
@@ -27,16 +24,12 @@ export default async function Home({ searchParams }: PageProps) {
 
     //로그인 안한경우
     const uuid = headersValue.get("uuid");
-    const res = await homepageTypeADataWhenEditMode(uuid!);
-    const json = await res.json();
-
-    homepageTypeAData = json[0];
+    console.log("uuid", uuid);
+    homepageTypeAData = await homepageTypeAApiRepository.getHompageTypeA(uuid!);
   } else {
     const url = headersValue.get("url");
     const uuid = headersValue.get("uuid");
-    const res = await homepageTypeADataWhenEditMode(uuid!);
-    const json = await res.json();
-    homepageTypeAData = json[0];
+    homepageTypeAData = await homepageTypeAApiRepository.getHompageTypeA(uuid!);
   }
 
   return (
