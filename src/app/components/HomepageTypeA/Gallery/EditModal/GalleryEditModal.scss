@@ -79,6 +79,16 @@
             }
           }
         }
+
+        .add-gallery-button {
+          button {
+            pointer-events: none;
+          }
+        }
+
+        input[type="file"]#add-gallery {
+          display: none;
+        }
       }
     }
   }

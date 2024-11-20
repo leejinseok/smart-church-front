@@ -19,7 +19,9 @@ export default function GalleryEditModal({
   updateGallery: (gallery: Gallery) => void;
   hide: () => void;
 }) {
-  const [galleryState, setGalleryState] = useState({ ...gallery });
+  const [galleryState, setGalleryState] = useState(
+    JSON.parse(JSON.stringify(gallery)),
+  );
 
   useEffect(() => {
     const imagesElement = document.querySelector(
@@ -75,8 +77,31 @@ export default function GalleryEditModal({
     hide();
   };
 
-  const handleClickAddGallery = () => {
-    console.log("hi");
+  const addGallery = (files: FileList | null) => {
+    if (!files || !files.length) {
+      return;
+    }
+
+    // upload and get url
+
+    const newValue = {
+      ...galleryState,
+    };
+
+    newValue.items.push({
+      description: "",
+      imageUrl: "",
+    });
+
+    setGalleryState(newValue);
+  };
+
+  const removeGallery = (index: number) => {
+    const newValue = {
+      ...galleryState,
+    };
+    newValue.items.splice(index, 1);
+    setGalleryState(newValue);
   };
 
   return (
@@ -162,7 +187,10 @@ export default function GalleryEditModal({
                               이동
                               <DragpanIcon fill="#888" maxWidth={18} />
                             </button>
-                            <button className="button-4 align-items-center">
+                            <button
+                              className="button-4 align-items-center"
+                              onClick={() => removeGallery(itemIndex)}
+                            >
                               삭제
                               <TrashIcon fill="#888" maxWidth={18} />
                             </button>
@@ -175,13 +203,14 @@ export default function GalleryEditModal({
               </table>
 
               <div className="text-align-right" style={{ marginTop: 12 }}>
-                <button
-                  type="button"
-                  className="button-4"
-                  onClick={handleClickAddGallery}
-                >
+                <label htmlFor="add-gallery" className="button-4">
                   사진 추가 +
-                </button>
+                </label>
+                <input
+                  type="file"
+                  id="add-gallery"
+                  onChange={(e) => addGallery(e.target.files)}
+                />
               </div>
             </div>
           </div>
