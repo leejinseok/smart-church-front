@@ -13,6 +13,7 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import EditIcon from "../../../../../components/Icon/EditIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -53,8 +54,8 @@ export default function StaffsEditModal({
   };
 
   const handleSubmit = async () => {
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
 
@@ -76,9 +77,13 @@ export default function StaffsEditModal({
     }
     newChurchStaffs.groups[0].staffs = sorted;
 
-    await homepageTypeAMockApiRepository.updateChurchStaffs(
-      homepageTypeAId,
-      newChurchStaffs,
+    const userUuid = getCookie("userUuid");
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        churchStaffs: newChurchStaffs,
+      },
     );
 
     updateStaffs(newChurchStaffs);

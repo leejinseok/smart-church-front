@@ -6,11 +6,11 @@ import {
   ChurchDepartmentsAndMinisties,
 } from "../../../../../type/homepage/homepage-type-a";
 import { getCookie } from "../../../../../util/cookie-utils";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import Toggle from "../../../Toggle/Toggle";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function ChurchDepartmentEditModal({
   churchDepartmentsAndMinistries,
@@ -70,8 +70,8 @@ export default function ChurchDepartmentEditModal({
   };
 
   const handleSubmit = async () => {
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
 
@@ -92,9 +92,13 @@ export default function ChurchDepartmentEditModal({
       );
     }
 
-    await homepageTypeAMockApiRepository.updateChurchDepartmentsAndMinistries(
-      +homepageTypeAId,
-      newChurchDepartmentsAndMinistries,
+    const userUuid = getCookie("userUuid");
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        churchDepartmentsAndMinistries: newChurchDepartmentsAndMinistries,
+      },
     );
 
     updateChurchDepartment({

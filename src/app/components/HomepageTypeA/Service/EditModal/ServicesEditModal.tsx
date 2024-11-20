@@ -5,9 +5,9 @@ import { WorshipServicesAndMeetings } from "../../../../../type/homepage/homepag
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import AddIcon from "../../../../../components/Icon/AddIcon";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function ServicesEditModal({
   hide,
@@ -161,14 +161,18 @@ export default function ServicesEditModal({
       ];
     }
 
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
 
-    await homepageTypeAMockApiRepository.updateWorkshipServicesAndMeetings(
-      homepageTypeAId,
-      newWorshipServicesAndMeetings,
+    const userUuid = getCookie("userUuid");
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        worshipServicesAndMeetings: newWorshipServicesAndMeetings,
+      },
     );
 
     updateWorshipServicesAndMeetings(newWorshipServicesAndMeetings);

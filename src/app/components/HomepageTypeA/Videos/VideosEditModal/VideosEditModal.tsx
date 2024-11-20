@@ -7,6 +7,7 @@ import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;
@@ -193,13 +194,20 @@ export default function VideosEditModal({
     }
     updateVideos(videosState);
 
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (homepageTypeAId) {
-      await homepageTypeAMockApiRepository.updateVideos(
-        +homepageTypeAId,
-        videosState,
-      );
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
+      return;
     }
+
+    const userUuid = getCookie("userUuid");
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        videos: videosState,
+      },
+    );
+
     hide();
   };
 

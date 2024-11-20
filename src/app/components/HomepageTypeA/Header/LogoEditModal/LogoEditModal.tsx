@@ -59,16 +59,6 @@ export default function LogoEditModal({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // const homepageTypeAId = getCookie("homepageTypeAId");
-    // if (!homepageTypeAId) {
-    //   return;
-    // }
-    // await homepageTypeAMockApiRepository.updateChurchLogo(
-    //   +homepageTypeAId,
-    //   churchLogoState,
-    // );
-
     const homepageUuid = getCookie("homepageUuid");
     if (!homepageUuid) {
       return;

@@ -6,8 +6,8 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import Sortable from "sortablejs";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function GalleryEditModal({
   gallery,
@@ -56,14 +56,18 @@ export default function GalleryEditModal({
       newValue.items = [...newItems];
     }
 
-    const homepageTypeAId = getCookie("homepageTypeAId");
-    if (!homepageTypeAId) {
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
       return;
     }
 
-    await homepageTypeAMockApiRepository.updateGallery(
-      homepageTypeAId,
-      newValue,
+    const userUuid = getCookie("userUuid");
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        gallery: newValue,
+      },
     );
 
     updateGallery(newValue);
@@ -124,7 +128,18 @@ export default function GalleryEditModal({
                     return (
                       <tr key={itemIndex} data-index={itemIndex}>
                         <td>
-                          <img src={item.imageUrl} alt="" />
+                          <div className="image-container">
+                            <img src={item.imageUrl} alt="" />
+                            <input
+                              type="file"
+                              id={`item-${itemIndex}-file-changer`}
+                              title=""
+                              alt=""
+                            />
+                            <label
+                              htmlFor={`item-${itemIndex}-file-changer`}
+                            ></label>
+                          </div>
                         </td>
                         <td className="description">
                           <textarea
