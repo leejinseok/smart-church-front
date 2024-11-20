@@ -118,9 +118,11 @@ export default function GalleryEditModal({
 
               <table className="width-100">
                 <thead>
-                  <th>이미지</th>
-                  <th>설명</th>
-                  <th>설정</th>
+                  <tr>
+                    <th>이미지</th>
+                    <th>설명</th>
+                    <th>설정</th>
+                  </tr>
                 </thead>
 
                 <tbody id="gallery-images">

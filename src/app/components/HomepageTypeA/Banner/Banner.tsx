@@ -57,8 +57,6 @@ export default function Banner({
             loop={bannersState.items.length > 1}
             speed={1200}
             pagination={{ clickable: true }}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log()}
           >
             {bannersState.visible &&
               bannersState.items.map((banner, bannerIndex) => {
