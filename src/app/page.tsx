@@ -1,6 +1,6 @@
 import "./page.scss";
 import HomepageTypeA from "./components/HomepageTypeA/HomepageTypeA";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 import { PageProps } from "../type/common";
 import { Metadata } from "next";
 import { HomepageTypeA as HomepageTypeAInterface } from "../type/homepage/homepage-type-a";
@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 export default async function Home({ searchParams }: PageProps) {
   const { editMode } = searchParams;
   const isEdit = editMode === "true";
-  const cookieValues = cookies();
 
   const headersValue = headers();
   let homepageTypeAData: HomepageTypeAInterface | null = null;
@@ -27,7 +26,6 @@ export default async function Home({ searchParams }: PageProps) {
     console.log("uuid", uuid);
     homepageTypeAData = await homepageTypeAApiRepository.getHompage(uuid!);
   } else {
-    const url = headersValue.get("url");
     const uuid = headersValue.get("uuid");
     homepageTypeAData = await homepageTypeAApiRepository.getHompage(uuid!);
   }

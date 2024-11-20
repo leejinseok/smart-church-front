@@ -8,6 +8,7 @@ import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import Sortable from "sortablejs";
 import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import CloseIcon from "../../../../../components/Icon/CloseIcon";
 
 export default function GalleryEditModal({
   gallery,
@@ -72,6 +73,10 @@ export default function GalleryEditModal({
 
     updateGallery(newValue);
     hide();
+  };
+
+  const handleClickAddGallery = () => {
+    console.log("hi");
   };
 
   return (
@@ -168,10 +173,31 @@ export default function GalleryEditModal({
                   })}
                 </tbody>
               </table>
+
+              <div className="text-align-right" style={{ marginTop: 12 }}>
+                <button
+                  type="button"
+                  className="button-4"
+                  onClick={handleClickAddGallery}
+                >
+                  사진 추가 +
+                </button>
+              </div>
             </div>
           </div>
 
           <div className="modal__footer text-align-right">
+            <button
+              type="button"
+              className="button-4 cancel"
+              onClick={hide}
+              style={{
+                marginRight: 4,
+              }}
+            >
+              취소
+              <CloseIcon maxWidth={18} />
+            </button>
             <button
               type="button"
               className="button-4 d-flex submit align-items-center"

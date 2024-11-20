@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ChurchStaffs as ChurchStaffsType } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
@@ -16,6 +16,14 @@ export default function ChurchStaffs({
     ...churchStaffs,
   });
   const [editModalVisible, setEditModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (editModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [editModalVisible]);
 
   return (
     <>

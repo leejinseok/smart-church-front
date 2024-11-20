@@ -18,6 +18,10 @@ root {
   margin: 0;
 }
 
+*::selection {
+  background-color: rgb(219, 225, 255);
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

@@ -38,6 +38,14 @@ export default function Header({
     setLogoEditModal({ visible: false });
   };
 
+  useEffect(() => {
+    if (logoEditModal.visible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [logoEditModal.visible]);
+
   return (
     <div id="header-component">
       <div

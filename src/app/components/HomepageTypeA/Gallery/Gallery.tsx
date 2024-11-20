@@ -23,6 +23,14 @@ export default function Gallery({
 
   const [galleryEditModalVisible, setGalleryEditModalVisible] = useState(false);
 
+  useEffect(() => {
+    if (galleryEditModalVisible) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  }, [galleryEditModalVisible]);
+
   const handleClickGallery = (galleryPhotoIndex: number) => {
     document.body.classList.add("overflow-hidden");
     setGalleryModal({

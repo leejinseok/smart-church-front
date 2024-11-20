@@ -8,6 +8,8 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import { getCookie } from "../../../../../util/cookie-utils";
 import AddIcon from "../../../../../components/Icon/AddIcon";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import CloseIcon from "../../../../../components/Icon/CloseIcon";
+import CheckIcon from "../../../../../components/Icon/CheckIcon";
 
 export default function ServicesEditModal({
   hide,
@@ -417,13 +419,25 @@ export default function ServicesEditModal({
             </div>
           </div>
 
-          <div className="modal__footer">
+          <div className="modal__footer text-align-right">
             <button
               type="button"
-              className="button-4 width-100"
-              onClick={() => handleSubmit()}
+              className="button-4 cancel"
+              onClick={hide}
+              style={{
+                marginRight: 4,
+              }}
+            >
+              취소
+              <CloseIcon maxWidth={18} />
+            </button>
+            <button
+              type="button"
+              className="button-4 d-flex submit align-items-center"
+              onClick={handleSubmit}
             >
               적용
+              <CheckIcon maxWidth={18} />
             </button>
           </div>
         </div>

@@ -10,9 +10,7 @@ import {
   ChurchLogo,
   ChurchLogoType,
 } from "../../../../../type/homepage/homepage-type-a";
-import { homepageTypeALocalStorageRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-localstorage-repository";
 import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 

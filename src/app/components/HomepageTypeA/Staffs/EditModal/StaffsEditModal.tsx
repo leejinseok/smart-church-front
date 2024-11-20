@@ -7,13 +7,13 @@ import {
 } from "../../../../../type/homepage/homepage-type-a";
 import Sortable from "sortablejs";
 import StaffEditModal from "./StaffEditModal";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import EditIcon from "../../../../../components/Icon/EditIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import CloseIcon from "../../../../../components/Icon/CloseIcon";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -238,6 +238,17 @@ export default function StaffsEditModal({
               </div>
             </div>
             <div className="modal__footer text-align-right">
+              <button
+                type="button"
+                className="button-4 cancel"
+                onClick={hide}
+                style={{
+                  marginRight: 4,
+                }}
+              >
+                취소
+                <CloseIcon maxWidth={18} />
+              </button>
               <button
                 type="button"
                 className="button-4 submit"

@@ -55,27 +55,6 @@ export default function HomepageTypeA({
             <Videos isEdit={isEdit} videos={homepageTypeAMock.videos} />
           </section>
 
-          <section>
-            {/* <h3
-                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
-              >
-                사역 및 부서소개
-              </h3> */}
-
-            {/* <div>
-                <ChurchDepartment
-                  departments={homepageTypeAMock.churchDepartmentsAndMinistries}
-                />
-              </div> */}
-
-            <ChurchDepartment
-              isEdit={isEdit}
-              churchDepartmentsAndMinistries={
-                homepageTypeAMock.churchDepartmentsAndMinistries
-              }
-            />
-          </section>
-
           <section className="service-guide">
             <Services
               isEdit={isEdit}
@@ -110,6 +89,15 @@ export default function HomepageTypeA({
 
           <section className="gallery">
             <Gallery isEdit={isEdit} gallery={homepageTypeAMock.gallery} />
+          </section>
+
+          <section>
+            <ChurchDepartment
+              isEdit={isEdit}
+              churchDepartmentsAndMinistries={
+                homepageTypeAMock.churchDepartmentsAndMinistries
+              }
+            />
           </section>
 
           <section>
