@@ -101,7 +101,12 @@ export default function HomepageTypeA({
           </section>
 
           <section>
-            <div>
+            <Locations
+              isEdit={isEdit}
+              latitude={37.3595704}
+              longitude={127.105399}
+            />
+            {/* <div>
               <h3
                 className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
               >
@@ -118,7 +123,7 @@ export default function HomepageTypeA({
                 </p>
                 <p style={{ marginTop: 16 }} className="font-size-l"></p>
               </div>
-            </div>
+            </div> */}
           </section>
         </div>
       </main>
