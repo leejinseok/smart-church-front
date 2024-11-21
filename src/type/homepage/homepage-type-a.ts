@@ -97,9 +97,11 @@ export interface ChurchDepartmentsAndMinisties {
   items: ChurchDepartmentAndMinistry[];
 }
 
-export interface HomepageTypeA {
+export interface HomepageTypeAResponse {
   id: number | null;
   uuid: string | null;
+  churchUuid: string | null;
+  ownerUuid: string | null;
   churchLogo: ChurchLogo;
   churchIntro: ChurchIntro;
   banners: ChurchBanners;

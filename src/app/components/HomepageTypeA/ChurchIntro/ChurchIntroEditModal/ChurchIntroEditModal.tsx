@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { ChurchIntro } from "../../../../../type/homepage/homepage-type-a";
 import Quill from "quill";
 import { getCookie } from "../../../../../util/cookie-utils";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
@@ -30,10 +29,6 @@ export default function ChurchIntroEditModal({
       setMounted(false);
     };
   }, []);
-
-  // useEffect(() => {
-  //   setChurchIntroState(churchIntro);
-  // }, [churchIntro]);
 
   useEffect(() => {
     if (!mounted || churchIntroEditor !== null) {
@@ -68,16 +63,6 @@ export default function ChurchIntroEditModal({
   }, [churchIntroEditor, churchIntroState, mounted]);
 
   const handleSubmit = async () => {
-    // const homepageTypeAId = getCookie("homepageTypeAId");
-    // if (!homepageTypeAId) {
-    //   return;
-    // }
-
-    // await homepageTypeAMockApiRepository.updateChurchIntro(
-    //   +homepageTypeAId,
-    //   churchIntroState,
-    // );
-
     const homepageUuid = getCookie("homepageUuid");
     if (!homepageUuid) {
       return;

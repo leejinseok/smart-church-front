@@ -2,8 +2,6 @@
 
 import "./HomepageTypeA.scss";
 import { ChurchResponse } from "../../../api/smart-church/smart-church-api-response";
-import { churchMock } from "../../../type/mock";
-import { nanumBarunGothicBold } from "../../layout";
 import Banner from "./Banner/Banner";
 import ChurchDepartment from "./ChurchDepartment/ChurchDepartment";
 import Footer from "./Footer/Footer";
@@ -12,55 +10,48 @@ import Header from "./Header/Header";
 import Locations from "./Location/Locations";
 import ChurchIntro from "./ChurchIntro/ChurchIntro";
 import Videos from "./Videos/Videos";
-import { HomepageTypeA as HomepageTypeAInterface } from "../../../type/homepage/homepage-type-a";
+import { HomepageTypeAResponse } from "../../../type/homepage/homepage-type-a";
 import Services from "./Service/Services";
 import ChurchStaffs from "./Staffs/ChurchStaffs";
+import ChurchEditModal from "./ChurchEdit/ChurchEditModal";
 
 export default function HomepageTypeA({
   isEdit,
-  homepageTypeAData,
+  church,
+  homepage,
 }: {
   isEdit: boolean;
-  homepageTypeAData: HomepageTypeAInterface;
+  church: ChurchResponse;
+  homepage: HomepageTypeAResponse;
 }) {
-  const church: ChurchResponse = {
-    ...churchMock,
-  };
-
-  const homepageTypeAMock = { ...homepageTypeAData };
-
   return (
     <div id="homepage-type-a-component">
       <Header
         church={church}
-        churchLogo={homepageTypeAMock.churchLogo}
+        homepageChurchUuid={homepage.churchUuid}
+        churchLogo={homepage.churchLogo}
         isEdit={isEdit}
       />
       <main>
         <div className="container">
           <section>
             <div style={{ paddingTop: 12, paddingBottom: 0 }}>
-              <Banner banners={homepageTypeAMock.banners} isEdit={isEdit} />
+              <Banner banners={homepage.banners} isEdit={isEdit} />
             </div>
           </section>
 
           <section>
-            <ChurchIntro
-              isEdit={isEdit}
-              churchIntro={homepageTypeAMock.churchIntro}
-            />
+            <ChurchIntro isEdit={isEdit} churchIntro={homepage.churchIntro} />
           </section>
 
           <section className="recently-videos">
-            <Videos isEdit={isEdit} videos={homepageTypeAMock.videos} />
+            <Videos isEdit={isEdit} videos={homepage.videos} />
           </section>
 
           <section className="service-guide">
             <Services
               isEdit={isEdit}
-              worshipServicesAndMeetings={
-                homepageTypeAMock.worshipServicesAndMeetings
-              }
+              worshipServicesAndMeetings={homepage.worshipServicesAndMeetings}
             />
           </section>
           {/* 
@@ -83,29 +74,25 @@ export default function HomepageTypeA({
           <section>
             <ChurchStaffs
               isEdit={isEdit}
-              churchStaffs={homepageTypeAMock.churchStaffs}
+              churchStaffs={homepage.churchStaffs}
             />
           </section>
 
           <section className="gallery">
-            <Gallery isEdit={isEdit} gallery={homepageTypeAMock.gallery} />
+            <Gallery isEdit={isEdit} gallery={homepage.gallery} />
           </section>
 
           <section>
             <ChurchDepartment
               isEdit={isEdit}
               churchDepartmentsAndMinistries={
-                homepageTypeAMock.churchDepartmentsAndMinistries
+                homepage.churchDepartmentsAndMinistries
               }
             />
           </section>
 
           <section>
-            <Locations
-              isEdit={isEdit}
-              latitude={37.3595704}
-              longitude={127.105399}
-            />
+            <Locations isEdit={isEdit} />
             {/* <div>
               <h3
                 className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
@@ -128,6 +115,8 @@ export default function HomepageTypeA({
         </div>
       </main>
       <Footer church={church} />
+
+      {isEdit && <ChurchEditModal church={church} />}
     </div>
   );
 }

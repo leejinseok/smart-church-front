@@ -3,11 +3,25 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { loadScript } from "../../../../util/script-utils";
 import { nanumBarunGothicBold } from "../../../layout";
+import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
+import LocationEditModal from "./EditModal/LocationEditModal";
 
 let mapInstance: naver.maps.Map | null = null;
 
-export default function Locations({ isEdit }: { isEdit: boolean }) {
+export default function Locations({
+  isEdit,
+  churchAddress,
+}: {
+  isEdit: boolean;
+  churchAddress: {
+    address: string;
+    latitude: number;
+    longitude: number;
+  };
+}) {
   const [, setMapLoaded] = useState(false);
+  const [locationEditModalVisible, setLocationEditModalVisible] =
+    useState(false);
   const [latitude, setLatitude] = useState();
   const [longitude, setLongitude] = useState();
   const mapRef = useRef<HTMLDivElement>(null);
@@ -118,7 +132,7 @@ export default function Locations({ isEdit }: { isEdit: boolean }) {
 
   return (
     <>
-      <div>
+      <div className={`${isEdit && "edit-overlay-container"}`}>
         <h3
           className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
         >
@@ -132,7 +146,17 @@ export default function Locations({ isEdit }: { isEdit: boolean }) {
           </p>
           <p style={{ marginTop: 16 }} className="font-size-l"></p>
         </div>
+
+        {isEdit && (
+          <HomepageEditOverlay
+            onClickListener={() => setLocationEditModalVisible(true)}
+          />
+        )}
       </div>
+
+      {isEdit && locationEditModalVisible && (
+        <LocationEditModal hide={() => setLocationEditModalVisible(false)} />
+      )}
     </>
   );
 }

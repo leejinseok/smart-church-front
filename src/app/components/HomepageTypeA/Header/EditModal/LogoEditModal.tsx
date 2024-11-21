@@ -10,7 +10,7 @@ import {
   ChurchLogo,
   ChurchLogoType,
 } from "../../../../../type/homepage/homepage-type-a";
-import { homepageTypeAFormMock } from "../../../../../type/homepage/homepage-type-a-mock";
+import { homepageTypeADefault } from "../../../../../type/homepage/homepage-type-a-mock";
 import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
@@ -80,7 +80,7 @@ export default function LogoEditModal({
   };
 
   const handleReset = () => {
-    setChurchLogoState(() => ({ ...homepageTypeAFormMock.churchLogo }));
+    setChurchLogoState(() => ({ ...homepageTypeADefault.churchLogo }));
   };
 
   return (

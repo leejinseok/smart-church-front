@@ -1,6 +1,6 @@
-import { HomepageTypeA } from "./homepage-type-a";
+import { HomepageTypeAResponse } from "./homepage-type-a";
 
-export const homepageTypeAFormMock: HomepageTypeA = {
+export const homepageTypeADefault: HomepageTypeAResponse = {
   id: null,
   uuid: null,
   churchLogo: {

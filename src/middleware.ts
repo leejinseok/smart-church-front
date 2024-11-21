@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { homepageTypeAFormMock } from "./type/homepage/homepage-type-a-mock";
+import { homepageTypeADefault } from "./type/homepage/homepage-type-a-mock";
 import { homepageTypeAApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
 
 const convertToParams = (queryString: string) => {
@@ -23,35 +23,39 @@ export async function middleware(request: NextRequest) {
 
   const params = convertToParams(search);
   const editMode = params["editMode"];
-  const uuid = params["uuid"];
+  const homepageUuid = params["uuid"];
 
   if (editMode === true) {
-    if (uuid) {
-      headers.append("uuid", `${uuid}`);
+    // homepageUuid가 query에 존재하면
+    if (homepageUuid) {
+      headers.append("homepageUuid", `${homepageUuid}`);
+      const res = await homepageTypeAApiRepository.getHompage(
+        `${homepageUuid}`,
+      );
 
-      const res = await homepageTypeAApiRepository.getHompage(`${uuid}`);
       if (res) {
         const next = NextResponse.next({
           headers,
         });
-
         next.cookies.set("homepageUuid", `${res.uuid}`);
         return next;
       }
     } else {
-      const defaultData = { ...homepageTypeAFormMock };
+      // homepageUuid가 query에 존재하지 않으면 샘플데이터를 save하고 uuid 생성
       const homepage =
-        await homepageTypeAApiRepository.saveHomepage(defaultData);
+        await homepageTypeAApiRepository.saveHomepage(homepageTypeADefault);
       const redirect = NextResponse.redirect(
         `${nextUrl.origin}${search}&uuid=${homepage.uuid}`,
       );
-      const homepageUuid = homepage.uuid;
-      redirect.cookies.set("homepageUuid", `${homepageUuid!}`);
       return redirect;
     }
   } else {
-    headers.append("uuid", `${uuid}`);
-    const homepage = await homepageTypeAApiRepository.getHompage(`${uuid}`);
+    // homepage uuid를 얻어와야한다. sub domain을 참조 혹은 path를 참조
+    headers.append("homepageUuid", `${homepageUuid}`);
+    const homepage = await homepageTypeAApiRepository.getHompage(
+      `${homepageUuid}`,
+    );
+
     if (homepage) {
       const next = NextResponse.next({
         headers,

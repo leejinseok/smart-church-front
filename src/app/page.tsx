@@ -1,10 +1,12 @@
 import "./page.scss";
 import HomepageTypeA from "./components/HomepageTypeA/HomepageTypeA";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { PageProps } from "../type/common";
 import { Metadata } from "next";
-import { HomepageTypeA as HomepageTypeAInterface } from "../type/homepage/homepage-type-a";
+import { HomepageTypeAResponse } from "../type/homepage/homepage-type-a";
 import { homepageTypeAApiRepository } from "../repository/homepage-type-a/homepage-type-a-api-repository";
+import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
+import { churchDefault } from "../type/mock";
 
 export const metadata: Metadata = {
   title: "스마트처치 | 미리보기 페이지",
@@ -14,25 +16,35 @@ export const metadata: Metadata = {
 export default async function Home({ searchParams }: PageProps) {
   const { editMode } = searchParams;
   const isEdit = editMode === "true";
-
   const headersValue = headers();
-  let homepageTypeAData: HomepageTypeAInterface | null = null;
-  if (isEdit) {
-    // 편집인경우
-    // 로그인한 경우
+  const uuid = headersValue.get("homepageUuid");
 
-    //로그인 안한경우
-    const uuid = headersValue.get("uuid");
-    console.log("uuid", uuid);
-    homepageTypeAData = await homepageTypeAApiRepository.getHompage(uuid!);
+  let homepageTypeAResponse: HomepageTypeAResponse | null = null;
+  let churchResponse: ChurchResponse | null = null;
+  homepageTypeAResponse = await homepageTypeAApiRepository.getHompage(uuid!);
+
+  if (homepageTypeAResponse.churchUuid) {
+    // TODO api에서 불러와야함
+    churchResponse = churchDefault;
   } else {
-    const uuid = headersValue.get("uuid");
-    homepageTypeAData = await homepageTypeAApiRepository.getHompage(uuid!);
+    // churchUuid가 없으면 현재 최초 작성이라는 의미
+    const churchTemporary = cookies().get("churchTemporary");
+    if (churchTemporary) {
+      churchResponse = JSON.parse(
+        decodeURIComponent(churchTemporary.value),
+      ) as ChurchResponse;
+    } else {
+      churchResponse = churchDefault;
+    }
   }
 
   return (
     <div id="main-page" className={`${isEdit && "edit"}`}>
-      <HomepageTypeA isEdit={isEdit} homepageTypeAData={homepageTypeAData!} />
+      <HomepageTypeA
+        isEdit={isEdit}
+        church={churchResponse}
+        homepage={homepageTypeAResponse!}
+      />
     </div>
   );
 }

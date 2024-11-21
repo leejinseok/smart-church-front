@@ -1,6 +1,10 @@
 import "./EditModeNav.scss";
 
-export default function EditModeNav() {
+export default function EditModeNav({
+  homepageChurchUuid,
+}: {
+  homepageChurchUuid: string | null | undefined;
+}) {
   const handleClickRegisterButton = () => {
     window.location.reload();
   };
@@ -19,17 +23,22 @@ export default function EditModeNav() {
               href={`?uuid=47236142-4c14-4830-941a-7b79879669a6`}
               target="_blank"
             >
-              <button type="button" className="font-size-m button-4">
+              <button
+                type="button"
+                className="font-size-m button-4 d-flex align-items-center"
+              >
                 미리보기
               </button>
             </a>
-            <button
-              type="button"
-              className="font-size-m button-4"
-              onClick={handleClickRegisterButton}
-            >
-              생성하기
-            </button>
+            {!homepageChurchUuid && (
+              <button
+                type="button"
+                className="font-size-m button-4 d-flex align-items-center"
+                onClick={handleClickRegisterButton}
+              >
+                생성
+              </button>
+            )}
             {/* <span>Copyright ©RainyHeaven</span> */}
           </div>
         </div>

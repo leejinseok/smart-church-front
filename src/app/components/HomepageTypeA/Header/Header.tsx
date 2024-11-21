@@ -6,18 +6,20 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { nanumBarunGothicBold } from "../../../layout";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
-import EditModeNav from "./EditMode/EditModeNav";
+import EditModeNav from "./EditModeNav/EditModeNav";
 import { useEffect, useState } from "react";
-import LogoEditModal from "./LogoEditModal/LogoEditModal";
+import LogoEditModal from "./EditModal/LogoEditModal";
 import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
 import TinyNav from "./TinyNav/TinyNav";
 
 export default function Header({
   church,
+  homepageChurchUuid,
   churchLogo,
   isEdit = false,
 }: {
   church: ChurchResponse;
+  homepageChurchUuid: string | null | undefined;
   churchLogo: ChurchLogo;
   isEdit: boolean;
 }) {
@@ -54,7 +56,11 @@ export default function Header({
           paddingTop: isEdit ? 40 : 32,
         }}
       >
-        {isEdit ? <EditModeNav /> : <TinyNav />}
+        {isEdit ? (
+          <EditModeNav homepageChurchUuid={homepageChurchUuid} />
+        ) : (
+          <TinyNav />
+        )}
         <nav
           className={`${nanumBarunGothicBold.className} container d-flex justify-content-center align-items-center`}
         >

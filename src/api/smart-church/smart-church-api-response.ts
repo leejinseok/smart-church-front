@@ -1,11 +1,9 @@
 export interface ChurchResponse {
-  email: string;
-  id: number;
+  id: number | null;
+  uuid: string | null;
   name: string;
   address: string;
-  tel: string;
-  logoImageUrl: string;
-  footerLogoImageUrl: string;
+  tel: string | null;
 }
 
 export type ServiceType = "SERVICE" | "CLASS";

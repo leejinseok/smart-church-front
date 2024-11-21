@@ -6,69 +6,69 @@ import {
   ChurchStaffs,
   ChurchVideos,
   Gallery,
-  HomepageTypeA,
+  HomepageTypeAResponse,
   WorshipServicesAndMeetings,
 } from "../../type/homepage/homepage-type-a";
-import { homepageTypeAFormMock } from "../../type/homepage/homepage-type-a-mock";
+import { homepageTypeADefault } from "../../type/homepage/homepage-type-a-mock";
 
 export interface HompageTypeAApiRepository {
   updateGallery(
     homepageTypeAId: string,
     userUuid: string,
     newValue: Gallery,
-  ): Promise<HomepageTypeA>;
+  ): Promise<HomepageTypeAResponse>;
   updateChurchStaffs(
     homepageTypeAId: string,
     userUuid: string,
     churchStaffsState: ChurchStaffs,
-  ): Promise<HomepageTypeA>;
+  ): Promise<HomepageTypeAResponse>;
   updateWorkshipServicesAndMeetings(
     homepageTypeAId: string,
     userUuid: string,
     newWorshipServicesAndMeetings: WorshipServicesAndMeetings,
-  ): Promise<HomepageTypeA>;
+  ): Promise<HomepageTypeAResponse>;
   updateChurchDepartmentsAndMinistries(
     homepageTypeAId: number,
     userUuid: string,
     churchDepartmentState: ChurchDepartmentsAndMinisties,
-  ): Promise<HomepageTypeA>;
+  ): Promise<HomepageTypeAResponse>;
   getHompageTypeA: (
     uuid: string,
     userUuid: string,
-  ) => Promise<HomepageTypeA | null>;
+  ) => Promise<HomepageTypeAResponse | null>;
   saveHomepageTypeA: (
-    homepageTypeA: HomepageTypeA,
+    homepageTypeA: HomepageTypeAResponse,
     userUuid: string,
-  ) => Promise<HomepageTypeA>;
+  ) => Promise<HomepageTypeAResponse>;
 
   updateChurchLogo: (
     homepageTypeAId: number,
     userUuid: string,
     churchLogo: ChurchLogo,
-  ) => Promise<HomepageTypeA>;
+  ) => Promise<HomepageTypeAResponse>;
 
   updateBannners: (
     homepageTypeAId: number,
     userUuid: string,
     banners: ChurchBanners,
-  ) => Promise<HomepageTypeA>;
+  ) => Promise<HomepageTypeAResponse>;
 
   updateChurchIntro: (
     homepageTypeAId: number,
     userUuid: string,
     churchIntro: ChurchIntro,
-  ) => Promise<HomepageTypeA>;
+  ) => Promise<HomepageTypeAResponse>;
 
   updateVideos: (
     homepageTypeAId: number,
     userUuid: string,
     churchVideos: ChurchVideos,
-  ) => Promise<HomepageTypeA>;
+  ) => Promise<HomepageTypeAResponse>;
 }
 
 const apiKey = "7b362dad-d4e9-4cd9-9fdc-7f5ae6be61d8";
 export const homepageTypeAApiRepository = {
-  async getHompage(homepageUuid: string): Promise<HomepageTypeA> {
+  async getHompage(homepageUuid: string): Promise<HomepageTypeAResponse> {
     const res = await fetch(
       `http://localhost:8088/homepages/type-a/${homepageUuid}`,
       {
@@ -82,7 +82,9 @@ export const homepageTypeAApiRepository = {
     return json;
   },
 
-  async saveHomepage(data: HomepageTypeA): Promise<HomepageTypeA> {
+  async saveHomepage(
+    data: HomepageTypeAResponse,
+  ): Promise<HomepageTypeAResponse> {
     const res = await fetch(`http://localhost:8088/homepages/type-a`, {
       headers: {
         "x-api-key": apiKey,
@@ -96,7 +98,7 @@ export const homepageTypeAApiRepository = {
   async updateHomepage(
     uuid: string,
     userUuid: string,
-    data: Partial<HomepageTypeA>,
+    data: Partial<HomepageTypeAResponse>,
   ) {
     await fetch(`http://localhost:8088/homepages/type-a/${uuid}`, {
       method: "PATCH",

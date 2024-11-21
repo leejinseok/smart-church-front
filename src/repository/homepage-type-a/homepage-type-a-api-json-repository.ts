@@ -1,4 +1,7 @@
-import { Gallery, HomepageTypeA } from "../../type/homepage/homepage-type-a";
+import {
+  Gallery,
+  HomepageTypeAResponse,
+} from "../../type/homepage/homepage-type-a";
 import { HompageTypeAApiRepository } from "./homepage-type-a-api-repository";
 
 export const homepageTypeAMockApiRepository: HompageTypeAApiRepository = {
@@ -135,7 +138,7 @@ export const homepageTypeAMockApiRepository: HompageTypeAApiRepository = {
   async updateChurchStaffs(
     homepageTypeAId,
     churchStaffs,
-  ): Promise<HomepageTypeA> {
+  ): Promise<HomepageTypeAResponse> {
     const res = await fetch(
       `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
       {
@@ -155,7 +158,7 @@ export const homepageTypeAMockApiRepository: HompageTypeAApiRepository = {
   async updateGallery(
     homepageTypeAId: string,
     gallery: Gallery,
-  ): Promise<HomepageTypeA> {
+  ): Promise<HomepageTypeAResponse> {
     const res = await fetch(
       `http://localhost:8088/homepageTypeA/${homepageTypeAId}`,
       {

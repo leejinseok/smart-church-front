@@ -5,9 +5,9 @@ import {
   ChurchBanners,
   ChurchIntro,
   ChurchLogo,
-  HomepageTypeA,
+  HomepageTypeAResponse,
 } from "../../type/homepage/homepage-type-a";
-import { homepageTypeAFormMock } from "../../type/homepage/homepage-type-a-mock";
+import { homepageTypeADefault } from "../../type/homepage/homepage-type-a-mock";
 import {
   getLocalStorageItem,
   getLocalStorageSize,
@@ -16,12 +16,12 @@ import {
 } from "../../util/local-storage-utils";
 
 export interface HomepageTypeARepository {
-  getHomepageTypeAByChurchUuid(churchUuid: string): HomepageTypeA;
+  getHomepageTypeAByChurchUuid(churchUuid: string): HomepageTypeAResponse;
 }
 
 export interface HompageTypeALocalStorageRepository {
-  getHompageTypeA: () => HomepageTypeA | null;
-  saveHomepageTypeA: (homepageTypeA: HomepageTypeA) => void;
+  getHompageTypeA: () => HomepageTypeAResponse | null;
+  saveHomepageTypeA: (homepageTypeA: HomepageTypeAResponse) => void;
   updateChurchLogo: (churchLogo: ChurchLogo) => void;
   updateBannners: (banners: ChurchBanners) => void;
   updateChurchIntro: (churchIntro: ChurchIntro) => void;
@@ -37,12 +37,12 @@ export const homepageTypeALocalStorageRepository: HompageTypeALocalStorageReposi
       if (homepageTypeALocalStorageItem) {
         const parse = JSON.parse(
           decodeURIComponent(homepageTypeALocalStorageItem),
-        ) as HomepageTypeA;
+        ) as HomepageTypeAResponse;
 
         return parse;
       }
 
-      this.saveHomepageTypeA(homepageTypeAFormMock);
+      this.saveHomepageTypeA(homepageTypeADefault);
       return null;
     },
     saveHomepageTypeA(homepageTypeA) {
