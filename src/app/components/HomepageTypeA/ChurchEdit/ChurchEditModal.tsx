@@ -22,14 +22,42 @@ export default function ChurchEditModal({
     }
   }, [visible]);
 
+  const clientId = "2xkw517mhy";
+  const clientSecret = "fdyRV2M4EAh3vr1tA5jiTyFzzBPbHvbbtv6AgeqZ";
+
   const handleAddressClick = () => {
+    const searchAddress = async (address: string) => {
+      try {
+        const response = await fetch(
+          `/api/geocode?address=${encodeURIComponent(address)}`,
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch geocode data");
+        }
+
+        const data = await response.json();
+
+        if (data.addresses && data.addresses.length > 0) {
+          const { x, y } = data.addresses[0]; // x: 경도, y: 위도
+          setChurchState((prev) => ({ ...prev, latitude: y, longitude: x }));
+        } else {
+          alert("주소를 찾을 수 없습니다.");
+        }
+      } catch (error) {
+        console.error("Error fetching geocode data:", error);
+        alert("오류가 발생했습니다.");
+      }
+    };
+
     const callback = () => {
       new daum.Postcode({
         oncomplete: function (data) {
           // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
           // 예제를 참고하여 다양한 활용법을 확인해 보세요.
 
-          console.log(data);
+          console.log("data: ", data);
+          searchAddress(data.address);
         },
       }).open();
     };

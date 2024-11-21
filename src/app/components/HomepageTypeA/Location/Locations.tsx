@@ -58,41 +58,6 @@ export default function Locations({
   const clientSecret = "fdyRV2M4EAh3vr1tA5jiTyFzzBPbHvbbtv6AgeqZ";
 
   useEffect(() => {
-    function searchAddress() {
-      const address = document.getElementById("address")?.value;
-      if (!address) {
-        return;
-      }
-
-      fetch(
-        `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`,
-        {
-          method: "GET",
-          headers: {
-            "X-NCP-APIGW-API-KEY-ID": clientId,
-            "X-NCP-APIGW-API-KEY": clientSecret,
-          },
-        },
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.addresses.length > 0) {
-            const { x, y } = data.addresses[0]; // x: 경도, y: 위도
-            document.getElementById("coords").innerText =
-              `위도: ${y}, 경도: ${x}`;
-            const newCenter = new naver.maps.LatLng(y, x);
-            map.setCenter(newCenter);
-          } else {
-            alert("주소를 찾을 수 없습니다.");
-          }
-        })
-        .catch((error) => console.error("Error fetching geocode data:", error));
-    }
-
-    searchAddress();
-  }, []);
-
-  useEffect(() => {
     if (!latitude || !longitude) {
       return;
     }

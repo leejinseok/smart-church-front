@@ -15,6 +15,7 @@ const convertToParams = (queryString: string) => {
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
+  console.log("middleware");
   const headers: HeadersInit = new Headers();
 
   const url = request.url;
@@ -72,5 +73,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: "/((?!api|_next|static|public|favicon.ico).*)",
+  matcher: "/((?!api|proxy|test|_next|static|public|favicon.ico).*)",
 };
