@@ -1,8 +1,14 @@
 #church-edit-modal {
   .modal__inner {
+    padding-top: 34px;
+
     .modal__box {
       .modal__body {
         padding: 14px 14px;
+
+        .form-group {
+          margin-bottom: 12px;
+        }
       }
     }
   }
