@@ -20,6 +20,7 @@ import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import ApplyButton from "../../../../../components/common/ApplyButton";
 
 export default function BannerEditModal({
   banners,
@@ -30,6 +31,7 @@ export default function BannerEditModal({
   updateBanners: Dispatch<SetStateAction<ChurchBanners>>;
   hide: () => void;
 }) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [bannersState, setBannersState] = useState<ChurchBanners>({
     visible: false,
     items: [],
@@ -182,7 +184,7 @@ export default function BannerEditModal({
         </div>
 
         <div className="modal__body" onClick={(e) => e.stopPropagation()}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} ref={formRef}>
             <div className="form-group">
               <h3 className="font-weight-bold font-size-m form-group__header">
                 노출여부
@@ -250,15 +252,20 @@ export default function BannerEditModal({
                 </div>
               </div>
             )}
-
-            <div className="form-group">
-              <div>
-                <button type="submit" className="width-100">
-                  변경사항 적용
-                </button>
-              </div>
-            </div>
           </form>
+        </div>
+
+        <div className="modal__footer text-align-right">
+          <ApplyButton
+            handleClick={() => {
+              const current = formRef.current;
+              if (!current) {
+                return;
+              }
+
+              current.requestSubmit();
+            }}
+          />
         </div>
       </EditModalWrapper>
     </>

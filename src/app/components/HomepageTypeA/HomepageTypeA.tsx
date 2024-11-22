@@ -48,9 +48,7 @@ export default function HomepageTypeA({
       <main>
         <div className="container">
           <section>
-            <div style={{ paddingTop: 12, paddingBottom: 0 }}>
-              <Banner banners={homepage.banners} isEdit={isEdit} />
-            </div>
+            <Banner banners={homepage.banners} isEdit={isEdit} />
           </section>
 
           <section>

@@ -8,6 +8,7 @@ import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import ApplyButton from "../../../../../components/common/ApplyButton";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;
@@ -336,16 +337,10 @@ export default function VideosEditModal({
             )}
           </ul>
         </div>
+      </div>
 
-        <div className="form-group submit-container">
-          <button
-            type="button"
-            className="button-4 width-100"
-            onClick={handleSubmit}
-          >
-            적용
-          </button>
-        </div>
+      <div className="modal__footer text-align-right">
+        <ApplyButton handleClick={handleSubmit} />
       </div>
     </EditModalWrapper>
   );

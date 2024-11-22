@@ -12,6 +12,7 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import ApplyButton from "../../../../../components/common/ApplyButton";
 
 export default function ChurchDepartmentEditModal({
   churchDepartmentsAndMinistries,
@@ -247,26 +248,14 @@ export default function ChurchDepartmentEditModal({
           </ul>
         </div>
 
-        <div style={{ paddingTop: 14 }}>
-          <button
-            className="button-4 width-100"
-            type="button"
-            onClick={handleAdd}
-          >
+        <div style={{ paddingTop: 0 }}>
+          <button className="button-4" type="button" onClick={handleAdd}>
             추가 +
           </button>
         </div>
       </div>
-      <div className="modal__footer">
-        <div>
-          <button
-            className="button-4 width-100"
-            type="button"
-            onClick={handleSubmit}
-          >
-            변경
-          </button>
-        </div>
+      <div className="modal__footer text-align-right">
+        <ApplyButton handleClick={handleSubmit} />
       </div>
     </EditModalWrapper>
   );
