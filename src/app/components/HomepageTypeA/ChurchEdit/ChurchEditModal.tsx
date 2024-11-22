@@ -5,6 +5,8 @@ import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-re
 import ApplyButton from "../../../../components/common/ApplyButton";
 import { setCookie } from "../../../../util/cookie-utils";
 import { loadScript } from "../../../../util/script-utils";
+import { useRecoilState } from "recoil";
+import { churchEditModalState } from "../../../../atom/ui";
 
 export default function ChurchEditModal({
   church,
@@ -14,15 +16,7 @@ export default function ChurchEditModal({
   updateChurch: (church: ChurchResponse) => void;
 }) {
   const [churchState, setChurchState] = useState({ ...church });
-  const [visible, setVisible] = useState(churchState.name === "");
-
-  useEffect(() => {
-    if (visible) {
-      document.body.classList.add("overflow-hidden");
-    } else {
-      document.body.classList.remove("overflow-hidden");
-    }
-  }, [visible]);
+  const [, setChurchEditModal] = useRecoilState(churchEditModalState);
 
   const handleAddressClick = () => {
     const searchAddress = async (address: string) => {
@@ -73,6 +67,14 @@ export default function ChurchEditModal({
     }
   };
 
+  const hide = () => {
+    if (!churchState.name) {
+      return;
+    }
+
+    setChurchEditModal({ visible: false });
+  };
+
   const handleSubmit = () => {
     setCookie(
       "churchTemporary",
@@ -80,111 +82,113 @@ export default function ChurchEditModal({
     );
 
     updateChurch(churchState);
-    setVisible(false);
+    setChurchEditModal({ visible: false });
   };
 
   return (
     <>
-      {visible && (
-        <div id="church-edit-modal" className="edit-modal modal-container">
-          <div className="modal__inner">
-            <div className="modal__box" onClick={(e) => e.stopPropagation()}>
-              <div className="modal__header">
-                <h3 className="font-size-l font-weight-bold">교회정보 편집</h3>
+      <div
+        id="church-edit-modal"
+        className="edit-modal modal-container"
+        onClick={hide}
+      >
+        <div className="modal__inner">
+          <div className="modal__box" onClick={(e) => e.stopPropagation()}>
+            <div className="modal__header">
+              <h3 className="font-size-l font-weight-bold">교회정보 편집</h3>
+            </div>
+
+            <div className="modal__body">
+              <div className="form-group">
+                <p
+                  className="font-weight-bold font-size-m required"
+                  style={{ marginBottom: 0 }}
+                >
+                  이름
+                </p>
+                <input
+                  type="text"
+                  className="font-size-m no-border"
+                  value={churchState.name}
+                  placeholder="교회이름을 입력해주세요"
+                  onChange={(e) =>
+                    setChurchState((prev) => ({
+                      ...prev,
+                      name: e.target.value,
+                    }))
+                  }
+                />
               </div>
 
-              <div className="modal__body">
-                <div className="form-group">
-                  <p
-                    className="font-weight-bold font-size-m required"
-                    style={{ marginBottom: 0 }}
-                  >
-                    이름
-                  </p>
-                  <input
-                    type="text"
-                    className="font-size-m no-border"
-                    value={churchState.name}
-                    placeholder="교회이름을 입력해주세요"
-                    onChange={(e) =>
-                      setChurchState((prev) => ({
-                        ...prev,
-                        name: e.target.value,
-                      }))
-                    }
-                  />
-                </div>
+              <div className="form-group">
+                <p
+                  className="font-weight-bold font-size-m required"
+                  style={{ marginBottom: 0 }}
+                >
+                  주소
+                </p>
 
-                <div className="form-group">
-                  <p
-                    className="font-weight-bold font-size-m required"
-                    style={{ marginBottom: 0 }}
-                  >
-                    주소
-                  </p>
-
-                  <div>
-                    <input
-                      type="text"
-                      className="font-size-m no-border width-100"
-                      value={churchState.address}
-                      placeholder="교회주소를 입력해주세요"
-                      readOnly
-                      onClick={handleAddressClick}
-                      onChange={(e) =>
-                        setChurchState((prev) => ({
-                          ...prev,
-                          address: e.target.value,
-                        }))
-                      }
-                    />
-                  </div>
-
-                  <div>
-                    <input
-                      type="text"
-                      className="font-size-m no-border width-100"
-                      value={churchState.addressDetail || ""}
-                      placeholder="상세주소를 입력해주세요"
-                      onChange={(e) =>
-                        setChurchState((prev) => ({
-                          ...prev,
-                          addressDetail: e.target.value,
-                        }))
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <p
-                    className="font-weight-bold font-size-m"
-                    style={{ marginBottom: 0 }}
-                  >
-                    전화번호
-                  </p>
-
+                <div>
                   <input
                     type="text"
                     className="font-size-m no-border width-100"
-                    value={churchState.tel || ""}
-                    placeholder="교회 전화번호를 입력해주세요"
+                    value={churchState.address}
+                    placeholder="교회주소를 입력해주세요"
+                    readOnly
+                    onClick={handleAddressClick}
                     onChange={(e) =>
                       setChurchState((prev) => ({
                         ...prev,
-                        tel: e.target.value,
+                        address: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+
+                <div>
+                  <input
+                    type="text"
+                    className="font-size-m no-border width-100"
+                    value={churchState.addressDetail || ""}
+                    placeholder="상세주소를 입력해주세요"
+                    onChange={(e) =>
+                      setChurchState((prev) => ({
+                        ...prev,
+                        addressDetail: e.target.value,
                       }))
                     }
                   />
                 </div>
               </div>
-              <div className="modal__footer text-align-center">
-                <ApplyButton handleClick={handleSubmit} />
+
+              <div className="form-group">
+                <p
+                  className="font-weight-bold font-size-m"
+                  style={{ marginBottom: 0 }}
+                >
+                  전화번호
+                </p>
+
+                <input
+                  type="text"
+                  className="font-size-m no-border width-100"
+                  value={churchState.tel || ""}
+                  placeholder="교회 전화번호를 입력해주세요"
+                  onChange={(e) =>
+                    setChurchState((prev) => ({
+                      ...prev,
+                      tel: e.target.value,
+                    }))
+                  }
+                />
               </div>
+            </div>
+            <div className="modal__footer text-align-center">
+              <ApplyButton handleClick={handleSubmit} />
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

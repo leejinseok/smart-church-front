@@ -14,7 +14,9 @@ import { HomepageTypeAResponse } from "../../../type/homepage/homepage-type-a";
 import Services from "./Service/Services";
 import ChurchStaffs from "./Staffs/ChurchStaffs";
 import ChurchEditModal from "./ChurchEdit/ChurchEditModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { churchEditModalState } from "../../../atom/ui";
 
 export default function HomepageTypeA({
   isEdit,
@@ -26,6 +28,14 @@ export default function HomepageTypeA({
   homepage: HomepageTypeAResponse;
 }) {
   const [churchState, setChurchState] = useState({ ...church });
+  const [churchEditModal, setChurchEditModal] =
+    useRecoilState(churchEditModalState);
+
+  useEffect(() => {
+    if (churchState.name === "") {
+      setChurchEditModal({ visible: true });
+    }
+  }, [churchState.name, setChurchEditModal]);
 
   return (
     <div id="homepage-type-a-component">
@@ -108,7 +118,7 @@ export default function HomepageTypeA({
       </main>
       <Footer church={churchState} />
 
-      {isEdit && (
+      {isEdit && churchEditModal.visible && (
         <ChurchEditModal
           church={churchState}
           updateChurch={(church) => {

@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { loadScript } from "../../../../util/script-utils";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
-import LocationEditModal from "./EditModal/LocationEditModal";
+import { churchEditModalState } from "../../../../atom/ui";
+import { useRecoilState } from "recoil";
 
 let mapInstance: naver.maps.Map | null = null;
 
@@ -22,6 +23,10 @@ export default function Locations({
   const [, setMapLoaded] = useState(false);
   const [locationEditModalVisible, setLocationEditModalVisible] =
     useState(false);
+
+  const [churchEditModal, setChurchEditModal] =
+    useRecoilState(churchEditModalState);
+
   const mapRef = useRef<HTMLDivElement>(null);
 
   const initMap = useCallback((latitude: number, longitude: number): void => {
@@ -110,14 +115,10 @@ export default function Locations({
 
         {isEdit && (
           <HomepageEditOverlay
-            onClickListener={() => setLocationEditModalVisible(true)}
+            onClickListener={() => setChurchEditModal({ visible: true })}
           />
         )}
       </div>
-
-      {isEdit && locationEditModalVisible && (
-        <LocationEditModal hide={() => setLocationEditModalVisible(false)} />
-      )}
     </>
   );
 }

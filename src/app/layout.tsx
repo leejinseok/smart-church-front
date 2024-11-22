@@ -5,6 +5,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
 import localFont from "next/font/local";
+import RecoilRootWrapper from "../layout/RecoilWrapper";
 
 export const nanumBarunGothicLight = localFont({
   src: "../../public/fonts/nanum-barun-gothic/NanumBarunGothicLight.otf",
@@ -28,8 +29,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${nanumBarunGothicLight.className}`}>
-      <body suppressHydrationWarning={true}>{children}</body>
-    </html>
+    <RecoilRootWrapper>
+      <html lang="ko" className={`${nanumBarunGothicLight.className}`}>
+        <body suppressHydrationWarning={true}>{children}</body>
+      </html>
+    </RecoilRootWrapper>
   );
 }

@@ -1,3 +1,5 @@
+import { useRecoilState } from "recoil";
+import { churchEditModalState } from "../../../../../atom/ui";
 import "./EditModeNav.scss";
 
 export default function EditModeNav({
@@ -5,8 +7,16 @@ export default function EditModeNav({
 }: {
   homepageChurchUuid: string | null | undefined;
 }) {
+  const [, setChurchEditModal] = useRecoilState(churchEditModalState);
+
   const handleClickRegisterButton = () => {
     window.location.reload();
+  };
+
+  const handleClickChurchEditButton = () => {
+    setChurchEditModal({
+      visible: true,
+    });
   };
 
   return (
@@ -30,6 +40,14 @@ export default function EditModeNav({
                 미리보기
               </button>
             </a>
+            <button
+              type="button"
+              className="font-size-m button-4 d-flex align-items-center"
+              onClick={handleClickChurchEditButton}
+            >
+              교회정보
+            </button>
+
             {!homepageChurchUuid && (
               <button
                 type="button"
