@@ -15,7 +15,6 @@ const convertToParams = (queryString: string) => {
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  console.log("middleware");
   const headers: HeadersInit = new Headers();
 
   const url = request.url;

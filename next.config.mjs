@@ -24,6 +24,9 @@ const nextConfig = {
       },
     ],
   },
+  env: {
+    NAVER_API_CLIENT_ID: process.env.NEXT_PUBLIC_API_URL,
+  },
 };
 
 export default nextConfig;

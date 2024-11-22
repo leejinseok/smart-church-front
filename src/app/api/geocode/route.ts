@@ -11,18 +11,14 @@ export async function GET(request: Request) {
     );
   }
 
-  const CLIENT_ID = "2xkw517mhy";
-  const CLIENT_SECRET = "fdyRV2M4EAh3vr1tA5jiTyFzzBPbHvbbtv6AgeqZ";
-  // const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID as string;
-  // const CLIENT_SECRET = process.env.NEXT_PUBLIC_CLIENT_SECRET as string;
-
   try {
     const response = await fetch(
       `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`,
       {
         headers: {
-          "X-NCP-APIGW-API-KEY-ID": CLIENT_ID,
-          "X-NCP-APIGW-API-KEY": CLIENT_SECRET,
+          "X-NCP-APIGW-API-KEY-ID": process.env
+            .NEXT_PUBLIC_NAVER_API_CLIENT_ID as string,
+          "X-NCP-APIGW-API-KEY": process.env.NAVER_API_CLIENT_SECRET as string,
         },
       },
     );

@@ -14,6 +14,7 @@ import { HomepageTypeAResponse } from "../../../type/homepage/homepage-type-a";
 import Services from "./Service/Services";
 import ChurchStaffs from "./Staffs/ChurchStaffs";
 import ChurchEditModal from "./ChurchEdit/ChurchEditModal";
+import { useState } from "react";
 
 export default function HomepageTypeA({
   isEdit,
@@ -24,10 +25,12 @@ export default function HomepageTypeA({
   church: ChurchResponse;
   homepage: HomepageTypeAResponse;
 }) {
+  const [churchState, setChurchState] = useState({ ...church });
+
   return (
     <div id="homepage-type-a-component">
       <Header
-        church={church}
+        church={churchState}
         homepageChurchUuid={homepage.churchUuid}
         churchLogo={homepage.churchLogo}
         isEdit={isEdit}
@@ -92,31 +95,27 @@ export default function HomepageTypeA({
           </section>
 
           <section>
-            <Locations isEdit={isEdit} />
-            {/* <div>
-              <h3
-                className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
-              >
-                찾아오시는 길
-              </h3>
-
-              <div>
-                <Locations latitude={37.3595704} longitude={127.105399} />
-                <p
-                  style={{ marginTop: 16 }}
-                  className="font-size-l font-weight-bold"
-                >
-                  {church.address}
-                </p>
-                <p style={{ marginTop: 16 }} className="font-size-l"></p>
-              </div>
-            </div> */}
+            <Locations
+              isEdit={isEdit}
+              churchAddress={{
+                address: churchState.address,
+                latitude: churchState.latitude!,
+                longitude: churchState.longitude!,
+              }}
+            />
           </section>
         </div>
       </main>
-      <Footer church={church} />
+      <Footer church={churchState} />
 
-      {isEdit && <ChurchEditModal church={church} />}
+      {isEdit && (
+        <ChurchEditModal
+          church={churchState}
+          updateChurch={(church) => {
+            setChurchState(church);
+          }}
+        />
+      )}
     </div>
   );
 }

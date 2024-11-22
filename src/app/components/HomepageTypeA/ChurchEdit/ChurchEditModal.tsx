@@ -8,8 +8,10 @@ import { loadScript } from "../../../../util/script-utils";
 
 export default function ChurchEditModal({
   church,
+  updateChurch,
 }: {
   church: ChurchResponse;
+  updateChurch: (church: ChurchResponse) => void;
 }) {
   const [churchState, setChurchState] = useState({ ...church });
   const [visible, setVisible] = useState(churchState.name === "");
@@ -21,9 +23,6 @@ export default function ChurchEditModal({
       document.body.classList.remove("overflow-hidden");
     }
   }, [visible]);
-
-  const clientId = "2xkw517mhy";
-  const clientSecret = "fdyRV2M4EAh3vr1tA5jiTyFzzBPbHvbbtv6AgeqZ";
 
   const handleAddressClick = () => {
     const searchAddress = async (address: string) => {
@@ -53,11 +52,14 @@ export default function ChurchEditModal({
     const callback = () => {
       new daum.Postcode({
         oncomplete: function (data) {
-          // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-          // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-
           console.log("data: ", data);
           searchAddress(data.address);
+
+          if (data.userSelectedType === "J") {
+            setChurchState((prev) => ({ ...prev, address: data.jibunAddress }));
+          } else {
+            setChurchState((prev) => ({ ...prev, address: data.roadAddress }));
+          }
         },
       }).open();
     };
@@ -76,6 +78,8 @@ export default function ChurchEditModal({
       "churchTemporary",
       encodeURIComponent(JSON.stringify(churchState)),
     );
+
+    updateChurch(churchState);
     setVisible(false);
   };
 
@@ -92,7 +96,7 @@ export default function ChurchEditModal({
               <div className="modal__body">
                 <div className="form-group">
                   <p
-                    className="font-weight-bold font-size-m"
+                    className="font-weight-bold font-size-m required"
                     style={{ marginBottom: 0 }}
                   >
                     이름
@@ -113,26 +117,43 @@ export default function ChurchEditModal({
 
                 <div className="form-group">
                   <p
-                    className="font-weight-bold font-size-m"
+                    className="font-weight-bold font-size-m required"
                     style={{ marginBottom: 0 }}
                   >
                     주소
                   </p>
 
-                  <input
-                    type="text"
-                    className="font-size-m no-border"
-                    value={churchState.address}
-                    placeholder="교회주소를 입력해주세요"
-                    readOnly
-                    onClick={handleAddressClick}
-                    onChange={(e) =>
-                      setChurchState((prev) => ({
-                        ...prev,
-                        address: e.target.value,
-                      }))
-                    }
-                  />
+                  <div>
+                    <input
+                      type="text"
+                      className="font-size-m no-border width-100"
+                      value={churchState.address}
+                      placeholder="교회주소를 입력해주세요"
+                      readOnly
+                      onClick={handleAddressClick}
+                      onChange={(e) =>
+                        setChurchState((prev) => ({
+                          ...prev,
+                          address: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <input
+                      type="text"
+                      className="font-size-m no-border width-100"
+                      value={churchState.addressDetail || ""}
+                      placeholder="상세주소를 입력해주세요"
+                      onChange={(e) =>
+                        setChurchState((prev) => ({
+                          ...prev,
+                          addressDetail: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
                 </div>
 
                 <div className="form-group">

@@ -3,6 +3,7 @@ export interface ChurchResponse {
   uuid: string | null;
   name: string;
   address: string;
+  addressDetail: string | null;
   latitude: number | null;
   longitude: number | null;
   tel: string | null;

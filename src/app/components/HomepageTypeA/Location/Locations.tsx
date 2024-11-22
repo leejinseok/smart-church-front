@@ -22,8 +22,6 @@ export default function Locations({
   const [, setMapLoaded] = useState(false);
   const [locationEditModalVisible, setLocationEditModalVisible] =
     useState(false);
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
   const mapRef = useRef<HTMLDivElement>(null);
 
   const initMap = useCallback((latitude: number, longitude: number): void => {
@@ -54,23 +52,21 @@ export default function Locations({
     setMapLoaded(true);
   }, []);
 
-  const clientId = "2xkw517mhy";
-  const clientSecret = "fdyRV2M4EAh3vr1tA5jiTyFzzBPbHvbbtv6AgeqZ";
-
   useEffect(() => {
+    const { latitude, longitude } = churchAddress;
     if (!latitude || !longitude) {
       return;
     }
 
     if (typeof naver === "undefined") {
       loadScript(
-        `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}&callback=initMap`,
+        `https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${process.env.NEXT_PUBLIC_NAVER_API_CLIENT_ID}&callback=initMap`,
         () => initMap(latitude, longitude),
       );
     } else {
       initMap(latitude, longitude);
     }
-  }, [initMap, latitude, longitude]);
+  }, [churchAddress, initMap]);
 
   const handleWindowResize = useCallback(() => {
     const current = mapRef.current;
