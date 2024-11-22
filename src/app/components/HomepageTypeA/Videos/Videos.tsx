@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ChurchVideos } from "../../../../type/homepage/homepage-type-a";
 import { nanumBarunGothicBold } from "../../../layout";
 import Video from "./Video";
-import VideosEditModal from "./VideosEditModal/VideosEditModal";
+import VideosEditModal from "./EditModal/VideosEditModal";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";
 

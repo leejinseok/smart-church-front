@@ -3,7 +3,7 @@ import "./ChurchIntro.scss";
 import { nanumBarunGothicBold } from "../../../layout";
 import QuillRenderer from "../../Quill/QuillRenderer";
 import { useEffect, useState } from "react";
-import ChurchIntroEditModal from "./ChurchIntroEditModal/ChurchIntroEditModal";
+import ChurchIntroEditModal from "./EditModal/ChurchIntroEditModal";
 import { ChurchIntro as ChurchIntroInterface } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 

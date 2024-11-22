@@ -1,7 +1,9 @@
+"use client";
+
 import "./ChurchDepartment.scss";
 import { nanumBarunGothicBold } from "../../../layout";
 import { useEffect, useState } from "react";
-import ChurchDepartmentEditModal from "./ChurchDepartmentEditModal/ChurchDepartmentEditModal";
+import ChurchDepartmentEditModal from "./EditModal/ChurchDepartmentEditModal";
 import { ChurchDepartmentsAndMinisties } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";

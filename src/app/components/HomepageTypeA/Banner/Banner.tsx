@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { ChurchBanners } from "../../../../type/homepage/homepage-type-a";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import { useEffect, useState } from "react";
-import BannerEditModal from "./BannerEditModal/BannerEditModal";
+import BannerEditModal from "./EditModal/BannerEditModal";
 import InvisibleContentGuide from "../../InvisibleContentGuide/InvisibleContentGuide";
 
 export default function Banner({

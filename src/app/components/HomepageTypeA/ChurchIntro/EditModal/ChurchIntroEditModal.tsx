@@ -7,6 +7,7 @@ import { getCookie } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
+import EditModalWrapper from "../../../Modal/EditModalWrapper";
 
 export default function ChurchIntroEditModal({
   churchIntro,
@@ -81,71 +82,67 @@ export default function ChurchIntroEditModal({
   };
 
   return (
-    <div
+    <EditModalWrapper
       id="church-intro-edit-modal-component"
       className="modal-container edit-modal vertical-center"
       onClick={hide}
     >
-      <div className="modal__inner">
-        <div className="modal__box" onClick={(e) => e.stopPropagation()}>
-          <div className="modal__header">
-            <h3 className="font-size-l font-weight-bold">교회소개 편집</h3>
-          </div>
-          <div className="modal__body">
-            <div className="form-group">
-              <p
-                className="font-weight-bold font-size-m"
-                style={{ marginBottom: 10 }}
-              >
-                제목
-              </p>
-              <input
-                type="text"
-                className="font-size-m no-border"
-                value={churchIntroState.title}
-                onChange={(e) =>
-                  setChurchIntroState((prev) => ({
-                    ...prev,
-                    title: e.target.value,
-                  }))
-                }
-              />
-            </div>
+      <div className="modal__header">
+        <h3 className="font-size-l font-weight-bold">교회소개 편집</h3>
+      </div>
+      <div className="modal__body">
+        <div className="form-group">
+          <p
+            className="font-weight-bold font-size-m"
+            style={{ marginBottom: 10 }}
+          >
+            제목
+          </p>
+          <input
+            type="text"
+            className="font-size-m no-border"
+            value={churchIntroState.title}
+            onChange={(e) =>
+              setChurchIntroState((prev) => ({
+                ...prev,
+                title: e.target.value,
+              }))
+            }
+          />
+        </div>
 
-            <div className="form-group">
-              <p
-                className="font-weight-bold font-size-m"
-                style={{ marginBottom: 10 }}
-              >
-                내용
-              </p>
-              <div id="church-intro-editor"></div>
-            </div>
-          </div>
-
-          <div className="modal__footer text-align-right">
-            <button
-              type="button"
-              className="button-4 cancel"
-              onClick={hide}
-              style={{
-                marginRight: 4,
-              }}
-            >
-              취소
-              <CloseIcon maxWidth={18} />
-            </button>
-            <button
-              type="button"
-              className="button-4 d-flex submit align-items-center"
-              onClick={handleSubmit}
-            >
-              적용
-              <CheckIcon maxWidth={18} />
-            </button>
-          </div>
+        <div className="form-group">
+          <p
+            className="font-weight-bold font-size-m"
+            style={{ marginBottom: 10 }}
+          >
+            내용
+          </p>
+          <div id="church-intro-editor"></div>
         </div>
       </div>
-    </div>
+
+      <div className="modal__footer text-align-right">
+        <button
+          type="button"
+          className="button-4 cancel"
+          onClick={hide}
+          style={{
+            marginRight: 4,
+          }}
+        >
+          취소
+          <CloseIcon maxWidth={18} />
+        </button>
+        <button
+          type="button"
+          className="button-4 d-flex submit align-items-center"
+          onClick={handleSubmit}
+        >
+          적용
+          <CheckIcon maxWidth={18} />
+        </button>
+      </div>
+    </EditModalWrapper>
   );
 }

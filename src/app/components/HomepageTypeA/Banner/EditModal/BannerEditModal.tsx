@@ -19,6 +19,7 @@ import { homepageTypeAMockApiRepository } from "../../../../../repository/homepa
 import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import EditModalWrapper from "../../../Modal/EditModalWrapper";
 
 export default function BannerEditModal({
   banners,
@@ -170,98 +171,96 @@ export default function BannerEditModal({
     hide();
   };
   return (
-    <div
-      id="banner-edit-modal-component"
-      className="modal-container edit-modal vertical-center font-size-m"
-      onClick={hide}
-    >
-      <div className="modal__inner">
-        <div className="modal__box">
-          <div className="modal__header">
-            <h3 className="font-size-l font-weight-bold">배너 편집</h3>
-          </div>
+    <>
+      <EditModalWrapper
+        className="vertical-center font-size-m"
+        id="banner-edit-modal-component"
+        onClick={hide}
+      >
+        <div className="modal__header">
+          <h3 className="font-size-l font-weight-bold">배너 편집</h3>
+        </div>
 
-          <div className="modal__body" onClick={(e) => e.stopPropagation()}>
-            <form onSubmit={handleSubmit}>
+        <div className="modal__body" onClick={(e) => e.stopPropagation()}>
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <h3 className="font-weight-bold font-size-m form-group__header">
+                노출여부
+              </h3>
+              <div className="d-flex form-group__body">
+                <Toggle
+                  isActive={bannersState.visible}
+                  onClick={() => {
+                    setBannersState((prev) => ({
+                      ...prev,
+                      visible: !prev.visible,
+                    }));
+                  }}
+                />
+              </div>
+            </div>
+
+            {bannersState.visible && (
               <div className="form-group">
                 <h3 className="font-weight-bold font-size-m form-group__header">
-                  노출여부
+                  배너 이미지
                 </h3>
-                <div className="d-flex form-group__body">
-                  <Toggle
-                    isActive={bannersState.visible}
-                    onClick={() => {
-                      setBannersState((prev) => ({
-                        ...prev,
-                        visible: !prev.visible,
-                      }));
-                    }}
-                  />
-                </div>
-              </div>
-
-              {bannersState.visible && (
-                <div className="form-group">
-                  <h3 className="font-weight-bold font-size-m form-group__header">
-                    배너 이미지
-                  </h3>
-                  <div className="form-group__body">
-                    <ul className="banners" ref={bannerItemsRef}>
-                      {bannersState.items.map((banner, bannerIndex) => {
-                        return (
-                          <li
-                            key={bannerIndex}
-                            className="d-flex align-items-center"
+                <div className="form-group__body">
+                  <ul className="banners" ref={bannerItemsRef}>
+                    {bannersState.items.map((banner, bannerIndex) => {
+                      return (
+                        <li
+                          key={bannerIndex}
+                          className="d-flex align-items-center"
+                        >
+                          <div>
+                            <div className="handle cursor-pointer">
+                              <DragpanIcon maxWidth={30} fill="#9c9c9c" />
+                            </div>
+                          </div>
+                          <div
+                            className="image-container"
+                            style={{ marginLeft: 6 }}
                           >
-                            <div>
-                              <div className="handle cursor-pointer">
-                                <DragpanIcon maxWidth={30} fill="#9c9c9c" />
-                              </div>
-                            </div>
-                            <div
-                              className="image-container"
-                              style={{ marginLeft: 6 }}
+                            <img
+                              alt="church banner image"
+                              src={banner.imageUrl}
+                            />
+                          </div>
+                          <div className="controls">
+                            <span
+                              className="cursor-pointer"
+                              onClick={() => removeBanner(bannerIndex)}
                             >
-                              <img
-                                alt="church banner image"
-                                src={banner.imageUrl}
-                              />
-                            </div>
-                            <div className="controls">
-                              <span
-                                className="cursor-pointer"
-                                onClick={() => removeBanner(bannerIndex)}
-                              >
-                                <TrashIcon maxWidth={30} fill="#9c9c9c" />
-                              </span>
-                            </div>
-                          </li>
-                        );
-                      })}
+                              <TrashIcon maxWidth={30} fill="#9c9c9c" />
+                            </span>
+                          </div>
+                        </li>
+                      );
+                    })}
 
-                      <li>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={chooseFilesHandler}
-                        />
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              )}
-
-              <div className="form-group">
-                <div>
-                  <button type="submit" className="width-100">
-                    변경사항 적용
-                  </button>
+                    <li>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={chooseFilesHandler}
+                      />
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </form>
-          </div>
+            )}
+
+            <div className="form-group">
+              <div>
+                <button type="submit" className="width-100">
+                  변경사항 적용
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
-      </div>
-    </div>
+      </EditModalWrapper>
+    </>
   );
 }

@@ -4,8 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { loadScript } from "../../../../util/script-utils";
 import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
-import { churchEditModalState } from "../../../../atom/ui";
-import { useRecoilState } from "recoil";
 import LocationEditModal from "./EditModal/LocationEditModal";
 import { Directions } from "../../../../type/homepage/homepage-type-a";
 
@@ -27,7 +25,6 @@ export default function Locations({
   const [, setMapLoaded] = useState(false);
   const [locationEditModalVisible, setLocationEditModalVisible] =
     useState(false);
-  const [, setChurchEditModal] = useRecoilState(churchEditModalState);
   const [directionsState, setDirectionsState] = useState(directions);
 
   const mapRef = useRef<HTMLDivElement>(null);

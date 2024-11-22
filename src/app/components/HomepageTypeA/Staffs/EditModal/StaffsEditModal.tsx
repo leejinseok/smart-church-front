@@ -14,6 +14,7 @@ import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
+import EditModalWrapper from "../../../Modal/EditModalWrapper";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -91,176 +92,170 @@ export default function StaffsEditModal({
   };
   return (
     <>
-      <div
+      <EditModalWrapper
         id="churchstaffs-edit-modal"
         className="modal-container edit-modal"
         onClick={hide}
       >
-        <div className="modal__inner">
-          <div className="modal__box" onClick={(e) => e.stopPropagation()}>
-            <div className="modal__header">
-              <h3 className="font-size-l font-weight-bold">
-                섬기는 사람들 편집
-              </h3>
-            </div>
+        <div className="modal__header">
+          <h3 className="font-size-l font-weight-bold">섬기는 사람들 편집</h3>
+        </div>
 
-            <div className="modal__body">
-              <div className="form-group">
-                <p
-                  className="font-weight-bold font-size-m"
-                  style={{ marginBottom: 0 }}
-                >
-                  제목
-                </p>
+        <div className="modal__body">
+          <div className="form-group">
+            <p
+              className="font-weight-bold font-size-m"
+              style={{ marginBottom: 0 }}
+            >
+              제목
+            </p>
 
-                <input
-                  type="text"
-                  className="font-size-m no-border"
-                  value={churchStaffsState.title}
-                  onChange={(e) =>
-                    setChurchStaffsState((prev) => ({
-                      ...prev,
-                      title: e.target.value,
-                    }))
-                  }
-                />
-              </div>
+            <input
+              type="text"
+              className="font-size-m no-border"
+              value={churchStaffsState.title}
+              onChange={(e) =>
+                setChurchStaffsState((prev) => ({
+                  ...prev,
+                  title: e.target.value,
+                }))
+              }
+            />
+          </div>
 
-              <div className="form-group">
-                <p
-                  className="font-weight-bold font-size-m"
-                  style={{ marginBottom: 12 }}
-                >
-                  항목
-                </p>
+          <div className="form-group">
+            <p
+              className="font-weight-bold font-size-m"
+              style={{ marginBottom: 12 }}
+            >
+              항목
+            </p>
 
-                <div>
-                  <table className="width-100">
-                    <thead>
-                      <tr className="header">
-                        <th>이름</th>
-                        <th>사진</th>
-                        <th>역할</th>
-                        <th>부서</th>
-                        <th>이메일</th>
-                        <th>설정</th>
-                      </tr>
-                    </thead>
+            <div>
+              <table className="width-100">
+                <thead>
+                  <tr className="header">
+                    <th>이름</th>
+                    <th>사진</th>
+                    <th>역할</th>
+                    <th>부서</th>
+                    <th>이메일</th>
+                    <th>설정</th>
+                  </tr>
+                </thead>
 
-                    <tbody id="staffs-table-tbody">
-                      {churchStaffsState.groups[0].staffs.map(
-                        (staff, staffIndex) => {
-                          return (
-                            <tr key={staffIndex} data-index={staffIndex}>
-                              <td>{staff.name}</td>
-                              <td>
-                                <img
-                                  className="profile-img"
-                                  src={staff.profileImageUrl || ""}
-                                  alt=""
-                                />
-                              </td>
-                              <td>{staff.role || "-"}</td>
-                              <td>{staff.department || "-"}</td>
-                              <td>{staff.email || "-"}</td>
-                              <td>
-                                <div className="nowrap button-container d-flex">
-                                  <button
-                                    type="button"
-                                    className="button-4 handle d-flex align-items-center"
-                                  >
-                                    <span>이동</span>
-                                    <DragpanIcon maxWidth={18} fill="#888" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="button-4  d-flex align-items-center "
-                                    onClick={() => {
-                                      setStaffEditModal({
-                                        visible: true,
-                                        groupIndex: 0,
-                                        staff: staff,
-                                        staffIndex: staffIndex,
-                                      });
-                                    }}
-                                  >
-                                    <span>편집</span>
-                                    <EditIcon maxWidth={18} fill="#888" />
-                                  </button>
-                                  <button
-                                    type="button"
-                                    className="button-4  d-flex align-items-center"
-                                    onClick={() => {
-                                      removeStaff(0, staffIndex);
-                                    }}
-                                  >
-                                    <span>삭제</span>
-                                    <TrashIcon maxWidth={18} fill="#888" />
-                                  </button>
-                                </div>
-                              </td>
-                            </tr>
-                          );
-                        },
-                      )}
-                    </tbody>
-                  </table>
+                <tbody id="staffs-table-tbody">
+                  {churchStaffsState.groups[0].staffs.map(
+                    (staff, staffIndex) => {
+                      return (
+                        <tr key={staffIndex} data-index={staffIndex}>
+                          <td>{staff.name}</td>
+                          <td>
+                            <img
+                              className="profile-img"
+                              src={staff.profileImageUrl || ""}
+                              alt=""
+                            />
+                          </td>
+                          <td>{staff.role || "-"}</td>
+                          <td>{staff.department || "-"}</td>
+                          <td>{staff.email || "-"}</td>
+                          <td>
+                            <div className="nowrap button-container d-flex">
+                              <button
+                                type="button"
+                                className="button-4 handle d-flex align-items-center"
+                              >
+                                <span>이동</span>
+                                <DragpanIcon maxWidth={18} fill="#888" />
+                              </button>
+                              <button
+                                type="button"
+                                className="button-4  d-flex align-items-center "
+                                onClick={() => {
+                                  setStaffEditModal({
+                                    visible: true,
+                                    groupIndex: 0,
+                                    staff: staff,
+                                    staffIndex: staffIndex,
+                                  });
+                                }}
+                              >
+                                <span>편집</span>
+                                <EditIcon maxWidth={18} fill="#888" />
+                              </button>
+                              <button
+                                type="button"
+                                className="button-4  d-flex align-items-center"
+                                onClick={() => {
+                                  removeStaff(0, staffIndex);
+                                }}
+                              >
+                                <span>삭제</span>
+                                <TrashIcon maxWidth={18} fill="#888" />
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    },
+                  )}
+                </tbody>
+              </table>
 
-                  <div
-                    className="text-align-right"
-                    style={{
-                      marginTop: 12,
-                    }}
-                  >
-                    <button
-                      className="button-4"
-                      onClick={() => {
-                        setStaffEditModal({
-                          visible: true,
-                          groupIndex: 0,
-                          staff: {
-                            name: "",
-                            department: "",
-                            description: "",
-                            email: "",
-                            profileImageUrl: "",
-                            role: "",
-                            tel: "",
-                          },
-                          staffIndex: null,
-                        });
-                      }}
-                    >
-                      추가+
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="modal__footer text-align-right">
-              <button
-                type="button"
-                className="button-4 cancel"
-                onClick={hide}
+              <div
+                className="text-align-right"
                 style={{
-                  marginRight: 4,
+                  marginTop: 12,
                 }}
               >
-                취소
-                <CloseIcon maxWidth={18} />
-              </button>
-              <button
-                type="button"
-                className="button-4 submit"
-                onClick={() => handleSubmit()}
-              >
-                적용
-                <CheckIcon maxWidth={18} />
-              </button>
+                <button
+                  className="button-4"
+                  onClick={() => {
+                    setStaffEditModal({
+                      visible: true,
+                      groupIndex: 0,
+                      staff: {
+                        name: "",
+                        department: "",
+                        description: "",
+                        email: "",
+                        profileImageUrl: "",
+                        role: "",
+                        tel: "",
+                      },
+                      staffIndex: null,
+                    });
+                  }}
+                >
+                  추가+
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <div className="modal__footer text-align-right">
+          <button
+            type="button"
+            className="button-4 cancel"
+            onClick={hide}
+            style={{
+              marginRight: 4,
+            }}
+          >
+            취소
+            <CloseIcon maxWidth={18} />
+          </button>
+          <button
+            type="button"
+            className="button-4 submit"
+            onClick={() => handleSubmit()}
+          >
+            적용
+            <CheckIcon maxWidth={18} />
+          </button>
+        </div>
+      </EditModalWrapper>
 
       {staffEditModal.visible && (
         <StaffEditModal

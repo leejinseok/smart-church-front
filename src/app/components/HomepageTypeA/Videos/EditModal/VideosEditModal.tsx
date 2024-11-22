@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { ChurchVideos } from "../../../../../type/homepage/homepage-type-a";
 import { loadScript } from "../../../../../util/script-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
 import { getCookie } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import EditModalWrapper from "../../../Modal/EditModalWrapper";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;
@@ -212,145 +212,141 @@ export default function VideosEditModal({
   };
 
   return (
-    <div
+    <EditModalWrapper
       id="church-videos-edit-modal"
       className="modal-container edit-modal"
       onClick={hide}
     >
-      <div className="modal__inner">
-        <div className="modal__box" onClick={(e) => e.stopPropagation()}>
-          <div className="modal__header">
-            <h3 className="font-size-l font-weight-bold">교회영상 편집</h3>
-            <p>
-              교회를 대표할 수 있는 영상 한두가지를 추가해보세요 (설교영상,
-              소개영상, 행사영상 ...)
-            </p>
-          </div>
+      <div className="modal__header">
+        <h3 className="font-size-l font-weight-bold">교회영상 편집</h3>
+        <p>
+          교회를 대표할 수 있는 영상 한두가지를 추가해보세요 (설교영상,
+          소개영상, 행사영상 ...)
+        </p>
+      </div>
 
-          <div className="modal__body">
-            <div className="form-group">
-              <p
-                className="font-weight-bold font-size-m"
-                style={{ marginBottom: 10 }}
-              >
-                제목
-              </p>
-              <input
-                type="text"
-                className="font-size-m no-border"
-                value={videosState.title}
-                onChange={(e) => {
-                  if (videosState) {
-                    setVideosState((prev) => {
-                      if (!prev) {
-                        return;
-                      }
-
-                      return { ...prev, title: e.target.value };
-                    });
+      <div className="modal__body">
+        <div className="form-group">
+          <p
+            className="font-weight-bold font-size-m"
+            style={{ marginBottom: 10 }}
+          >
+            제목
+          </p>
+          <input
+            type="text"
+            className="font-size-m no-border"
+            value={videosState.title}
+            onChange={(e) => {
+              if (videosState) {
+                setVideosState((prev) => {
+                  if (!prev) {
+                    return;
                   }
-                }}
-              />
-            </div>
-            <div className="form-group">
-              <p
-                className="font-weight-bold font-size-m"
-                style={{ marginBottom: 10 }}
-              >
-                노출여부
-              </p>
-              <Toggle
-                isActive={videosState.visible}
-                onClick={() => {
-                  setVideosState((prev) => {
-                    return {
-                      ...prev,
-                      visible: !prev.visible,
-                    };
-                  });
-                }}
-              />
-            </div>
-            <div className="form-group church-videos">
-              <p
-                className="font-weight-bold font-size-m"
-                style={{ marginBottom: 10 }}
-              >
-                항목
-              </p>
-              <ul className="church-videos-in-edit-modal width-100">
-                {videosState?.page.data.map((video, videoIndex) => {
-                  return (
-                    <li key={videoIndex}>
-                      <div className="church-video-iframe-container">
-                        <div
-                          id={`church-video-in-edit-modal-${videoIndex}`}
-                          className="church-vedio-container"
-                        ></div>
-                      </div>
 
-                      <div style={{ marginBottom: 6 }}>
-                        <input
-                          type="text"
-                          value={video.url || ""}
-                          onChange={(e) =>
-                            handleChangeVideoUrl(e.target.value, videoIndex)
-                          }
-                          className="width-100 font-size-l input-underline"
-                        />
-                      </div>
-                      <div>
-                        <button
-                          className="button-4 width-100 d-flex align-items-center justify-content-center"
-                          onClick={() => removeVideo(videoIndex)}
-                        >
-                          삭제 <TrashIcon maxWidth={16} fill="#888" />
-                        </button>
-                      </div>
-                    </li>
-                  );
-                })}
+                  return { ...prev, title: e.target.value };
+                });
+              }
+            }}
+          />
+        </div>
+        <div className="form-group">
+          <p
+            className="font-weight-bold font-size-m"
+            style={{ marginBottom: 10 }}
+          >
+            노출여부
+          </p>
+          <Toggle
+            isActive={videosState.visible}
+            onClick={() => {
+              setVideosState((prev) => {
+                return {
+                  ...prev,
+                  visible: !prev.visible,
+                };
+              });
+            }}
+          />
+        </div>
+        <div className="form-group church-videos">
+          <p
+            className="font-weight-bold font-size-m"
+            style={{ marginBottom: 10 }}
+          >
+            항목
+          </p>
+          <ul className="church-videos-in-edit-modal width-100">
+            {videosState?.page.data.map((video, videoIndex) => {
+              return (
+                <li key={videoIndex}>
+                  <div className="church-video-iframe-container">
+                    <div
+                      id={`church-video-in-edit-modal-${videoIndex}`}
+                      className="church-vedio-container"
+                    ></div>
+                  </div>
 
-                {videosState?.page && videosState?.page.data.length < 2 && (
-                  <li>
-                    <div style={{ marginBottom: 6 }}>
-                      <div id="new-video-container">
-                        <div id="new-video"></div>
-                      </div>
-                    </div>
-                    <div className="d-flex" style={{ gap: 6 }}>
-                      <div style={{ marginBottom: 6, flex: 1 }}>
-                        <input
-                          type="text"
-                          value={videoUrl}
-                          className="width-100 font-size-l input-underline"
-                          placeholder="유튜브 링크를 입력해주세요"
-                          onChange={(e) => setVideoUrl(e.target.value)}
-                        />
-                      </div>
-                      <div className="d-flex align-items-center">
-                        <button className="button-4" onClick={() => addVideo()}>
-                          추가
-                        </button>
-                      </div>
-                    </div>
-                  </li>
-                )}
-              </ul>
-            </div>
+                  <div style={{ marginBottom: 6 }}>
+                    <input
+                      type="text"
+                      value={video.url || ""}
+                      onChange={(e) =>
+                        handleChangeVideoUrl(e.target.value, videoIndex)
+                      }
+                      className="width-100 font-size-l input-underline"
+                    />
+                  </div>
+                  <div>
+                    <button
+                      className="button-4 width-100 d-flex align-items-center justify-content-center"
+                      onClick={() => removeVideo(videoIndex)}
+                    >
+                      삭제 <TrashIcon maxWidth={16} fill="#888" />
+                    </button>
+                  </div>
+                </li>
+              );
+            })}
 
-            <div className="form-group submit-container">
-              <button
-                type="button"
-                className="button-4 width-100"
-                onClick={handleSubmit}
-              >
-                적용
-              </button>
-            </div>
-          </div>
+            {videosState?.page && videosState?.page.data.length < 2 && (
+              <li>
+                <div style={{ marginBottom: 6 }}>
+                  <div id="new-video-container">
+                    <div id="new-video"></div>
+                  </div>
+                </div>
+                <div className="d-flex" style={{ gap: 6 }}>
+                  <div style={{ marginBottom: 6, flex: 1 }}>
+                    <input
+                      type="text"
+                      value={videoUrl}
+                      className="width-100 font-size-l input-underline"
+                      placeholder="유튜브 링크를 입력해주세요"
+                      onChange={(e) => setVideoUrl(e.target.value)}
+                    />
+                  </div>
+                  <div className="d-flex align-items-center">
+                    <button className="button-4" onClick={() => addVideo()}>
+                      추가
+                    </button>
+                  </div>
+                </div>
+              </li>
+            )}
+          </ul>
+        </div>
+
+        <div className="form-group submit-container">
+          <button
+            type="button"
+            className="button-4 width-100"
+            onClick={handleSubmit}
+          >
+            적용
+          </button>
         </div>
       </div>
-    </div>
+    </EditModalWrapper>
   );
 }
