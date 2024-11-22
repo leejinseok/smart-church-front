@@ -1,0 +1,21 @@
+#homepage-register-modal {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  .modal__inner {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    width: 900px;
+    .modal__body {
+      padding: 14px 0;
+
+      .modal__body-group {
+        margin-bottom: 16px;
+      }
+    }
+  }
+}

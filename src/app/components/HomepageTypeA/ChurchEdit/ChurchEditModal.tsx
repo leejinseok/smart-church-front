@@ -79,6 +79,7 @@ export default function ChurchEditModal({
     setCookie(
       "churchTemporary",
       encodeURIComponent(JSON.stringify(churchState)),
+      3,
     );
 
     updateChurch(churchState);

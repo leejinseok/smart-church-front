@@ -40,9 +40,15 @@
     justify-content: center;
     flex-direction: column;
 
+    .modal__header {
+    }
+
     .modal__body {
       margin: 0;
       max-width: 100%;
+    }
+
+    .modal__footer {
     }
   }
 }

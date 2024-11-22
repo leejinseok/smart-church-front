@@ -16,7 +16,11 @@ import ChurchStaffs from "./Staffs/ChurchStaffs";
 import ChurchEditModal from "./ChurchEdit/ChurchEditModal";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { churchEditModalState } from "../../../atom/ui";
+import {
+  churchEditModalState,
+  homepageRegisterModalState,
+} from "../../../atom/ui";
+import HomepageRegisterModal from "./HomepageRegisterModal/HomepageRegisterModal";
 
 export default function HomepageTypeA({
   isEdit,
@@ -30,6 +34,10 @@ export default function HomepageTypeA({
   const [churchState, setChurchState] = useState({ ...church });
   const [churchEditModal, setChurchEditModal] =
     useRecoilState(churchEditModalState);
+
+  const [homepageRegisterModal, setHomepageRegisterModal] = useRecoilState(
+    homepageRegisterModalState,
+  );
 
   useEffect(() => {
     if (churchState.name === "") {
@@ -125,6 +133,8 @@ export default function HomepageTypeA({
           }}
         />
       )}
+
+      {isEdit && homepageRegisterModal.visible && <HomepageRegisterModal />}
     </div>
   );
 }

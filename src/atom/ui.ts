@@ -6,3 +6,10 @@ export const churchEditModalState = atom({
     visible: false,
   },
 });
+
+export const homepageRegisterModalState = atom({
+  key: "ui/homepageRegisterModal",
+  default: {
+    visible: false,
+  },
+});

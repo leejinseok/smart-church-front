@@ -1,5 +1,8 @@
 import { useRecoilState } from "recoil";
-import { churchEditModalState } from "../../../../../atom/ui";
+import {
+  churchEditModalState,
+  homepageRegisterModalState,
+} from "../../../../../atom/ui";
 import "./EditModeNav.scss";
 import { getCookie } from "../../../../../util/cookie-utils";
 
@@ -9,10 +12,15 @@ export default function EditModeNav({
   homepageChurchUuid: string | null | undefined;
 }) {
   const [, setChurchEditModal] = useRecoilState(churchEditModalState);
+  const [, setHomepageRegisterModal] = useRecoilState(
+    homepageRegisterModalState,
+  );
 
   const handleClickRegisterButton = () => {
     const userUuid = getCookie("userUuid");
     console.log("생성");
+
+    setHomepageRegisterModal({ visible: true });
   };
 
   const handleClickChurchEditButton = () => {
