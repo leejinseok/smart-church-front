@@ -112,6 +112,7 @@ export default function HomepageTypeA({
                 latitude: churchState.latitude!,
                 longitude: churchState.longitude!,
               }}
+              directions={homepage.directions || ""}
             />
           </section>
         </div>

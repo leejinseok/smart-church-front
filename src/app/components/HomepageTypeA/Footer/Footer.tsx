@@ -1,4 +1,4 @@
-import { ChurchResponse } from "@/api/smart-church/smart-church-api-response";
+import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 
 export default function Footer({ church }: { church: ChurchResponse }) {
   return (
@@ -9,15 +9,11 @@ export default function Footer({ church }: { church: ChurchResponse }) {
           <p>{church.address}</p>
           <div className="d-flex align-items-center">
             <ul className="clearfix">
-              <li className="col">
-                <p>전화 {church.tel}</p>
-              </li>
-              <li className="col" style={{ marginLeft: 4, marginRight: 4 }}>
-                <span style={{ color: "#ccc" }}>|</span>
-              </li>
-              <li className="col">
-                <p>이메일 {church.email}</p>
-              </li>
+              {church.tel && (
+                <li className="col">
+                  <p>전화 {church.tel}</p>
+                </li>
+              )}
             </ul>
           </div>
         </div>

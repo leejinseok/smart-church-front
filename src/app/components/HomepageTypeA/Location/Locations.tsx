@@ -6,12 +6,15 @@ import { nanumBarunGothicBold } from "../../../layout";
 import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import { churchEditModalState } from "../../../../atom/ui";
 import { useRecoilState } from "recoil";
+import LocationEditModal from "./EditModal/LocationEditModal";
+import { Directions } from "../../../../type/homepage/homepage-type-a";
 
 let mapInstance: naver.maps.Map | null = null;
 
 export default function Locations({
   isEdit,
   churchAddress,
+  directions,
 }: {
   isEdit: boolean;
   churchAddress: {
@@ -19,13 +22,13 @@ export default function Locations({
     latitude: number;
     longitude: number;
   };
+  directions: Directions;
 }) {
   const [, setMapLoaded] = useState(false);
   const [locationEditModalVisible, setLocationEditModalVisible] =
     useState(false);
-
-  const [churchEditModal, setChurchEditModal] =
-    useRecoilState(churchEditModalState);
+  const [, setChurchEditModal] = useRecoilState(churchEditModalState);
+  const [directionsState, setDirectionsState] = useState(directions);
 
   const mapRef = useRef<HTMLDivElement>(null);
 
@@ -102,23 +105,38 @@ export default function Locations({
         <h3
           className={`${nanumBarunGothicBold.className} font-size-l font-weight-bold`}
         >
-          찾아오시는 길
+          {directionsState.title || "찾아오시는 길"}
         </h3>
 
         <div>
           <div id="map" ref={mapRef} style={{ width: "100%", height: 500 }} />
-          <p style={{ marginTop: 16 }} className="font-size-l font-weight-bold">
-            {/* {church.address} */}
+          <p style={{ marginTop: 16 }} className="font-size-m font-weight-bold">
+            {churchAddress.address}
           </p>
-          <p style={{ marginTop: 16 }} className="font-size-l"></p>
+
+          {directionsState.description && (
+            <p style={{ marginTop: 4 }} className="font-size-m">
+              {directionsState.description}
+            </p>
+          )}
         </div>
 
         {isEdit && (
           <HomepageEditOverlay
-            onClickListener={() => setChurchEditModal({ visible: true })}
+            onClickListener={() => setLocationEditModalVisible(true)}
           />
         )}
       </div>
+
+      {isEdit && locationEditModalVisible && (
+        <LocationEditModal
+          hide={() => setLocationEditModalVisible(false)}
+          directions={directionsState}
+          updateDirections={(directions) => {
+            setDirectionsState(directions);
+          }}
+        />
+      )}
     </>
   );
 }

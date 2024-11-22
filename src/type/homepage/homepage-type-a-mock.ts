@@ -3,9 +3,15 @@ import { HomepageTypeAResponse } from "./homepage-type-a";
 export const homepageTypeADefault: HomepageTypeAResponse = {
   id: null,
   uuid: null,
+  churchUuid: null,
+  ownerUuid: null,
   churchLogo: {
     type: "LOGO_AND_CHURCH_NAME",
     image: "https://placehold.co/50x50?text=Logo",
+  },
+  directions: {
+    title: "찾아오시는 길",
+    description: "",
   },
   banners: {
     visible: true,

@@ -1,4 +1,38 @@
-export default function LocationEditModal({ hide }: { hide: () => void }) {
+import { useState } from "react";
+import "./LocationEditModal.scss";
+import { Directions } from "../../../../../type/homepage/homepage-type-a";
+import ApplyButton from "../../../../../components/common/ApplyButton";
+import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { getCookie } from "../../../../../util/cookie-utils";
+
+export default function LocationEditModal({
+  hide,
+  directions,
+  updateDirections,
+}: {
+  hide: () => void;
+  directions: Directions;
+  updateDirections: (directions: Directions) => void;
+}) {
+  const [directionsState, setDirectionsState] = useState(directions);
+
+  const handleSubmit = async () => {
+    const homepageUuid = getCookie("homepageUuid");
+    if (!homepageUuid) {
+      return;
+    }
+    const userUuid = getCookie("userUuid");
+
+    await homepageTypeAApiRepository.updateHomepage(
+      homepageUuid,
+      userUuid || "",
+      {
+        directions: directionsState,
+      },
+    );
+    updateDirections(directionsState);
+    hide();
+  };
   return (
     <div
       id="location-edit-modal"
@@ -11,8 +45,53 @@ export default function LocationEditModal({ hide }: { hide: () => void }) {
             <h3 className="font-size-l font-weight-bold">찾아오시는 길 편집</h3>
           </div>
 
-          <div className="modal__body">sdf</div>
-          <div className="modal__footer">sdf</div>
+          <div className="modal__body">
+            <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 0 }}
+              >
+                제목
+              </p>
+
+              <input
+                type="text"
+                className="font-size-m no-border width-100"
+                value={directionsState.title}
+                placeholder="찾아오시는 길"
+                onChange={(e) =>
+                  setDirectionsState((prev) => ({
+                    ...prev,
+                    title: e.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <div className="form-group">
+              <p
+                className="font-weight-bold font-size-m"
+                style={{ marginBottom: 0 }}
+              >
+                설명
+              </p>
+
+              <textarea
+                className="font-size-m no-border width-100"
+                value={directionsState.description}
+                placeholder="찾아오는 길을 간단하게 설명해주세요"
+                onChange={(e) =>
+                  setDirectionsState((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+              />
+            </div>
+          </div>
+          <div className="modal__footer text-align-right">
+            <ApplyButton handleClick={handleSubmit} />
+          </div>
         </div>
       </div>
     </div>

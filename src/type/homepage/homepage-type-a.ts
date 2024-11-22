@@ -97,9 +97,15 @@ export interface ChurchDepartmentsAndMinisties {
   items: ChurchDepartmentAndMinistry[];
 }
 
+export interface Directions {
+  title: string;
+  description: string;
+}
+
 export interface HomepageTypeAResponse {
   id: number | null;
   uuid: string | null;
+  directions: Directions;
   churchUuid: string | null;
   ownerUuid: string | null;
   churchLogo: ChurchLogo;
