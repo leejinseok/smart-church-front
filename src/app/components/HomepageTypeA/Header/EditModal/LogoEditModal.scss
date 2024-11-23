@@ -2,8 +2,6 @@
   .modal__inner {
     .modal__box {
       .modal__body {
-        padding: 14px 14px;
-
         label {
           cursor: pointer;
         }
@@ -13,7 +11,7 @@
             margin-bottom: 18px;
           }
 
-          .form-group__title {
+          .form-group__header {
             margin-bottom: 6px;
             display: inline-block;
           }

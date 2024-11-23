@@ -5,25 +5,6 @@
     .modal__box {
       .modal__body {
         padding: 14px 20px;
-
-        .form-group {
-          margin-bottom: 12px;
-
-          > p {
-            &.required {
-              position: relative;
-
-              &::after {
-                content: "*";
-                position: absolute;
-                left: -8px;
-                top: -8px;
-                color: red;
-                font-size: 12;
-              }
-            }
-          }
-        }
       }
     }
   }

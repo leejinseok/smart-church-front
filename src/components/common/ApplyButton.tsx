@@ -2,8 +2,10 @@ import CheckIcon from "../Icon/CheckIcon";
 
 export default function ApplyButton({
   handleClick,
+  text,
 }: {
   handleClick: () => void;
+  text?: string;
 }) {
   return (
     <button
@@ -11,7 +13,7 @@ export default function ApplyButton({
       className="button-4 d-flex submit align-items-center"
       onClick={handleClick}
     >
-      적용
+      {text || "적용"}
       <CheckIcon maxWidth={18} />
     </button>
   );

@@ -102,7 +102,7 @@ export default function ChurchEditModal({
             <div className="modal__body">
               <div className="form-group">
                 <p
-                  className="font-weight-bold font-size-m required"
+                  className="font-weight-bold font-size-m form-group__header required"
                   style={{ marginBottom: 0 }}
                 >
                   이름
@@ -123,7 +123,7 @@ export default function ChurchEditModal({
 
               <div className="form-group">
                 <p
-                  className="font-weight-bold font-size-m required"
+                  className="font-weight-bold font-size-m form-group__header required"
                   style={{ marginBottom: 0 }}
                 >
                   주소
@@ -164,7 +164,7 @@ export default function ChurchEditModal({
 
               <div className="form-group">
                 <p
-                  className="font-weight-bold font-size-m"
+                  className="font-weight-bold font-size-m form-group__header"
                   style={{ marginBottom: 0 }}
                 >
                   전화번호

@@ -92,10 +92,7 @@ export default function ChurchIntroEditModal({
       </div>
       <div className="modal__body">
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 10 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             제목
           </p>
           <input
@@ -112,10 +109,7 @@ export default function ChurchIntroEditModal({
         </div>
 
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 10 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             내용
           </p>
           <div id="church-intro-editor"></div>

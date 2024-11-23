@@ -141,10 +141,7 @@ export default function ChurchDepartmentEditModal({
       </div>
       <div className="modal__body">
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 12 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             노출여부
           </p>
           <div>
@@ -163,10 +160,7 @@ export default function ChurchDepartmentEditModal({
         </div>
 
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 0 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             제목
           </p>
           <input
@@ -183,10 +177,7 @@ export default function ChurchDepartmentEditModal({
         </div>
 
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 12 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             항목
           </p>
 

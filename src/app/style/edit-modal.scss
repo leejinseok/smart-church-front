@@ -13,6 +13,34 @@
         border-bottom: 1px solid #ccc;
       }
 
+      .modal__body {
+        padding: 14px 14px;
+        .form-group {
+          margin-bottom: 12px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .form-group__header {
+            margin-bottom: 6px;
+
+            &.required {
+              position: relative;
+
+              &::after {
+                content: "*";
+                position: absolute;
+                left: -8px;
+                top: -8px;
+                color: red;
+                font-size: 12;
+              }
+            }
+          }
+        }
+      }
+
       .modal__footer {
         padding: 18px 14px;
         border-top: 1px solid #ccc;

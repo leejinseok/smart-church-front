@@ -209,10 +209,7 @@ export default function ServicesEditModal({
 
       <div className="modal__body">
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 0 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             제목
           </p>
           <input
@@ -229,12 +226,7 @@ export default function ServicesEditModal({
         </div>
         <div className="form-group">
           <div className="d-flex">
-            <p
-              className="font-weight-bold font-size-m"
-              style={{ marginBottom: 0 }}
-            >
-              항목
-            </p>
+            <p className="font-weight-bold form-group__header">항목</p>
 
             <span
               className="d-flex cursor-pointer"

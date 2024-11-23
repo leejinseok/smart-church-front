@@ -46,10 +46,7 @@ export default function LocationEditModal({
 
       <div className="modal__body">
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 0 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             제목
           </p>
 
@@ -68,10 +65,7 @@ export default function LocationEditModal({
         </div>
 
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 0 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             설명
           </p>
 

@@ -228,10 +228,7 @@ export default function VideosEditModal({
 
       <div className="modal__body">
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 10 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             제목
           </p>
           <input
@@ -252,10 +249,7 @@ export default function VideosEditModal({
           />
         </div>
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 10 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             노출여부
           </p>
           <Toggle
@@ -271,10 +265,7 @@ export default function VideosEditModal({
           />
         </div>
         <div className="form-group church-videos">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 10 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             항목
           </p>
           <ul className="church-videos-in-edit-modal width-100">

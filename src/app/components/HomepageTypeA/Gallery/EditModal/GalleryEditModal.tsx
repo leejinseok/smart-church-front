@@ -117,10 +117,7 @@ export default function GalleryEditModal({
 
       <div className="modal__body">
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 0 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             제목
           </p>
 
@@ -138,10 +135,7 @@ export default function GalleryEditModal({
         </div>
 
         <div className="form-group">
-          <p
-            className="font-weight-bold font-size-m"
-            style={{ marginBottom: 12 }}
-          >
+          <p className="font-weight-bold font-size-m form-group__header">
             항목
           </p>
 

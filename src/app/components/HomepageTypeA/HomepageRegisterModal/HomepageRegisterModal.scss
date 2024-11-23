@@ -9,12 +9,28 @@
     padding: 24px;
     background-color: #fff;
     border-radius: 12px;
-    width: 900px;
+    width: 500px;
     .modal__body {
       padding: 14px 0;
 
-      .modal__body-group {
+      .modal__body__group {
         margin-bottom: 16px;
+        h4 {
+          margin-bottom: 12px;
+        }
+
+        .modal__body__form__group {
+          margin-bottom: 12px;
+          label {
+            margin-right: 6px;
+            display: block;
+          }
+
+          input {
+            padding: 8px 12px;
+            width: 100%;
+          }
+        }
       }
     }
   }

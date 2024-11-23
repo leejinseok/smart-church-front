@@ -99,7 +99,9 @@ export default function LogoEditModal({
           <div className="modal__body">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <span className="form-group__title font-weight-bold">유형</span>
+                <span className="form-group__header font-weight-bold">
+                  유형
+                </span>
                 <div>
                   <div>
                     <div>
@@ -165,7 +167,7 @@ export default function LogoEditModal({
 
               {churchLogoState.type !== "CHURCH_NAME" && (
                 <div className="form-group form-group-logoImage">
-                  <span className="font-weight-bold form-group__title">
+                  <span className="font-weight-bold form-group__header">
                     로고 이미지
                   </span>
 
