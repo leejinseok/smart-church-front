@@ -37,6 +37,7 @@ export default async function HomePage({ searchParams }: PageProps) {
         const session = await authApiRepository.session(
           churchAdminAccessTokenCookie.value,
         );
+        // TODO 이거 테스트
         session.uuid = "4";
         if (session.uuid !== ownerUuid) {
           redirect("/error?errorType=not-owner", RedirectType.push);
