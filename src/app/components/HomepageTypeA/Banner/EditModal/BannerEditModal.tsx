@@ -18,6 +18,7 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import {
   getChurchAdminAccessTokenCookie,
   getCookie,
+  getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
@@ -152,7 +153,7 @@ export default function BannerEditModal({
     if (!bannersState) {
       return;
     }
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

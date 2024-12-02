@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { ChurchVideos } from "../../../../../type/homepage/homepage-type-a";
 import { loadScript } from "../../../../../util/script-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
@@ -195,7 +198,7 @@ export default function VideosEditModal({
     }
     updateVideos(videosState);
 
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

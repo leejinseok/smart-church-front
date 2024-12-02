@@ -7,7 +7,10 @@ import {
 } from "../../../../../type/homepage/homepage-type-a";
 import Sortable from "sortablejs";
 import StaffEditModal from "./StaffEditModal";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import EditIcon from "../../../../../components/Icon/EditIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
@@ -55,7 +58,7 @@ export default function StaffsEditModal({
   };
 
   const handleSubmit = async () => {
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

@@ -34,7 +34,6 @@ export default function HomepageRegisterModal({
     homepageTitle: "",
   });
   const [userForm, setUserForm] = useState({
-    active: false,
     email: "",
     emailVerified: false,
     emailVerificationCode: "",
@@ -42,10 +41,12 @@ export default function HomepageRegisterModal({
   });
 
   useEffect(() => {
-    if (!homepage.ownerUuid) {
-      setUserForm((prev) => ({ ...prev, active: true }));
-    }
-  }, [homepage.ownerUuid]);
+    setUserForm((prev) => ({
+      ...prev,
+      emailVerified: false,
+      emailVerificationCode: "",
+    }));
+  }, [userForm.email]);
 
   useEffect(() => {
     const churchTemporaryCookie = getCookie("churchTemporary");
@@ -123,9 +124,24 @@ export default function HomepageRegisterModal({
 
     // homepage 정보에 ownerUuid가 없다면 현재 회원가입을 안한 상태라는 것
     if (!ownerUuid) {
+      if (!userForm.emailVerified) {
+        alert("이메일을 인증해주세요");
+        return;
+      }
+
+      if (!userForm.password) {
+        alert("비밀번호를 입력해주세요");
+        return;
+      }
+
       const { email, password } = userForm;
       const res = await authApiRepository.register(email, password);
       const json = await res.json();
+      if (res.status >= 400) {
+        alert(json.message);
+        return;
+      }
+
       ownerUuid = json.uuid;
       setChurchAdminAccessTokenCookie(json.accessToken);
     }
@@ -134,15 +150,18 @@ export default function HomepageRegisterModal({
 
     // 교회 정보 등록 or 수정
     if (!churchUuid) {
-      alert("교회생성");
       // 교회 생성
       if (churchAdminAccessToken && churchState) {
         const res = await smartChurchChurchApiRepository.saveChurch(
           churchAdminAccessToken,
           churchState,
         );
-
         const json = await res.json();
+        if (res.status >= 400) {
+          alert(json.message || "문제가 발생하였습니다");
+          return;
+        }
+
         churchUuid = json.uuid;
       }
     } else {
@@ -164,10 +183,9 @@ export default function HomepageRegisterModal({
         homepageStatus: "REGISTERED",
       });
 
-      // if (ownerUuid) {
-      //   alert("완료");
-      //   window.location.reload();
-      // }
+      if (ownerUuid) {
+        window.location.reload();
+      }
     } catch (err) {
       console.error(err);
     }

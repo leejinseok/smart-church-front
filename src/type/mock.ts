@@ -6,4 +6,7 @@ export const churchDefault: ChurchResponse = {
   name: "",
   tel: "",
   address: "",
+  addressDetail: "",
+  latitude: null,
+  longitude: null,
 };

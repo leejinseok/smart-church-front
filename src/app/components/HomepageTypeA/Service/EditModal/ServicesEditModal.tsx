@@ -5,7 +5,10 @@ import { WorshipServicesAndMeetings } from "../../../../../type/homepage/homepag
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import AddIcon from "../../../../../components/Icon/AddIcon";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
@@ -164,7 +167,7 @@ export default function ServicesEditModal({
       ];
     }
 
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

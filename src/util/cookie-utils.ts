@@ -12,6 +12,10 @@ export function getChurchAdminAccessTokenCookie() {
   return getCookie("churchAdminAccessToken");
 }
 
+export function getHomepageUuidCookie() {
+  return getHomepageUuidCookie();
+}
+
 export function setCookie(
   key: string,
   value: string,

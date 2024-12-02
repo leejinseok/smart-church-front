@@ -5,7 +5,10 @@ import {
   ChurchDepartmentAndMinistry,
   ChurchDepartmentsAndMinisties,
 } from "../../../../../type/homepage/homepage-type-a";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
@@ -72,7 +75,7 @@ export default function ChurchDepartmentEditModal({
   };
 
   const handleSubmit = async () => {
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

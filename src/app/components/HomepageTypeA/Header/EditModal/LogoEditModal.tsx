@@ -14,6 +14,7 @@ import { homepageTypeADefault } from "../../../../../type/homepage/homepage-type
 import {
   getChurchAdminAccessTokenCookie,
   getCookie,
+  getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
@@ -61,7 +62,7 @@ export default function LogoEditModal({
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

@@ -3,7 +3,10 @@ import "./LocationEditModal.scss";
 import { Directions } from "../../../../../type/homepage/homepage-type-a";
 import ApplyButton from "../../../../../components/common/ApplyButton";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
 
 export default function LocationEditModal({
@@ -18,7 +21,7 @@ export default function LocationEditModal({
   const [directionsState, setDirectionsState] = useState(directions);
 
   const handleSubmit = async () => {
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }

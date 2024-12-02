@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { homepageTypeADefault } from "./type/homepage/homepage-type-a-mock";
 import { homepageTypeAApiRepository } from "./repository/homepage-type-a/homepage-type-a-api-repository";
+import { cookies } from "next/headers";
+import { authApiRepository } from "./repository/smart-church/smart-church-auth-api-repository";
 
 const convertToParams = (queryString: string) => {
   const params = new URLSearchParams(queryString);
@@ -38,23 +40,22 @@ export async function middleware(request: NextRequest) {
           headers,
         });
 
-        // const homepageChurchUuid = res.churchUuid;
-        // if (homepageChurchUuid) {
-        //   next.cookies.set("homepageChurchUuid", `${res.churchUuid}`);
-        // }
-
-        // const homepageOwnerUuid = res.ownerUuid;
-        // if (homepageOwnerUuid) {
-        //   next.cookies.set("homepageOwnerUuid", `${res.ownerUuid}`);
-        // }
-
         next.cookies.set("homepageUuid", `${res.uuid}`);
         return next;
       }
     } else {
-      // homepageUuid가 query에 존재하지 않으면 샘플데이터를 save하고 uuid 생성
       const homepage =
         await homepageTypeAApiRepository.saveHomepage(homepageTypeADefault);
+
+      // 로그인한 사용자라면
+      const churchAdminAccessCookie = cookies().get("churchAdminAccessToken");
+      if (churchAdminAccessCookie) {
+        const session = await authApiRepository.session(
+          churchAdminAccessCookie.value,
+        );
+        homepage.ownerUuid = session.uuid;
+      }
+
       const redirect = NextResponse.redirect(
         `${nextUrl.origin}${search}&uuid=${homepage.uuid}`,
       );
@@ -71,15 +72,6 @@ export async function middleware(request: NextRequest) {
       const next = NextResponse.next({
         headers,
       });
-      // const homepageChurchUuid = homepage.churchUuid;
-      // if (homepageChurchUuid) {
-      //   next.cookies.set("homepageChurchUuid", `${homepage.churchUuid}`);
-      // }
-
-      // const hompeageOwnerUuid = homepage.ownerUuid;
-      // if (hompeageOwnerUuid) {
-      //   next.cookies.set("hompeageOwnerUuid", `${homepage.ownerUuid}`);
-      // }
       next.cookies.set("homepageUuid", `${homepage.uuid}`);
       return next;
     }

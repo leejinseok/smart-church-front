@@ -6,7 +6,10 @@ import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import Sortable from "sortablejs";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
@@ -60,7 +63,7 @@ export default function GalleryEditModal({
       newValue.items = [...newItems];
     }
 
-    const homepageUuid = getCookie("homepageUuid");
+    const homepageUuid = getHomepageUuidCookie();
     if (!homepageUuid) {
       return;
     }
