@@ -5,11 +5,12 @@ import {
 } from "../../../../../atom/ui";
 import "./EditModeNav.scss";
 import { getCookie } from "../../../../../util/cookie-utils";
+import { HomepageStatus } from "../../../../../type/homepage/homepage";
 
 export default function EditModeNav({
-  homepageChurchUuid,
+  homepageStatus,
 }: {
-  homepageChurchUuid: string | null | undefined;
+  homepageStatus: HomepageStatus | null;
 }) {
   const [, setChurchEditModal] = useRecoilState(churchEditModalState);
   const [, setHomepageRegisterModal] = useRecoilState(
@@ -58,8 +59,7 @@ export default function EditModeNav({
               >
                 교회정보
               </button>
-
-              {!homepageChurchUuid && (
+              {homepageStatus?.trim() === "TEMPORARY" && (
                 <button
                   type="button"
                   className="font-size-m button-4 d-flex align-items-center"

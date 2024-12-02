@@ -9,6 +9,15 @@ export interface ChurchResponse {
   tel: string | null;
 }
 
+export type ChurchRequest = {
+  name: string;
+  address: string;
+  addressDetail: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  tel: string | null;
+};
+
 export type ServiceType = "SERVICE" | "CLASS";
 export interface Service {
   type: ServiceType;

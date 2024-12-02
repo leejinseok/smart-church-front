@@ -37,6 +37,17 @@ export async function middleware(request: NextRequest) {
         const next = NextResponse.next({
           headers,
         });
+
+        // const homepageChurchUuid = res.churchUuid;
+        // if (homepageChurchUuid) {
+        //   next.cookies.set("homepageChurchUuid", `${res.churchUuid}`);
+        // }
+
+        // const homepageOwnerUuid = res.ownerUuid;
+        // if (homepageOwnerUuid) {
+        //   next.cookies.set("homepageOwnerUuid", `${res.ownerUuid}`);
+        // }
+
         next.cookies.set("homepageUuid", `${res.uuid}`);
         return next;
       }
@@ -60,6 +71,15 @@ export async function middleware(request: NextRequest) {
       const next = NextResponse.next({
         headers,
       });
+      // const homepageChurchUuid = homepage.churchUuid;
+      // if (homepageChurchUuid) {
+      //   next.cookies.set("homepageChurchUuid", `${homepage.churchUuid}`);
+      // }
+
+      // const hompeageOwnerUuid = homepage.ownerUuid;
+      // if (hompeageOwnerUuid) {
+      //   next.cookies.set("hompeageOwnerUuid", `${homepage.ownerUuid}`);
+      // }
       next.cookies.set("homepageUuid", `${homepage.uuid}`);
       return next;
     }

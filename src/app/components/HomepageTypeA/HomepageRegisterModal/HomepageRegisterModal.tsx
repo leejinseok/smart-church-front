@@ -3,18 +3,50 @@ import "./HomepageRegisterModal.scss";
 import { useRecoilState } from "recoil";
 import { homepageRegisterModalState } from "../../../../atom/ui";
 import { useEffect, useState } from "react";
-import { getCookie } from "../../../../util/cookie-utils";
-import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
+import {
+  getChurchAdminAccessTokenCookie,
+  getCookie,
+  setChurchAdminAccessTokenCookie,
+} from "../../../../util/cookie-utils";
+import {
+  ChurchRequest,
+  ChurchResponse,
+} from "../../../../api/smart-church/smart-church-api-response";
 import ApplyButton from "../../../../components/common/ApplyButton";
-import { loadScript } from "../../../../util/script-utils";
 import { openDaumPostCode } from "../../../../util/map-utils";
+import { authApiRepository } from "../../../../repository/smart-church/smart-church-auth-api-repository";
+import { SmartChurchHttpError } from "../../../../type/smart-church-api-type";
+import { HomepageTypeAResponse } from "../../../../type/homepage/homepage-type-a";
+import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api";
+import { homepageTypeAApiRepository } from "../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
-export default function HomepageRegisterModal() {
+export default function HomepageRegisterModal({
+  homepage,
+}: {
+  homepage: HomepageTypeAResponse;
+}) {
   const [, setHomepageRegisterModal] = useRecoilState(
     homepageRegisterModalState,
   );
 
-  const [churchState, setChurchState] = useState<ChurchResponse | null>();
+  const [churchState, setChurchState] = useState<ChurchRequest | null>();
+  const [homepageInfo, setHomepageInfo] = useState({
+    homepageTitle: "",
+  });
+  const [userForm, setUserForm] = useState({
+    active: false,
+    email: "",
+    emailVerified: false,
+    emailVerificationCode: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (!homepage.ownerUuid) {
+      setUserForm((prev) => ({ ...prev, active: true }));
+    }
+  }, [homepage.ownerUuid]);
+
   useEffect(() => {
     const churchTemporaryCookie = getCookie("churchTemporary");
     if (!churchTemporaryCookie) {
@@ -26,6 +58,13 @@ export default function HomepageRegisterModal() {
     ) as ChurchResponse;
     setChurchState(churchTemporary);
   }, []);
+
+  useEffect(() => {
+    setHomepageInfo((prev) => ({
+      ...prev,
+      homepageTitle: churchState?.name || "",
+    }));
+  }, [churchState?.name]);
 
   const handleAddressClick = async () => {
     if (!churchState) {
@@ -42,6 +81,98 @@ export default function HomepageRegisterModal() {
     }
   };
 
+  const handleChangeHomepageTitle = (value: string) => {
+    setHomepageInfo((prev) => ({ ...prev, homepageTitle: value }));
+  };
+
+  const handleClickSendEmailVerifyCode = async () => {
+    try {
+      await authApiRepository.sendEmailVerifyCode(userForm.email);
+      alert("인증번호를 전송하였습니다. 이메일을 확인해주세요");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleClickEmailVerifyCode = async () => {
+    try {
+      const res = await authApiRepository.verifyEmail(
+        userForm.email,
+        userForm.emailVerificationCode,
+      );
+
+      if (res.status === 200) {
+        setUserForm((prev) => ({ ...prev, emailVerified: true }));
+      }
+      if (res.status >= 400) {
+        const error = JSON.parse(await res.text()) as SmartChurchHttpError;
+        alert("인증번호가 일치하지 않습니다");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleChangeUserEmail = (value: string) => {
+    setUserForm((prev) => ({ ...prev, email: value }));
+  };
+
+  const handleCreateHomepageClick = async () => {
+    let { ownerUuid, churchUuid } = homepage;
+    const { uuid: homepageUuid } = homepage;
+
+    // homepage 정보에 ownerUuid가 없다면 현재 회원가입을 안한 상태라는 것
+    if (!ownerUuid) {
+      const { email, password } = userForm;
+      const res = await authApiRepository.register(email, password);
+      const json = await res.json();
+      ownerUuid = json.uuid;
+      setChurchAdminAccessTokenCookie(json.accessToken);
+    }
+
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+
+    // 교회 정보 등록 or 수정
+    if (!churchUuid) {
+      alert("교회생성");
+      // 교회 생성
+      if (churchAdminAccessToken && churchState) {
+        const res = await smartChurchChurchApiRepository.saveChurch(
+          churchAdminAccessToken,
+          churchState,
+        );
+
+        const json = await res.json();
+        churchUuid = json.uuid;
+      }
+    } else {
+      // 교회 정보 업데이트
+      if (churchAdminAccessToken && churchState) {
+        await smartChurchChurchApiRepository.updateChurch(
+          churchAdminAccessToken,
+          churchUuid,
+          churchState,
+        );
+      }
+    }
+
+    // 홈페이지에 회원정보, 교회정보 업데이트
+    try {
+      await homepageTypeAApiRepository.updateHomepage(homepageUuid!, "", {
+        ownerUuid,
+        churchUuid,
+        homepageStatus: "REGISTERED",
+      });
+
+      // if (ownerUuid) {
+      //   alert("완료");
+      //   window.location.reload();
+      // }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div
       id="homepage-register-modal"
@@ -53,25 +184,93 @@ export default function HomepageRegisterModal() {
           <h3>홈페이지 생성하기</h3>
         </div>
         <div className="modal__body">
+          {!homepage.ownerUuid && (
+            <div className="modal__body__group">
+              <h4 className="font-size-m">회원정보</h4>
+              <div className="modal__body__form">
+                <div className="modal__body__form__group">
+                  <label htmlFor="">이메일</label>
+                  <div className="d-flex">
+                    <input
+                      type="email"
+                      value={userForm.email}
+                      onChange={(e) => handleChangeUserEmail(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="button-4 border-radius-0"
+                      style={{ marginLeft: 4 }}
+                      onClick={handleClickSendEmailVerifyCode}
+                    >
+                      인증번호 전송
+                    </button>
+                  </div>
+                </div>
+
+                {!userForm.emailVerified && (
+                  <div className="modal__body__form__group">
+                    <label htmlFor="">인증번호</label>
+
+                    <div className="d-flex">
+                      <input
+                        type="number"
+                        value={userForm.emailVerificationCode}
+                        onChange={(e) =>
+                          setUserForm((prev) => ({
+                            ...prev,
+                            emailVerificationCode: e.target.value,
+                          }))
+                        }
+                      />
+                      <button
+                        type="button"
+                        className="button-4 border-radius-0"
+                        style={{ marginLeft: 4 }}
+                        onClick={handleClickEmailVerifyCode}
+                      >
+                        확인
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <div className="modal__body__form__group">
+                  <label htmlFor="">패스워드</label>
+                  <input
+                    type="password"
+                    value={userForm.password}
+                    onChange={(e) =>
+                      setUserForm((prev) => ({
+                        ...prev,
+                        password: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="modal__body__group">
-            <h4 className="font-size-m">회원정보</h4>
+            <h4 className="font-size-m">홈페이지 정보</h4>
             <div className="modal__body__form">
               <div className="modal__body__form__group">
-                <label htmlFor="">이메일</label>
-                <input type="email" />
+                <label htmlFor="">홈페이지 주소</label>
+                <input type="text" />
               </div>
+
               <div className="modal__body__form__group">
-                <label htmlFor="">패스워드</label>
-                <input type="password" />
-              </div>
-              <div className="modal__body__form__group">
-                <label htmlFor="">인증번호</label>
-                <input type="number" />
+                <label htmlFor="">홈페이지 타이틀</label>
+                <input
+                  type="text"
+                  value={homepageInfo.homepageTitle}
+                  onChange={(e) => handleChangeHomepageTitle(e.target.value)}
+                />
               </div>
             </div>
           </div>
 
-          <div className="modal__body__group">
+          {/* <div className="modal__body__group">
             <h4 className="font-size-m">교회정보</h4>
             <div className="modal__body__form">
               <div className="modal__body__form__group">
@@ -97,10 +296,10 @@ export default function HomepageRegisterModal() {
                 <input type="text" value={churchState?.tel || ""} />
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="modal__footer text-align-right">
-          <ApplyButton handleClick={() => {}} text="생성" />
+          <ApplyButton handleClick={handleCreateHomepageClick} text="생성" />
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import { HomepageTypeAResponse } from "../type/homepage/homepage-type-a";
 import { homepageTypeAApiRepository } from "../repository/homepage-type-a/homepage-type-a-api-repository";
 import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
 import { churchDefault } from "../type/mock";
+import { smartChurchChurchApiRepository } from "../repository/smart-church/smart-church-church-api";
 
 export const metadata: Metadata = {
   title: "스마트처치 | 미리보기 페이지",
@@ -24,8 +25,11 @@ export default async function Home({ searchParams }: PageProps) {
   homepageTypeAResponse = await homepageTypeAApiRepository.getHompage(uuid!);
 
   if (homepageTypeAResponse.churchUuid) {
-    // TODO api에서 불러와야함
-    churchResponse = churchDefault;
+    const res = await smartChurchChurchApiRepository.getChurchByUuid(
+      homepageTypeAResponse.churchUuid,
+    );
+    const json = await res.json();
+    churchResponse = { ...json };
   } else {
     // churchUuid가 없으면 현재 최초 작성이라는 의미
     const churchTemporary = cookies().get("churchTemporary");

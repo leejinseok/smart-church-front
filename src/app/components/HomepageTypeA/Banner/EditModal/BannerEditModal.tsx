@@ -15,12 +15,15 @@ import {
 import "./BannerEditModal.scss";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
-import { homepageTypeAMockApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-json-repository";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getChurchAdminAccessTokenCookie,
+  getCookie,
+} from "../../../../../util/cookie-utils";
 import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
 import ApplyButton from "../../../../../components/common/ApplyButton";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function BannerEditModal({
   banners,
@@ -154,12 +157,19 @@ export default function BannerEditModal({
       return;
     }
 
-    const userUuid = getCookie("userUuid");
-
     const newBanners: ChurchBanners = {
       ...bannersState,
       items: [...bannerItemsSorted],
     };
+
+    const churchAdminAccessTokenCookie = getChurchAdminAccessTokenCookie();
+    let userUuid = "";
+    if (churchAdminAccessTokenCookie) {
+      const session = await authApiRepository.session(
+        churchAdminAccessTokenCookie,
+      );
+      userUuid = session.uuid;
+    }
 
     await homepageTypeAApiRepository.updateHomepage(
       homepageUuid,

@@ -3,11 +3,15 @@ import "./ChurchIntroEditModal.scss";
 import { useEffect, useState } from "react";
 import { ChurchIntro } from "../../../../../type/homepage/homepage-type-a";
 import Quill from "quill";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getChurchAdminAccessTokenCookie,
+  getCookie,
+} from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function ChurchIntroEditModal({
   churchIntro,
@@ -69,8 +73,12 @@ export default function ChurchIntroEditModal({
       return;
     }
 
-    const userUuid = getCookie("userUuid");
-
+    let userUuid = "";
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      userUuid = session.uuid;
+    }
     await homepageTypeAApiRepository.updateHomepage(
       homepageUuid,
       userUuid || "",

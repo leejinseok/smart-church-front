@@ -47,12 +47,7 @@ export default function HomepageTypeA({
 
   return (
     <div id="homepage-type-a-component">
-      <Header
-        church={churchState}
-        homepageChurchUuid={homepage.churchUuid}
-        churchLogo={homepage.churchLogo}
-        isEdit={isEdit}
-      />
+      <Header church={churchState} homepage={homepage} isEdit={isEdit} />
       <main>
         <div className="container">
           <section>
@@ -134,7 +129,9 @@ export default function HomepageTypeA({
         />
       )}
 
-      {isEdit && homepageRegisterModal.visible && <HomepageRegisterModal />}
+      {isEdit && homepageRegisterModal.visible && (
+        <HomepageRegisterModal homepage={homepage} />
+      )}
     </div>
   );
 }

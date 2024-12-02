@@ -9,18 +9,19 @@ import HomepageEditOverlay from "../../HomepageEdit/HomepageEditOverlay";
 import EditModeNav from "./EditModeNav/EditModeNav";
 import { useEffect, useState } from "react";
 import LogoEditModal from "./EditModal/LogoEditModal";
-import { ChurchLogo } from "../../../../type/homepage/homepage-type-a";
+import {
+  ChurchLogo,
+  HomepageTypeAResponse,
+} from "../../../../type/homepage/homepage-type-a";
 import TinyNav from "./TinyNav/TinyNav";
 
 export default function Header({
   church,
-  homepageChurchUuid,
-  churchLogo,
+  homepage,
   isEdit = false,
 }: {
   church: ChurchResponse;
-  homepageChurchUuid: string | null | undefined;
-  churchLogo: ChurchLogo;
+  homepage: HomepageTypeAResponse;
   isEdit: boolean;
 }) {
   const [churchLogoState, setChurchLogoState] = useState<ChurchLogo>();
@@ -29,8 +30,8 @@ export default function Header({
   });
 
   useEffect(() => {
-    setChurchLogoState({ ...churchLogo });
-  }, [churchLogo]);
+    setChurchLogoState({ ...homepage.churchLogo });
+  }, [homepage.churchLogo]);
 
   const handleClickEditClick = () => {
     setLogoEditModal({ visible: true });
@@ -57,7 +58,7 @@ export default function Header({
         }}
       >
         {isEdit ? (
-          <EditModeNav homepageChurchUuid={homepageChurchUuid} />
+          <EditModeNav homepageStatus={homepage.homepageStatus} />
         ) : (
           <TinyNav />
         )}

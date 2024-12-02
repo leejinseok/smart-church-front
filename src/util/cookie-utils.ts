@@ -4,6 +4,14 @@ export function getCookie(key: string) {
   if (parts.length === 2) return parts.pop()?.split(";").shift();
 }
 
+export function setChurchAdminAccessTokenCookie(cookieValue: string) {
+  setCookie("churchAdminAccessToken", cookieValue);
+}
+
+export function getChurchAdminAccessTokenCookie() {
+  return getCookie("churchAdminAccessToken");
+}
+
 export function setCookie(
   key: string,
   value: string,

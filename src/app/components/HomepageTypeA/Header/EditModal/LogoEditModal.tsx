@@ -11,8 +11,12 @@ import {
   ChurchLogoType,
 } from "../../../../../type/homepage/homepage-type-a";
 import { homepageTypeADefault } from "../../../../../type/homepage/homepage-type-a-mock";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getChurchAdminAccessTokenCookie,
+  getCookie,
+} from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function LogoEditModal({
   churchLogo,
@@ -62,14 +66,17 @@ export default function LogoEditModal({
       return;
     }
 
-    const userUuid = getCookie("userUuid");
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        churchLogo: churchLogoState,
-      },
-    );
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          churchLogo: churchLogoState,
+        },
+      );
+    }
 
     updateChurchLogo((prev) => ({
       ...prev,

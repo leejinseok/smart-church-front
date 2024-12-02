@@ -1,4 +1,5 @@
 import { Op } from "quill/core";
+import { HomepageStatus, HomepageUrlType } from "./homepage";
 
 export interface ChurchVideos {
   visible: boolean;
@@ -105,9 +106,12 @@ export interface Directions {
 export interface HomepageTypeAResponse {
   id: number | null;
   uuid: string | null;
-  directions: Directions;
-  churchUuid: string | null;
   ownerUuid: string | null;
+  churchUuid: string | null;
+  homepageStatus: HomepageStatus | null;
+  urlType: HomepageUrlType | null;
+  subdomain: string | null;
+  urlPath: string | null;
   churchLogo: ChurchLogo;
   churchIntro: ChurchIntro;
   banners: ChurchBanners;
@@ -117,4 +121,5 @@ export interface HomepageTypeAResponse {
   churchRegisterGuide: Op[];
   churchStaffs: ChurchStaffs;
   gallery: Gallery;
+  directions: Directions;
 }
