@@ -84,5 +84,5 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: "/((?!api|proxy|test|_next|static|public|favicon.ico).*)",
+  matcher: "/((?!api|proxy|test|_next|static|public|favicon.ico|error).*)",
 };

@@ -8,13 +8,16 @@ import { homepageTypeAApiRepository } from "../repository/homepage-type-a/homepa
 import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
 import { churchDefault } from "../type/mock";
 import { smartChurchChurchApiRepository } from "../repository/smart-church/smart-church-church-api";
+import { getChurchAdminAccessTokenCookie } from "../util/cookie-utils";
+import { authApiRepository } from "../repository/smart-church/smart-church-auth-api-repository";
+import { redirect, RedirectType } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "스마트처치 | 미리보기 페이지",
   description: "스마트처치",
 };
 
-export default async function Home({ searchParams }: PageProps) {
+export default async function HomePage({ searchParams }: PageProps) {
   const { editMode } = searchParams;
   const isEdit = editMode === "true";
   const headersValue = headers();
@@ -23,6 +26,24 @@ export default async function Home({ searchParams }: PageProps) {
   let homepageTypeAResponse: HomepageTypeAResponse | null = null;
   let churchResponse: ChurchResponse | null = null;
   homepageTypeAResponse = await homepageTypeAApiRepository.getHompage(uuid!);
+
+  if (isEdit) {
+    const churchAdminAccessTokenCookie = cookies().get(
+      "churchAdminAccessToken",
+    );
+    const ownerUuid = homepageTypeAResponse.ownerUuid;
+    if (ownerUuid) {
+      if (churchAdminAccessTokenCookie) {
+        const session = await authApiRepository.session(
+          churchAdminAccessTokenCookie.value,
+        );
+        session.uuid = "4";
+        if (session.uuid !== ownerUuid) {
+          redirect("/error?errorType=not-owner", RedirectType.push);
+        }
+      }
+    }
+  }
 
   if (homepageTypeAResponse.churchUuid) {
     const res = await smartChurchChurchApiRepository.getChurchByUuid(
