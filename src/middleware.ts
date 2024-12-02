@@ -44,8 +44,7 @@ export async function middleware(request: NextRequest) {
         return next;
       }
     } else {
-      const homepage =
-        await homepageTypeAApiRepository.saveHomepage(homepageTypeADefault);
+      let ownerUuid = "";
 
       // 로그인한 사용자라면
       const churchAdminAccessCookie = cookies().get("churchAdminAccessToken");
@@ -53,8 +52,13 @@ export async function middleware(request: NextRequest) {
         const session = await authApiRepository.session(
           churchAdminAccessCookie.value,
         );
-        homepage.ownerUuid = session.uuid;
+        ownerUuid = session.uuid;
       }
+
+      const homepage = await homepageTypeAApiRepository.saveHomepage({
+        ...homepageTypeADefault,
+        ownerUuid,
+      });
 
       const redirect = NextResponse.redirect(
         `${nextUrl.origin}${search}&uuid=${homepage.uuid}`,
