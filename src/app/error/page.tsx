@@ -1,3 +1,14 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
+
 export default function ErrorPage() {
-  return <div>hello world</div>;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  return (
+    <div>
+      <p>{searchParams.get("type")}</p>
+    </div>
+  );
 }

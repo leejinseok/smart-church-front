@@ -27,25 +27,6 @@ export default async function HomePage({ searchParams }: PageProps) {
   let churchResponse: ChurchResponse | null = null;
   homepageTypeAResponse = await homepageTypeAApiRepository.getHompage(uuid!);
 
-  if (isEdit) {
-    const churchAdminAccessTokenCookie = cookies().get(
-      "churchAdminAccessToken",
-    );
-    const ownerUuid = homepageTypeAResponse.ownerUuid;
-    if (ownerUuid) {
-      if (churchAdminAccessTokenCookie) {
-        const session = await authApiRepository.session(
-          churchAdminAccessTokenCookie.value,
-        );
-        // TODO 이거 테스트
-        session.uuid = "4";
-        if (session.uuid !== ownerUuid) {
-          redirect("/error?errorType=not-owner", RedirectType.push);
-        }
-      }
-    }
-  }
-
   if (homepageTypeAResponse.churchUuid) {
     const res = await smartChurchChurchApiRepository.getChurchByUuid(
       homepageTypeAResponse.churchUuid,

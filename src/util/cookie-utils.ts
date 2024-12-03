@@ -13,7 +13,7 @@ export function getChurchAdminAccessTokenCookie() {
 }
 
 export function getHomepageUuidCookie() {
-  return getHomepageUuidCookie();
+  return getCookie("homepageUuid");
 }
 
 export function setCookie(

@@ -5,6 +5,7 @@ import { ChurchVideos } from "../../../../../type/homepage/homepage-type-a";
 import { loadScript } from "../../../../../util/script-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import {
+  getChurchAdminAccessTokenCookie,
   getCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
@@ -12,6 +13,7 @@ import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
 import ApplyButton from "../../../../../components/common/ApplyButton";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 const videoOriginalWidth = 610;
 const videoOriginalHeight = 380;
@@ -203,14 +205,17 @@ export default function VideosEditModal({
       return;
     }
 
-    const userUuid = getCookie("userUuid");
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        videos: videosState,
-      },
-    );
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          videos: videosState,
+        },
+      );
+    }
 
     hide();
   };
