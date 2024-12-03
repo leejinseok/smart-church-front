@@ -117,7 +117,6 @@ export default function ChurchEditModal({
             </div>
 
             <div className="modal__body">
-              <pre>{JSON.stringify(church, null, 2)}</pre>
               <div className="form-group">
                 <p
                   className="font-weight-bold font-size-m form-group__header required"
