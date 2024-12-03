@@ -6,7 +6,7 @@ import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import Sortable from "sortablejs";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
 import {
-  getCookie,
+  getChurchAdminAccessTokenCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import AddIcon from "../../../../../components/Icon/AddIcon";
@@ -14,6 +14,7 @@ import { homepageTypeAApiRepository } from "../../../../../repository/homepage-t
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function ServicesEditModal({
   hide,
@@ -172,17 +173,20 @@ export default function ServicesEditModal({
       return;
     }
 
-    const userUuid = getCookie("userUuid");
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        worshipServicesAndMeetings: newWorshipServicesAndMeetings,
-      },
-    );
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          worshipServicesAndMeetings: newWorshipServicesAndMeetings,
+        },
+      );
 
-    updateWorshipServicesAndMeetings(newWorshipServicesAndMeetings);
-    hide();
+      updateWorshipServicesAndMeetings(newWorshipServicesAndMeetings);
+      hide();
+    }
   };
 
   const handleChangeGroupName = (value: string, groupIndex: number) => {

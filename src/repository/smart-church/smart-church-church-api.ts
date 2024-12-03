@@ -26,6 +26,7 @@ export const smartChurchChurchApiRepository = {
       method: "put",
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        "content-type": "application/json",
       },
       body: JSON.stringify({
         ...church,

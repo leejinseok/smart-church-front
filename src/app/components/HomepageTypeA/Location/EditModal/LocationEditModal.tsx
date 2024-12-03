@@ -4,10 +4,11 @@ import { Directions } from "../../../../../type/homepage/homepage-type-a";
 import ApplyButton from "../../../../../components/common/ApplyButton";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import {
-  getCookie,
+  getChurchAdminAccessTokenCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function LocationEditModal({
   hide,
@@ -25,17 +26,20 @@ export default function LocationEditModal({
     if (!homepageUuid) {
       return;
     }
-    const userUuid = getCookie("userUuid");
 
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        directions: directionsState,
-      },
-    );
-    updateDirections(directionsState);
-    hide();
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          directions: directionsState,
+        },
+      );
+      updateDirections(directionsState);
+      hide();
+    }
   };
   return (
     <EditModalWrapper

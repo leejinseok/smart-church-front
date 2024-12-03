@@ -7,12 +7,13 @@ import TrashIcon from "../../../../../components/Icon/TrashIcon";
 import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import Sortable from "sortablejs";
 import {
-  getCookie,
+  getChurchAdminAccessTokenCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function GalleryEditModal({
   gallery,
@@ -68,17 +69,20 @@ export default function GalleryEditModal({
       return;
     }
 
-    const userUuid = getCookie("userUuid");
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        gallery: newValue,
-      },
-    );
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          gallery: newValue,
+        },
+      );
 
-    updateGallery(newValue);
-    hide();
+      updateGallery(newValue);
+      hide();
+    }
   };
 
   const addGallery = (files: FileList | null) => {

@@ -1,12 +1,16 @@
 import "./ChurchEditModal.scss";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChurchResponse } from "../../../../api/smart-church/smart-church-api-response";
 import ApplyButton from "../../../../components/common/ApplyButton";
-import { setCookie } from "../../../../util/cookie-utils";
+import {
+  getChurchAdminAccessTokenCookie,
+  setCookie,
+} from "../../../../util/cookie-utils";
 import { loadScript } from "../../../../util/script-utils";
 import { useRecoilState } from "recoil";
 import { churchEditModalState } from "../../../../atom/ui";
+import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api";
 
 export default function ChurchEditModal({
   church,
@@ -76,11 +80,24 @@ export default function ChurchEditModal({
   };
 
   const handleSubmit = () => {
-    setCookie(
-      "churchTemporary",
-      encodeURIComponent(JSON.stringify(churchState)),
-      3,
-    );
+    if (!churchState.id) {
+      setCookie(
+        "churchTemporary",
+        encodeURIComponent(JSON.stringify(churchState)),
+        3,
+      );
+    } else if (churchState.id && churchState.uuid) {
+      const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+      if (churchAdminAccessToken) {
+        smartChurchChurchApiRepository.updateChurch(
+          churchAdminAccessToken,
+          churchState.uuid,
+          {
+            ...churchState,
+          },
+        );
+      }
+    }
 
     updateChurch(churchState);
     setChurchEditModal({ visible: false });
@@ -100,6 +117,7 @@ export default function ChurchEditModal({
             </div>
 
             <div className="modal__body">
+              <pre>{JSON.stringify(church, null, 2)}</pre>
               <div className="form-group">
                 <p
                   className="font-weight-bold font-size-m form-group__header required"

@@ -8,7 +8,7 @@ import {
 import Sortable from "sortablejs";
 import StaffEditModal from "./StaffEditModal";
 import {
-  getCookie,
+  getChurchAdminAccessTokenCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import DragpanIcon from "../../../../../components/Icon/DragpanIcon";
@@ -18,6 +18,7 @@ import CheckIcon from "../../../../../components/Icon/CheckIcon";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import CloseIcon from "../../../../../components/Icon/CloseIcon";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function StaffsEditModal({
   churchStaffs,
@@ -81,17 +82,20 @@ export default function StaffsEditModal({
     }
     newChurchStaffs.groups[0].staffs = sorted;
 
-    const userUuid = getCookie("userUuid");
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        churchStaffs: newChurchStaffs,
-      },
-    );
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          churchStaffs: newChurchStaffs,
+        },
+      );
 
-    updateStaffs(newChurchStaffs);
-    hide();
+      updateStaffs(newChurchStaffs);
+      hide();
+    }
   };
   return (
     <>

@@ -6,7 +6,7 @@ import {
   ChurchDepartmentsAndMinisties,
 } from "../../../../../type/homepage/homepage-type-a";
 import {
-  getCookie,
+  getChurchAdminAccessTokenCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import TrashIcon from "../../../../../components/Icon/TrashIcon";
@@ -16,6 +16,7 @@ import Toggle from "../../../Toggle/Toggle";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
 import ApplyButton from "../../../../../components/common/ApplyButton";
+import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function ChurchDepartmentEditModal({
   churchDepartmentsAndMinistries,
@@ -97,19 +98,22 @@ export default function ChurchDepartmentEditModal({
       );
     }
 
-    const userUuid = getCookie("userUuid");
-    await homepageTypeAApiRepository.updateHomepage(
-      homepageUuid,
-      userUuid || "",
-      {
-        churchDepartmentsAndMinistries: newChurchDepartmentsAndMinistries,
-      },
-    );
+    const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
+    if (churchAdminAccessToken) {
+      const session = await authApiRepository.session(churchAdminAccessToken);
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid,
+        session.uuid || "",
+        {
+          churchDepartmentsAndMinistries: newChurchDepartmentsAndMinistries,
+        },
+      );
 
-    updateChurchDepartment({
-      ...newChurchDepartmentsAndMinistries,
-    });
-    hide();
+      updateChurchDepartment({
+        ...newChurchDepartmentsAndMinistries,
+      });
+      hide();
+    }
   };
 
   const handleAdd = () => {
