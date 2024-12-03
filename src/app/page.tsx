@@ -8,6 +8,7 @@ import { homepageTypeAApiRepository } from "../repository/homepage-type-a/homepa
 import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
 import { churchDefault } from "../type/mock";
 import { smartChurchChurchApiRepository } from "../repository/smart-church/smart-church-church-api";
+import { useRecoilState } from "recoil";
 
 // export const metadata: Metadata = {
 //   title: "스마트처치 | 미리보기 페이지",

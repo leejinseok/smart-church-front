@@ -35,9 +35,7 @@ export default function HomepageTypeA({
   const [churchEditModal, setChurchEditModal] =
     useRecoilState(churchEditModalState);
 
-  const [homepageRegisterModal, setHomepageRegisterModal] = useRecoilState(
-    homepageRegisterModalState,
-  );
+  const [homepageRegisterModal] = useRecoilState(homepageRegisterModalState);
 
   useEffect(() => {
     if (churchState.name === "") {
