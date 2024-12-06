@@ -103,15 +103,23 @@ export interface Directions {
   description: string;
 }
 
+export type HomepageInformations = {
+  homepageTitle: string | null;
+  homepageDescription: string | null;
+  homepageStatus: HomepageStatus | null;
+  urlType: HomepageUrlType | null;
+  subdomain: string | null;
+  urlPath: string | null;
+};
+
 export interface HomepageTypeAResponse {
   id: number | null;
   uuid: string | null;
   ownerUuid: string | null;
   churchUuid: string | null;
-  homepageStatus: HomepageStatus | null;
-  urlType: HomepageUrlType | null;
-  subdomain: string | null;
-  urlPath: string | null;
+
+  homepageInformations: HomepageInformations;
+
   churchLogo: ChurchLogo;
   churchIntro: ChurchIntro;
   banners: ChurchBanners;

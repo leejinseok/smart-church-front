@@ -58,7 +58,9 @@ export default function Header({
         }}
       >
         {isEdit ? (
-          <EditModeNav homepageStatus={homepage.homepageStatus} />
+          <EditModeNav
+            homepageStatus={homepage?.homepageInformations?.homepageStatus}
+          />
         ) : (
           <TinyNav />
         )}

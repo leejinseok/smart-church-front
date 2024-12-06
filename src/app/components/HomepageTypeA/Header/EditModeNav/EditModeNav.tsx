@@ -59,15 +59,13 @@ export default function EditModeNav({
               >
                 교회정보
               </button>
-              {homepageStatus?.trim() === "TEMPORARY" && (
-                <button
-                  type="button"
-                  className="font-size-m button-4 d-flex align-items-center"
-                  onClick={handleClickRegisterButton}
-                >
-                  생성
-                </button>
-              )}
+              <button
+                type="button"
+                className="font-size-m button-4 d-flex align-items-center"
+                onClick={handleClickRegisterButton}
+              >
+                {homepageStatus === "TEMPORARY" ? "생성" : "수정"}
+              </button>
               {/* <span>Copyright ©RainyHeaven</span> */}
             </div>
           </div>

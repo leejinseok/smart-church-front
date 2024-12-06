@@ -9,7 +9,6 @@ import {
   HomepageTypeAResponse,
   WorshipServicesAndMeetings,
 } from "../../type/homepage/homepage-type-a";
-import { homepageTypeADefault } from "../../type/homepage/homepage-type-a-mock";
 
 export interface HompageTypeAApiRepository {
   updateGallery(
@@ -70,7 +69,7 @@ const apiKey = "7b362dad-d4e9-4cd9-9fdc-7f5ae6be61d8";
 export const homepageTypeAApiRepository = {
   async getHompage(homepageUuid: string): Promise<HomepageTypeAResponse> {
     const res = await fetch(
-      `http://localhost:8088/homepages/type-a/${homepageUuid}`,
+      `http://localhost:8088/api/v1/homepages/type-a/${homepageUuid}`,
       {
         headers: {
           "x-api-key": apiKey,
@@ -85,7 +84,7 @@ export const homepageTypeAApiRepository = {
   async saveHomepage(
     data: HomepageTypeAResponse,
   ): Promise<HomepageTypeAResponse> {
-    const res = await fetch(`http://localhost:8088/homepages/type-a`, {
+    const res = await fetch(`http://localhost:8088/api/v1/homepages/type-a`, {
       headers: {
         "x-api-key": apiKey,
       },
@@ -100,7 +99,7 @@ export const homepageTypeAApiRepository = {
     userUuid: string,
     data: Partial<HomepageTypeAResponse>,
   ) {
-    await fetch(`http://localhost:8088/homepages/type-a/${uuid}`, {
+    await fetch(`http://localhost:8088/api/v1/homepages/type-a/${uuid}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

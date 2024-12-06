@@ -22,17 +22,22 @@ import { homepageTypeAApiRepository } from "../../../../repository/homepage-type
 
 export default function HomepageRegisterModal({
   homepage,
+  church,
 }: {
   homepage: HomepageTypeAResponse;
+  church: ChurchResponse;
 }) {
   const [, setHomepageRegisterModal] = useRecoilState(
     homepageRegisterModalState,
   );
+  const mode =
+    homepage.ownerUuid && homepage.churchUuid ? "UPDATE" : "REGISTER";
+
+  const [homepageState, setHomepageState] = useState(
+    JSON.parse(JSON.stringify(homepage)) as HomepageTypeAResponse,
+  );
 
   const [churchState, setChurchState] = useState<ChurchRequest | null>();
-  const [homepageInfo, setHomepageInfo] = useState({
-    homepageTitle: "",
-  });
   const [userForm, setUserForm] = useState({
     email: "",
     emailVerified: false,
@@ -50,22 +55,29 @@ export default function HomepageRegisterModal({
 
   useEffect(() => {
     const churchTemporaryCookie = getCookie("churchTemporary");
-    if (!churchTemporaryCookie) {
+    if (churchTemporaryCookie) {
+      const churchTemporary = JSON.parse(
+        decodeURIComponent(churchTemporaryCookie),
+      ) as ChurchResponse;
+      setChurchState(churchTemporary);
+    } else {
+      setChurchState(church);
+    }
+  }, [church]);
+
+  useEffect(() => {
+    if (homepageState.homepageInformations.homepageTitle) {
       return;
     }
 
-    const churchTemporary = JSON.parse(
-      decodeURIComponent(churchTemporaryCookie),
-    ) as ChurchResponse;
-    setChurchState(churchTemporary);
-  }, []);
-
-  useEffect(() => {
-    setHomepageInfo((prev) => ({
+    setHomepageState((prev) => ({
       ...prev,
-      homepageTitle: churchState?.name || "",
+      homepageInformations: {
+        ...prev.homepageInformations,
+        homepageTitle: churchState?.name || "",
+      },
     }));
-  }, [churchState?.name]);
+  }, [churchState?.name, homepageState.homepageInformations.homepageTitle]);
 
   const handleAddressClick = async () => {
     if (!churchState) {
@@ -83,7 +95,13 @@ export default function HomepageRegisterModal({
   };
 
   const handleChangeHomepageTitle = (value: string) => {
-    setHomepageInfo((prev) => ({ ...prev, homepageTitle: value }));
+    setHomepageState((prev) => ({
+      ...prev,
+      homepageInformations: {
+        ...prev.homepageInformations,
+        homepageTitle: value,
+      },
+    }));
   };
 
   const handleClickSendEmailVerifyCode = async () => {
@@ -187,11 +205,23 @@ export default function HomepageRegisterModal({
 
     // 홈페이지에 회원정보, 교회정보 업데이트
     try {
-      await homepageTypeAApiRepository.updateHomepage(homepageUuid!, "", {
-        ownerUuid,
-        churchUuid,
-        homepageStatus: "REGISTERED",
-      });
+      let session = null;
+      if (churchAdminAccessToken) {
+        session = await authApiRepository.session(churchAdminAccessToken);
+      }
+
+      await homepageTypeAApiRepository.updateHomepage(
+        homepageUuid!,
+        session?.uuid || "",
+        {
+          ownerUuid,
+          churchUuid,
+          homepageInformations: {
+            ...homepageState.homepageInformations,
+            homepageStatus: "REGISTERED",
+          },
+        },
+      );
 
       if (ownerUuid) {
         window.location.reload();
@@ -209,7 +239,7 @@ export default function HomepageRegisterModal({
     >
       <div className="modal__inner" onClick={(e) => e.stopPropagation()}>
         <div className="modal__header">
-          <h3>홈페이지 생성하기</h3>
+          <h3>홈페이지 {mode === "REGISTER" ? "생성" : "수정"}하기</h3>
         </div>
         <div className="modal__body">
           {!homepage.ownerUuid && (
@@ -284,14 +314,19 @@ export default function HomepageRegisterModal({
             <div className="modal__body__form">
               <div className="modal__body__form__group">
                 <label htmlFor="">홈페이지 주소</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  value={homepageState?.homepageInformations?.subdomain || ""}
+                />
               </div>
 
               <div className="modal__body__form__group">
                 <label htmlFor="">홈페이지 타이틀</label>
                 <input
                   type="text"
-                  value={homepageInfo.homepageTitle}
+                  value={
+                    homepageState?.homepageInformations?.homepageTitle || ""
+                  }
                   onChange={(e) => handleChangeHomepageTitle(e.target.value)}
                 />
               </div>
@@ -327,7 +362,10 @@ export default function HomepageRegisterModal({
           </div> */}
         </div>
         <div className="modal__footer text-align-right">
-          <ApplyButton handleClick={handleCreateHomepageClick} text="생성" />
+          <ApplyButton
+            handleClick={handleCreateHomepageClick}
+            text={mode === "REGISTER" ? "생성" : "수정"}
+          />
         </div>
       </div>
     </div>

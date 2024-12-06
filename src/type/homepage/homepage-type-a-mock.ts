@@ -5,10 +5,15 @@ export const homepageTypeADefault: HomepageTypeAResponse = {
   uuid: null,
   churchUuid: null,
   ownerUuid: null,
-  homepageStatus: "TEMPORARY",
-  subdomain: null,
-  urlPath: null,
-  urlType: null,
+  homepageInformations: {
+    homepageTitle: "",
+    homepageDescription: "",
+    homepageStatus: "TEMPORARY",
+    subdomain: null,
+    urlPath: null,
+    urlType: null,
+  },
+
   churchLogo: {
     type: "LOGO_AND_CHURCH_NAME",
     image: "https://placehold.co/50x50?text=Logo",

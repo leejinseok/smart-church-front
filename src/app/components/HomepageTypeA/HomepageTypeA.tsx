@@ -128,7 +128,7 @@ export default function HomepageTypeA({
       )}
 
       {isEdit && homepageRegisterModal.visible && (
-        <HomepageRegisterModal homepage={homepage} />
+        <HomepageRegisterModal homepage={homepage} church={churchState} />
       )}
     </div>
   );
