@@ -28,8 +28,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("hi");
-
   return (
     <RecoilRootWrapper>
       <html lang="ko" className={`${nanumBarunGothicLight.className}`}>

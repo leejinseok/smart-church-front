@@ -1,6 +1,7 @@
 export interface ChurchResponse {
   id: number | null;
   uuid: string | null;
+  ownerId: number | null;
   name: string;
   address: string;
   addressDetail: string | null;
@@ -16,6 +17,7 @@ export type ChurchRequest = {
   latitude: number | null;
   longitude: number | null;
   tel: string | null;
+  ownerId: number | null;
 };
 
 export type ServiceType = "SERVICE" | "CLASS";

@@ -11,6 +11,7 @@ import { loadScript } from "../../../../util/script-utils";
 import { useRecoilState } from "recoil";
 import { churchEditModalState } from "../../../../atom/ui";
 import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api";
+import { authApiRepository } from "../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function ChurchEditModal({
   church,
@@ -79,7 +80,7 @@ export default function ChurchEditModal({
     setChurchEditModal({ visible: false });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!churchState.id) {
       setCookie(
         "churchTemporary",
@@ -89,11 +90,13 @@ export default function ChurchEditModal({
     } else if (churchState.id && churchState.uuid) {
       const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
       if (churchAdminAccessToken) {
+        const session = await authApiRepository.session(churchAdminAccessToken);
         smartChurchChurchApiRepository.updateChurch(
           churchAdminAccessToken,
           churchState.uuid,
           {
             ...churchState,
+            ownerId: session.id,
           },
         );
       }

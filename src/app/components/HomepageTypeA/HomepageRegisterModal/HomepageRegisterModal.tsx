@@ -144,6 +144,16 @@ export default function HomepageRegisterModal({
 
       ownerUuid = json.uuid;
       setChurchAdminAccessTokenCookie(json.accessToken);
+      setChurchState((prev) => {
+        if (!prev) {
+          return;
+        }
+
+        return {
+          ...prev,
+          ownerId: json.id,
+        };
+      });
     }
 
     const churchAdminAccessToken = getChurchAdminAccessTokenCookie();
