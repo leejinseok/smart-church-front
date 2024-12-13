@@ -12,16 +12,14 @@ export async function GET(request: Request) {
   }
 
   try {
-    const response = await fetch(
-      `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`,
-      {
-        headers: {
-          "X-NCP-APIGW-API-KEY-ID": process.env
-            .NEXT_PUBLIC_NAVER_API_CLIENT_ID as string,
-          "X-NCP-APIGW-API-KEY": process.env.NAVER_API_CLIENT_SECRET as string,
-        },
+    const url = `https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=${encodeURIComponent(address)}`;
+    const response = await fetch(url, {
+      headers: {
+        "X-NCP-APIGW-API-KEY-ID": process.env
+          .NEXT_PUBLIC_NAVER_API_CLIENT_ID as string,
+        "X-NCP-APIGW-API-KEY": process.env.NAVER_API_CLIENT_SECRET as string,
       },
-    );
+    });
 
     if (!response.ok) {
       return NextResponse.json(

@@ -86,7 +86,6 @@ export default function HomepageRegisterModal({
 
     try {
       const result = await openDaumPostCode();
-      console.log("result: ", result);
       const { latitude, longitude, address } = result;
       setChurchState((prev) => ({ ...prev!, latitude, longitude, address }));
     } catch (err) {
