@@ -17,7 +17,7 @@ import { openDaumPostCode } from "../../../../util/map-utils";
 import { authApiRepository } from "../../../../repository/smart-church/smart-church-auth-api-repository";
 import { SmartChurchHttpError } from "../../../../type/smart-church-api-type";
 import { HomepageTypeAResponse } from "../../../../type/homepage/homepage-type-a";
-import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api";
+import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api-repository";
 import { homepageTypeAApiRepository } from "../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 
 export default function HomepageRegisterModal({

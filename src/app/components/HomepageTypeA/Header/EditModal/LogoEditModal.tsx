@@ -18,6 +18,7 @@ import {
 } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
 import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
+import { smartChurchFileApiRepository } from "../../../../../repository/smart-church/smart-church-file-api-repository";
 
 export default function LogoEditModal({
   churchLogo,
@@ -38,26 +39,25 @@ export default function LogoEditModal({
     }));
   };
 
-  const handleChangeLogoImage = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeLogoImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) {
       return;
     }
 
-    // TODO Upload to real backend server.
     const file = files[0];
-    const reader = new FileReader();
-    reader.onload = (progressEvent: ProgressEvent<FileReader>) => {
-      const dataURL = progressEvent.target?.result;
-      if (dataURL) {
-        setChurchLogoState((prev) => ({
-          ...prev,
-          image: dataURL.toString(),
-        }));
-      }
-    };
 
-    reader.readAsDataURL(file); // Read the file as a data URL
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileType", "CHURCH_LOGO");
+
+    const res = await smartChurchFileApiRepository.uploadFile(formData);
+    const json = await res.json();
+
+    setChurchLogoState((prev) => ({
+      ...prev,
+      image: json.url,
+    }));
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {

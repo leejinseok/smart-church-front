@@ -7,7 +7,7 @@ import { HomepageTypeAResponse } from "../type/homepage/homepage-type-a";
 import { homepageTypeAApiRepository } from "../repository/homepage-type-a/homepage-type-a-api-repository";
 import { ChurchResponse } from "../api/smart-church/smart-church-api-response";
 import { churchDefault } from "../type/mock";
-import { smartChurchChurchApiRepository } from "../repository/smart-church/smart-church-church-api";
+import { smartChurchChurchApiRepository } from "../repository/smart-church/smart-church-church-api-repository";
 import { useRecoilState } from "recoil";
 
 // export const metadata: Metadata = {

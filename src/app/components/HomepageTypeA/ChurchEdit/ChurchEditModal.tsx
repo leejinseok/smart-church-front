@@ -10,7 +10,7 @@ import {
 import { loadScript } from "../../../../util/script-utils";
 import { useRecoilState } from "recoil";
 import { churchEditModalState } from "../../../../atom/ui";
-import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api";
+import { smartChurchChurchApiRepository } from "../../../../repository/smart-church/smart-church-church-api-repository";
 import { authApiRepository } from "../../../../repository/smart-church/smart-church-auth-api-repository";
 
 export default function ChurchEditModal({
