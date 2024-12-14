@@ -13,7 +13,6 @@ import {
 import { homepageTypeADefault } from "../../../../../type/homepage/homepage-type-a-mock";
 import {
   getChurchAdminAccessTokenCookie,
-  getCookie,
   getHomepageUuidCookie,
 } from "../../../../../util/cookie-utils";
 import { homepageTypeAApiRepository } from "../../../../../repository/homepage-type-a/homepage-type-a-api-repository";
@@ -26,7 +25,7 @@ export default function LogoEditModal({
   hide,
 }: {
   churchLogo: ChurchLogo;
-  updateChurchLogo: Dispatch<SetStateAction<ChurchLogo>>;
+  updateChurchLogo: Dispatch<SetStateAction<ChurchLogo | undefined>>;
   hide: () => void;
 }) {
   const [churchLogoState, setChurchLogoState] =
@@ -216,7 +215,7 @@ export default function LogoEditModal({
                       className="width-100"
                       placeholder="문자열을 입력해주세요"
                       onChange={(e) => handleChangeLogoText(e)}
-                      value={churchLogoState.text}
+                      value={churchLogoState.text || ""}
                     />
                   </div>
                 </div>

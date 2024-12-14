@@ -25,6 +25,7 @@ import { homepageTypeAApiRepository } from "../../../../../repository/homepage-t
 import EditModalWrapper from "../../../Modal/EditModalWrapper";
 import ApplyButton from "../../../../../components/common/ApplyButton";
 import { authApiRepository } from "../../../../../repository/smart-church/smart-church-auth-api-repository";
+import { smartChurchFileApiRepository } from "../../../../../repository/smart-church/smart-church-file-api-repository";
 
 export default function BannerEditModal({
   banners,
@@ -107,7 +108,7 @@ export default function BannerEditModal({
     });
   };
 
-  const chooseFilesHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const chooseFilesHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) {
       return;
@@ -115,36 +116,25 @@ export default function BannerEditModal({
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const reader = new FileReader();
 
-      reader.onload = (progressEvent: ProgressEvent<FileReader>) => {
-        const dataURL = progressEvent.target?.result;
-        if (dataURL) {
-          if (!bannersState) {
-            return;
-          }
-
-          if (!bannersState) {
-            return;
-          }
-
-          setBannersState((prev) => {
-            return {
-              ...prev,
-              items: [
-                ...prev.items,
-                {
-                  id: 0,
-                  imageUrl: dataURL.toString(),
-                  order: 1,
-                },
-              ],
-            };
-          });
-        }
-      };
-
-      reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("fileType", "CHURCH_BANNER");
+      const res = await smartChurchFileApiRepository.uploadFile(formData);
+      const json = await res.json();
+      setBannersState((prev) => {
+        return {
+          ...prev,
+          items: [
+            ...prev.items,
+            {
+              id: 0,
+              imageUrl: json.url,
+              order: 1,
+            },
+          ],
+        };
+      });
     }
   };
 
