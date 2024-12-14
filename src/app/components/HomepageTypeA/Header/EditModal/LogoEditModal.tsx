@@ -60,6 +60,11 @@ export default function LogoEditModal({
     }));
   };
 
+  const handleChangeLogoText = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setChurchLogoState((prev) => ({ ...prev, text: value }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const homepageUuid = getHomepageUuidCookie();
@@ -116,19 +121,15 @@ export default function LogoEditModal({
                       <input
                         id="logoType-imageAndChurchName"
                         type="radio"
-                        value={"LOGO_AND_CHURCH_NAME" as ChurchLogoType}
-                        checked={
-                          churchLogoState.type === "LOGO_AND_CHURCH_NAME"
-                        }
-                        onChange={() =>
-                          handleClickLogoType("LOGO_AND_CHURCH_NAME")
-                        }
+                        value={"LOGO_AND_TEXT" as ChurchLogoType}
+                        checked={churchLogoState.type === "LOGO_AND_TEXT"}
+                        onChange={() => handleClickLogoType("LOGO_AND_TEXT")}
                       />
                       <label
                         htmlFor="logoType-imageAndChurchName"
                         style={{ marginLeft: 4 }}
                       >
-                        로고 이미지 + 교회이름
+                        로고 이미지 + 문자열
                       </label>
                     </div>
                   </div>
@@ -158,22 +159,22 @@ export default function LogoEditModal({
                       <input
                         id="logoType-churchName"
                         type="radio"
-                        value={"CHURCH_NAME" as ChurchLogoType}
-                        checked={churchLogoState.type === "CHURCH_NAME"}
-                        onChange={() => handleClickLogoType("CHURCH_NAME")}
+                        value={"TEXT" as ChurchLogoType}
+                        checked={churchLogoState.type === "TEXT"}
+                        onChange={() => handleClickLogoType("TEXT")}
                       />
                       <label
                         htmlFor="logoType-churchName"
                         style={{ marginLeft: 4 }}
                       >
-                        교회이름
+                        문자열
                       </label>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {churchLogoState.type !== "CHURCH_NAME" && (
+              {churchLogoState.type !== "TEXT" && (
                 <div className="form-group form-group-logoImage">
                   <span className="font-weight-bold form-group__header">
                     로고 이미지
@@ -198,6 +199,24 @@ export default function LogoEditModal({
                       placeholder="로고 이미지를 선택해주세요"
                       accept="image/*"
                       onChange={(e) => handleChangeLogoImage(e)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {["TEXT", "LOGO_AND_TEXT"].includes(churchLogoState.type) && (
+                <div className="form-group form-group-logoImage">
+                  <span className="font-weight-bold form-group__header">
+                    문자열
+                  </span>
+
+                  <div>
+                    <input
+                      type="text"
+                      className="width-100"
+                      placeholder="문자열을 입력해주세요"
+                      onChange={(e) => handleChangeLogoText(e)}
+                      value={churchLogoState.text}
                     />
                   </div>
                 </div>

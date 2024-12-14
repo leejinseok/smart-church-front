@@ -85,7 +85,9 @@ export const homepageTypeAApiRepository = {
     data: HomepageTypeAResponse,
   ): Promise<HomepageTypeAResponse> {
     const res = await fetch(`http://localhost:8088/api/v1/homepages/type-a`, {
+      method: "post",
       headers: {
+        "content-type": "application/json",
         "x-api-key": apiKey,
       },
       body: JSON.stringify(data),

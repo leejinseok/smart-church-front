@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { authApiRepository } from "./repository/smart-church/smart-church-auth-api-repository";
 import { NextURL } from "next/dist/server/web/next-url";
 import { redirect } from "next/navigation";
+import { smartChurchSessionUserApiRepository } from "./repository/smart-church/smart-church-session-user-api";
 
 const convertToParams = (queryString: string) => {
   const params = new URLSearchParams(queryString);
@@ -62,6 +63,7 @@ const applyInEditMode = async (
     }
   } else {
     let ownerUuid = "";
+    let churchUuid = null;
 
     // 로그인한 사용자라면
     if (churchAdminAccessCookie) {
@@ -69,11 +71,17 @@ const applyInEditMode = async (
         churchAdminAccessCookie.value,
       );
       ownerUuid = session.uuid;
+
+      const church = await smartChurchSessionUserApiRepository.getChurch(
+        churchAdminAccessCookie.value,
+      );
+      churchUuid = church.uuid;
     }
 
     const homepage = await homepageTypeAApiRepository.saveHomepage({
       ...homepageTypeADefault,
       ownerUuid,
+      churchUuid,
     });
 
     const redirect = NextResponse.redirect(

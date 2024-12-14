@@ -15,8 +15,9 @@ export const homepageTypeADefault: HomepageTypeAResponse = {
   },
 
   churchLogo: {
-    type: "LOGO_AND_CHURCH_NAME",
+    type: "LOGO_AND_TEXT",
     image: "https://placehold.co/50x50?text=Logo",
+    text: "",
   },
   directions: {
     title: "찾아오시는 길",

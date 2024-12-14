@@ -75,7 +75,7 @@ export default function Header({
                 minHeight: 30,
               }}
             >
-              {churchLogoState && churchLogoState.type !== "CHURCH_NAME" && (
+              {churchLogoState && churchLogoState.type !== "TEXT" && (
                 <img
                   src={churchLogoState?.image || ""}
                   alt=""
@@ -87,7 +87,9 @@ export default function Header({
               )}
 
               {churchLogoState && churchLogoState.type !== "LOGO" && (
-                <span className="font-size-xxl">{church.name}</span>
+                <span className="font-size-xxl">
+                  {churchLogoState.text || church.name}
+                </span>
               )}
             </div>
             {isEdit && (

@@ -4,8 +4,12 @@ import {
   homepageRegisterModalState,
 } from "../../../../../atom/ui";
 import "./EditModeNav.scss";
-import { getCookie } from "../../../../../util/cookie-utils";
+import {
+  getCookie,
+  getHomepageUuidCookie,
+} from "../../../../../util/cookie-utils";
 import { HomepageStatus } from "../../../../../type/homepage/homepage";
+import { useEffect, useState } from "react";
 
 export default function EditModeNav({
   homepageStatus,
@@ -16,11 +20,16 @@ export default function EditModeNav({
   const [, setHomepageRegisterModal] = useRecoilState(
     homepageRegisterModalState,
   );
+  const [homepageUuid, setHomepageUuid] = useState("");
+
+  useEffect(() => {
+    const homepageUuidCookie = getHomepageUuidCookie();
+    if (homepageUuidCookie) {
+      setHomepageUuid(homepageUuidCookie as string);
+    }
+  }, []);
 
   const handleClickRegisterButton = () => {
-    const userUuid = getCookie("userUuid");
-    console.log("생성");
-
     setHomepageRegisterModal({ visible: true });
   };
 
@@ -41,10 +50,7 @@ export default function EditModeNav({
             </div>
 
             <div className="d-flex align-items-center">
-              <a
-                href={`?uuid=47236142-4c14-4830-941a-7b79879669a6`}
-                target="_blank"
-              >
+              <a href={`?uuid=${homepageUuid}`} target="_blank">
                 <button
                   type="button"
                   className="font-size-m button-4 d-flex align-items-center"

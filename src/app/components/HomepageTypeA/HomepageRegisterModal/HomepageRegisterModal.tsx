@@ -103,6 +103,16 @@ export default function HomepageRegisterModal({
     }));
   };
 
+  const handleChangeHomepageDescription = (value: string) => {
+    setHomepageState((prev) => ({
+      ...prev,
+      homepageInformations: {
+        ...prev.homepageInformations,
+        homepageDescription: value,
+      },
+    }));
+  };
+
   const handleClickSendEmailVerifyCode = async () => {
     try {
       await authApiRepository.sendEmailVerifyCode(userForm.email);
@@ -327,6 +337,20 @@ export default function HomepageRegisterModal({
                     homepageState?.homepageInformations?.homepageTitle || ""
                   }
                   onChange={(e) => handleChangeHomepageTitle(e.target.value)}
+                />
+              </div>
+
+              <div className="modal__body__form__group">
+                <label htmlFor="">홈페이지 설명</label>
+                <input
+                  type="text"
+                  value={
+                    homepageState?.homepageInformations?.homepageDescription ||
+                    ""
+                  }
+                  onChange={(e) =>
+                    handleChangeHomepageDescription(e.target.value)
+                  }
                 />
               </div>
             </div>

@@ -76,10 +76,11 @@ export interface Gallery {
   }[];
 }
 
-export type ChurchLogoType = "LOGO" | "LOGO_AND_CHURCH_NAME" | "CHURCH_NAME";
+export type ChurchLogoType = "LOGO" | "LOGO_AND_TEXT" | "TEXT";
 export interface ChurchLogo {
   type: ChurchLogoType;
   image: string | null;
+  text: string | null;
 }
 
 export interface ChurchBanners {
@@ -117,9 +118,7 @@ export interface HomepageTypeAResponse {
   uuid: string | null;
   ownerUuid: string | null;
   churchUuid: string | null;
-
   homepageInformations: HomepageInformations;
-
   churchLogo: ChurchLogo;
   churchIntro: ChurchIntro;
   banners: ChurchBanners;
